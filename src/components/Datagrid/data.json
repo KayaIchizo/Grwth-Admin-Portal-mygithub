@@ -1,0 +1,91 @@
+[
+    {
+      "label": "All Students",
+      "tagClassName": "special",
+      "children": [
+        {
+          "label": "1A",
+          "children": [
+            {
+              "label": "keith"
+            },
+            {
+              "label": "Alan"
+            },
+            {
+              "label": "Kaya"
+            }
+          ]
+        },
+        {
+          "label": "1B",
+          "children": [
+            {
+              "label": "Joby"
+            },
+            {
+              "label": "Sharon"
+            }
+          ]
+        },
+        {
+          "label": "1C",
+          "children": [
+            {
+              "label": "Niki"
+            },
+            {
+              "label": "Leo"
+            },
+            {
+              "label": "Yung"
+            },
+            {
+              "label": "aaaa"
+            }
+          ]
+        },
+        {
+          "label": "1D",
+          "children": [
+            {
+              "label": "bbbb"
+            },
+            {
+              "label": "ccccc"
+            },
+            {
+              "label": "ddddd"
+            }
+          ]
+        }
+      ]
+    },
+    {
+        "label": "All Teachers",
+        "tagClassName": "special",
+        "children": [
+          {
+            "label": "Teacher Group",
+            "children": [
+              {
+                "label": "English teacher"
+              },
+              {
+                "label": "Maths teacher"
+              },
+              {
+                "label": "Art teacher"
+              },
+              {
+                "label":"Music teacher"
+              },
+              {
+                "label":"Sport teacher"
+              }
+            ]
+          }
+        ]
+      }    
+]
+  

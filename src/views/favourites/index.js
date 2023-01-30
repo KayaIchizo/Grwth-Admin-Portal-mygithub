@@ -1,0 +1,153 @@
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { Typography } from '@mui/material';
+import Button from '@mui/material/Button';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import Box from '@mui/material/Box';
+import { Container, Grid } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import Radio from '@mui/material/Radio';
+import SearchComponent from 'react-material-ui-searchbar';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { userRows } from '../../components/Datagrid/dummyData';
+import ImageListItem from '@mui/material/ImageListItem';
+import room1 from '../../assets/images/roomimg/room1.png';
+import { IconUserCircle } from '@tabler/icons';
+import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
+import Popover from '@mui/material/Popover';
+import { Link } from 'react-router-dom';
+import TextareaAutosize from '@mui/base/TextareaAutosize';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { useTheme } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
+import RoomA1 from 'assets/images/roomimg/RoomA_V1.webp';
+import RoomA_Items1 from 'assets/images/roomimg/RoomA_Items1.webp';
+import RoomA_Items2 from 'assets/images/roomimg/RoomA_Items2.webp';
+import RoomA_Items3 from 'assets/images/roomimg/RoomA_Items3.webp';
+import RoomA_Items4 from 'assets/images/roomimg/RoomA_Items4.webp';
+import Paper from '@mui/material/Paper';
+import UserIconGroup from 'assets/images/icons/UserIconGroup.png';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import {
+    IconHeart,
+    IconArchive
+} from '@tabler/icons';
+const icons = { IconHeart, IconArchive };
+
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    width: 300,
+    height: 250,
+    boxShadow: "3.0331px 0px 3.0331px rgba(0, 0, 0, 0.25)",
+    
+    // transform: "rotate(90deg)",
+    
+}));
+
+
+
+
+
+function FavouriteRoom() {
+    
+
+    const currentDate = new Date();
+    const toIsodate = currentDate.toISOString();
+    const toIsodate1 = toIsodate.slice(0, -5);
+
+    
+
+    const roomObjectMockdatas = [
+        { imageurl: RoomA_Items1, title: "Bookshelf", sharedNumber: '',heart:true },
+        { imageurl: RoomA1, title: "Room A", sharedNumber: '+5',heart:false },
+        { imageurl: RoomA_Items3, title: "Chair", sharedNumber: '+5',heart:true },
+
+        { imageurl: RoomA_Items4, title: "Drawing Desk", sharedNumber: '',heart:false },
+        { imageurl: RoomA1, title: "Room A", sharedNumber: '+5',heart:true },
+        { imageurl: RoomA_Items2, title: "Desk", sharedNumber: '+5',heart:false },
+
+        { imageurl: RoomA_Items3, title: "Drawing Desk", sharedNumber: '',heart:false },
+       
+    ];
+    const roomname = "Room A"
+
+  
+    return (
+        <React.Fragment>
+            <Grid container spacing={4}>
+                    {roomObjectMockdatas.map((onedata, index) => (
+                        //spacing size problem
+                        <Grid container spacing={0} xs={3} item  key={index}>  
+                            <Item>
+                                <ImageListItem >
+                                    <img
+                                        src={onedata.imageurl}
+                                        alt="room1"
+                                        loading="lazy"
+                                        style={{height:"200px"}}
+                                        // onClick={ () => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room2')}
+                                    />
+                                </ImageListItem>
+                                {/* boxShadow:"0px 3.0331px 3.0331px rgba(0, 0, 0, 0.25)", borderRadius:"7.58274px 7.58274px 0px 0px" */}
+                            <Box sx={{display:'flex',justifyContent:"space-between", padding:"0px 13px"}}>
+                                <Typography component="h2" variant="h2">
+                                    {onedata.title}
+                                </Typography>
+                                    <IconHeart  style={{ fill: 'red' }}/>
+                            </Box>
+                               
+                            </Item>
+                       
+                        </Grid>
+                     
+                    ))}
+            
+            </Grid>
+        </React.Fragment>
+    );
+  
+}
+
+
+
+const Favourites = () => {
+    const [value, setValue] = useState('1');
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+    const theme = useTheme();
+    
+    const StyledTab = styled(Tab)({
+        "&.Mui-selected": {
+        color: theme.palette.background.primaryColor
+        }
+    });
+    return(
+        <Box>
+                <Box>
+                    <Typography component="h2" variant="h3">
+                       Favourites
+                    </Typography>
+                </Box>
+         
+                <Grid container item spacing={1} sx={{mt:5}}>
+                    <FavouriteRoom />
+                </Grid>
+                    
+        </Box>
+    )
+
+}
+
+export default Favourites;
