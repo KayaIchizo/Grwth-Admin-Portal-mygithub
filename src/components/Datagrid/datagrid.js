@@ -25,8 +25,8 @@ import Dialog from '@mui/material/Dialog';
 import { IconTrash, IconX, IconCheck, IconShare } from '@tabler/icons';
 import ShareIcon from '@mui/icons-material/Share';
 import { Typography } from '@mui/material';
-import TreeSelect, { TreeNode, SHOW_PARENT } from 'rc-tree-select';
-import 'rc-tree-select/assets/index.css';
+// import TreeSelect, { TreeNode, SHOW_PARENT } from 'rc-tree-select';
+// import 'rc-tree-select/assets/index.css';
 import './index.css';
 import DropdownTreeSelectHOC from "./HOC";
 // import 'react-dropdown-tree-select/dist/styles.css'
