@@ -42,6 +42,10 @@ import TreeView from '@mui/lab/TreeView';
 import TreeItem from '@mui/lab/TreeItem';
 import React from 'react';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs, { Dayjs } from 'dayjs';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
@@ -90,9 +94,9 @@ export default function Assignmentlistpage() {
     const handleclickstudentlistclose = () => {
         Setopenstudentlist(false);
     };
-    const [value, setValue] = useState('1');
+    const [dialogvalue, setdialogValue] = useState('1');
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        setdialogValue(newValue);
     };
     const [calendarvalue, setCalendarvalue] = useState(new Date());
     const onChangecalendar = (date) => {
@@ -166,7 +170,7 @@ export default function Assignmentlistpage() {
     }
 
     const nexttabvalue = () => {
-        setValue("2");
+        setdialogValue("2");
     }
   
 
@@ -211,6 +215,21 @@ export default function Assignmentlistpage() {
         const name = e.target.getAttribute("name")
          setListdata(listdata.filter(item => item !== name));
     };
+
+    const handleChangedatetime = () => {
+       
+    }
+
+    const currentDate = new Date()
+    const day = currentDate.getDate()
+    const month = currentDate.getMonth() + 1
+    const year = currentDate.getFullYear()
+    const currentYearDate = year + "-" + month + "-" + day;
+    console.log(currentYearDate)
+
+    const [value,setValue] = useState( 
+        dayjs(currentYearDate)
+    )
 
 
     return (
@@ -308,7 +327,7 @@ export default function Assignmentlistpage() {
                                     <IconX style={{backgroundColor:"#7983FF",color:"white"}} onClick={handleClose}/>
 
                                 </div>
-                        <TabContext value={value}>
+                        <TabContext value={dialogvalue}>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                 <TabList onChange={handleChange} aria-label="lab API tabs example">
                                     <Tab label="Assignment Info" value="1" />
@@ -390,7 +409,7 @@ export default function Assignmentlistpage() {
                                             }}
                                         >
                                             <div>
-                                                <TextField
+                                                {/* <TextField
                                                     id="datetime-local"
                                                     label="Due Date & Time:"
                                                     type="datetime-local"
@@ -399,7 +418,18 @@ export default function Assignmentlistpage() {
                                                     InputLabelProps={{
                                                         shrink: true
                                                     }}
-                                                />
+                                                /> */}
+                                                   <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                    <DateTimePicker
+                                                        renderInput={(props) => <TextField {...props}  sx={{width: '370px'}} />}
+                                                        label="Due Date & Time:"
+                                                        value={value}
+                                                        onChange={(newValue) => {
+                                                        setValue(newValue);
+                                                        }}
+                                                        
+                                                    />
+                                                </LocalizationProvider>
                                             </div>
                                             <div>
                                                 {/* <Button variant="contained" onClick={handleClose}>

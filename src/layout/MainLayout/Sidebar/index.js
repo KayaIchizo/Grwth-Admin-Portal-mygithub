@@ -46,6 +46,10 @@ import TreeItem from '@mui/lab/TreeItem';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs, { Dayjs } from 'dayjs';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 // ==============================|| SIDEBAR DRAWER ||============================== //
 
@@ -81,9 +85,9 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
         if (newTab) newTab.opener = null;
         setAnchorEl(null);
     };
-    const [value, setValue] = useState('1');
+    const [dialogvalue, setdialogValue] = useState('1');
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        setdialogValue(newValue);
     };
 
     const [selectedValue, setSelectedValue] = useState('a');
@@ -118,7 +122,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
     }
 
     const nexttabvalue = () => {
-        setValue("2");
+        setdialogValue("2");
     }
 
     const handleExpandClick = () => {
@@ -158,6 +162,21 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
      
     };
 
+    const handleChangedatetime = () => {
+       
+    }
+
+    const currentDate = new Date()
+    const day = currentDate.getDate()
+    const month = currentDate.getMonth() + 1
+    const year = currentDate.getFullYear()
+    const currentYearDate = year + "-" + month + "-" + day;
+    console.log(currentYearDate)
+
+    const [value,setValue] = useState( 
+        dayjs(currentYearDate)
+    )
+
 
     const drawer = (
         <>
@@ -181,7 +200,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
                                                 <IconX style={{backgroundColor:"#7983FF",color:"white"}} onClick={handleClose}/>
 
                         </div>
-                        <TabContext value={value}>
+                        <TabContext value={dialogvalue}>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                 <TabList onChange={handleChange} aria-label="lab API tabs example">
                                     <Tab label="Assignment Info" value="1" />
@@ -263,7 +282,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
                                             }}
                                         >
                                             <div>
-                                                <TextField
+                                                {/* <TextField
                                                     id="datetime-local"
                                                     label="Due Date & Time:"
                                                     type="datetime-local"
@@ -272,7 +291,19 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
                                                     InputLabelProps={{
                                                         shrink: true
                                                     }}
-                                                />
+                                                /> */}
+
+                                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                    <DateTimePicker
+                                                        renderInput={(props) => <TextField {...props}  sx={{width: '370px'}} />}
+                                                        label="Due Date & Time:"
+                                                        value={value}
+                                                        onChange={(newValue) => {
+                                                        setValue(newValue);
+                                                        }}
+                                                        
+                                                    />
+                                                </LocalizationProvider>
                                             </div>
                                             <div>
                                                 {/* <Button variant="contained" onClick={handleClose}>
