@@ -99,21 +99,21 @@ function FormRow() {
 
 
     const createdByMeMockdatas = [
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '' },
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '+5' },
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '+5' },
+        { imageurl: RoomA1, title: "Maths Calculation", sharedNumber: '' },
+        { imageurl: RoomA1, title: "English Grammar", sharedNumber: '+5' },
+        { imageurl: RoomA1, title: "Art", sharedNumber: '+5' },
 
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '' },
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '+5' },
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '+5' },
+        { imageurl: RoomA1, title: "Chemical Storage", sharedNumber: '' },
+        { imageurl: RoomA1, title: "Painting", sharedNumber: '+5' },
+        { imageurl: RoomA1, title: "Mathematics Problem", sharedNumber: '+5' },
 
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '' },
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '+5' },
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '+5' },
+        { imageurl: RoomA1, title: "Economics", sharedNumber: '' },
+        { imageurl: RoomA1, title: "Artistic Elements", sharedNumber: '+5' },
+        { imageurl: RoomA1, title: "Texture and Space", sharedNumber: '+5' },
 
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '' },
-        { imageurl: RoomA1, title: "Room Name last", sharedNumber: '+5' },
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '+5' }
+        { imageurl: RoomA1, title: "History", sharedNumber: '' },
+        { imageurl: RoomA1, title: "Analytic", sharedNumber: '+5' },
+        { imageurl: RoomA1, title: "Listening", sharedNumber: '+5' }
     ];
 
 
@@ -142,7 +142,7 @@ function FormRow() {
                                         <Typography component="h2" variant="h5" sx={{ mr: 2 }}>
                                             {onedata.sharedNumber}
                                         </Typography>
-                                        <Typography component="h2" variant="h2">
+                                        <Typography component="h3" variant="h4">
                                             {onedata.title}
                                         </Typography>
                                     </Box>
@@ -351,21 +351,21 @@ const RecentAssignmentsFormRow = () => {
 
 
     const assignmentTitle = [
-        { imageurl: AssignmentTitle, title: 'Assignment Title', sharedNumber: '' },
-        { imageurl: AssignmentTitle, title: 'Assignment Title', sharedNumber: '+5' },
-        { imageurl: AssignmentTitle, title: 'Assignment Title', sharedNumber: '+5' },
+        { imageurl: AssignmentTitle, title: 'My Village Essay', sharedNumber: '' },
+        { imageurl: AssignmentTitle, title: 'Grammar Assignment', sharedNumber: '+5' },
+        { imageurl: AssignmentTitle, title: 'Matrix Problems', sharedNumber: '+5' },
 
-        { imageurl: AssignmentTitle, title: 'Assignment Title', sharedNumber: '' },
-        { imageurl: AssignmentTitle, title: 'Assignment Title', sharedNumber: '+5' },
-        { imageurl: AssignmentTitle, title: 'Assignment Title', sharedNumber: '+5' },
+        { imageurl: AssignmentTitle, title: 'Importance of Music', sharedNumber: '' },
+        { imageurl: AssignmentTitle, title: 'Reading/Research Proposal', sharedNumber: '+5' },
+        { imageurl: AssignmentTitle, title: 'My Favourite Book Essay', sharedNumber: '+5' },
 
-        { imageurl: AssignmentTitle, title: 'Assignment Title', sharedNumber: '' },
-        { imageurl: AssignmentTitle, title: 'Assignment Title', sharedNumber: '+5' },
-        { imageurl: AssignmentTitle, title: 'Assignment Title', sharedNumber: '+5' },
+        { imageurl: AssignmentTitle, title: 'Painting Assignment', sharedNumber: '' },
+        { imageurl: AssignmentTitle, title: 'Personal Assignment', sharedNumber: '+5' },
+        { imageurl: AssignmentTitle, title: 'Science Assignment', sharedNumber: '+5' },
 
-        { imageurl: AssignmentTitle, title: 'Assignment Title', sharedNumber: '' },
-        { imageurl: AssignmentTitle, title: 'Assignment Title', sharedNumber: '+5' },
-        { imageurl: AssignmentTitle, title: 'Assignment Title', sharedNumber: '+5' }
+        { imageurl: AssignmentTitle, title: 'Nature Assignment', sharedNumber: '' },
+        { imageurl: AssignmentTitle, title: 'Sports Assignment', sharedNumber: '+5' },
+        { imageurl: AssignmentTitle, title: 'Differential Calculus Assignment', sharedNumber: '+5' }
     ];
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -402,7 +402,7 @@ const RecentAssignmentsFormRow = () => {
 
                                 // onClick={ () => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room2')}
                                 />
-                                <Typography component="h2" variant="h2" sx={{ position: 'absolute', top: '40%', right: '20%' }}>
+                                <Typography component="h2" variant="h2" sx={{position:"absolute",top:"30%",margin:"0 25px",textAlign:"center",  }}>
                                     {oneassignment.title}
                                 </Typography>
                             </ImageListItem>

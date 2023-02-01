@@ -169,31 +169,38 @@ function createData(
 }
 
 const rows = [
-    createData('Class', 'English', 'Assignment Title', 'Due Date & Time', 4.0),
-    createData('Class', 'Maths', 'Assignment Title', 'Due Date & Time', 4.3),
-    createData('Class', 'Nature', 'Assignment Title', 'Due Date & Time', 6.0),
-    createData('Class', 'Music', 'Assignment Title', 'Due Date & Time', 4.3),
-    createData('Class', 'Sport', 'Assignment Title', 'Due Date & Time', 3.9),
-    createData('Class', 'Art', 'Assignment Title', 'Due Date & Time', 3.9),
+    createData('A1', 'English', 'My Favourite Book Essay', '03/31/2023 06:50 PM', 4.0),
+    createData('A2', 'Maths', 'Differential Calculus Assignment', '03/28/2023 04:30 PM', 4.3),
+    createData('C2', 'Liberal Studies', 'Reading/Research Proposal', '03/25/2023 10:00 AM', 4.0),
+    // createData('Class', 'Nature', 'Beauty of Nature', 'Due Date & Time', 6.0),
+    createData('C1', 'English', 'My Village Essay', '03/22/2023 11:30 AM', 4.0),
+    createData('B2', 'Maths', 'Transformations', '03/17/2023 02:40 PM', 4.3),
+    createData('D1', 'Liberal Studies', 'Importance of Music', '03/14/2023 03:10 PM', 4.3),
+    // createData('Class', 'Music', 'Song analysis', 'Due Date & Time', 4.3),
+    // createData('Class', 'Sport', 'My Favorite Sportsperson', 'Due Date & Time', 3.9),
+    // createData('Class', 'Art', 'painting', 'Due Date & Time', 3.9),
+    createData('B1', 'English', 'Personal', '03/10/2023 9:20 AM', 4.0),
+    createData('D2', 'Maths', 'Matrix Problems', '03/07/2023 08:00 PM', 6.0),
+    createData('E2', 'Liberal Studies', 'Grammar and Checking', '03/04/2023 06:00 PM', 6.0),
    
 ];
 
 const filterrowsEnglish = [
-    createData('Class', 'English', 'Assignment Title', 'Due Date & Time', 4.0),
-    createData('Class', 'English', 'Assignment Title', 'Due Date & Time', 4.3),
-    createData('Class', 'English', 'Assignment Title', 'Due Date & Time', 6.0),
+    createData('A1', 'English', 'My Favourite Book Essay', '03/31/2023 06:50 PM', 4.0),
+    createData('C1', 'English', 'My Village Essay', '03/22/2023 11:30 AM', 4.3),
+    createData('B1', 'English', 'Personal', '03/10/2023 9:20 AM', 6.0),
 ]
 
 const filterrowsMaths = [
-    createData('Class', 'Maths', 'Assignment Title', 'Due Date & Time', 4.0),
-    createData('Class', 'Maths', 'Assignment Title', 'Due Date & Time', 4.3),
-    createData('Class', 'Maths', 'Assignment Title', 'Due Date & Time', 6.0),
+    createData('A2', 'Maths', 'Differential Calculus Assignment', '03/28/2023 04:30 PM', 4.0),
+    createData('B2', 'Maths', 'Transformations', '03/17/2023 02:40 PM', 4.3),
+    createData('D2', 'Maths', 'Matrix Problems', '03/07/2023 08:00 PM', 6.0),
 ]
 
 const filterrowsLiberalStudies = [
-    createData('Class', 'Liberal Studies', 'Assignment Title', 'Due Date & Time', 4.0),
-    createData('Class', 'Liberal Studies', 'Assignment Title', 'Due Date & Time', 4.3),
-    createData('Class', 'Liberal Studies', 'Assignment Title', 'Due Date & Time', 6.0),
+    createData('C2', 'Liberal Studies', 'Reading/Research Proposal', '03/25/2023 10:00 AM', 4.0),
+    createData('D1', 'Liberal Studies', 'Importance of Music', '03/14/2023 03:10 PM', 4.3),
+    createData('E2', 'Liberal Studies', 'Grammar and Checking', '03/04/2023 06:00 PM', 6.0),
 ]
 
 export default function CustomizedTables({filtercheck}) {
