@@ -353,7 +353,7 @@ const RecentAssignmentsFormRow = () => {
     const assignmentTitle = [
         { imageurl: AssignmentTitle, title: 'My Village Essay', sharedNumber: '' },
         { imageurl: AssignmentTitle, title: 'Grammar Assignment', sharedNumber: '+5' },
-        { imageurl: AssignmentTitle, title: 'Matrix Problems', sharedNumber: '+5' },
+        { imageurl: AssignmentTitle, title: 'Calculation Problems', sharedNumber: '+5' },
 
         { imageurl: AssignmentTitle, title: 'Importance of Music', sharedNumber: '' },
         { imageurl: AssignmentTitle, title: 'Reading/Research Proposal', sharedNumber: '+5' },

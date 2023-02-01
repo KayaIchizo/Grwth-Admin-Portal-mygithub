@@ -32,6 +32,8 @@ import DropdownTreeSelectHOC from "./HOC";
 // import 'react-dropdown-tree-select/dist/styles.css'
 import data  from './data.json';
 import usericon from 'assets/images/roomimg/share_item.webp';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 // const data = [
 //     {
@@ -271,6 +273,39 @@ export default function CustomizedTables({filtercheck}) {
     const TableRowonClick = () => {
         navigate('/studentlists');
     }
+
+
+    const [sharetoEdit,setShareToEdit] = useState('');
+
+    const [sharetoPlay,setShareToPlay] = useState('')
+    
+    const [alertOpen,setAlertOpen] = useState(false);
+
+    const sharetoeditClick = () => {
+        console.log("dssssss")
+       setAlertOpen(true);
+       setShareToEdit('https://grwthx.com/file/d/1awregsdf5/view?usp=sharing')
+    }
+
+    const handleCloseAlert = () => {
+     
+        setAlertOpen(false);
+    };
+
+
+    const [alertplayOpen,setAlertPlayOpen] = useState(false);
+    const  sharetoplayClick =  () => {
+        setAlertPlayOpen(true);
+        setShareToPlay('https://grwthx.com/file/d/2awregege3/view?usp=sharing')
+    }
+
+    const handleClosePlayAlert = () => {
+     
+        setAlertPlayOpen(false);
+    };
+
+
+
     return (
     <Box>
     {
@@ -655,8 +690,17 @@ export default function CustomizedTables({filtercheck}) {
                         </Typography> 
                         <Box sx={{display:"flex", alignItems: 'center'}}>
                      
-                            <TextField id="sharetoedit" variant="outlined" sx={{ width: '100%',mr:"10px" }} placeholder="URL"/>
-                            <img src={usericon} alt="UserIcon" width={40} height={40}  />
+                            <TextField id="sharetoedit" value = {sharetoEdit} variant="outlined" sx={{ width: '100%',mr:"10px" }} placeholder="URL"/>
+                            <img src={usericon} alt="UserIcon" width={40} height={40}  onClick={sharetoeditClick}/>
+                            
+                            <Snackbar
+                                open={alertOpen}
+                                autoHideDuration={1000}
+                                message="Get linked"
+                                onClose={handleCloseAlert}
+                                sx={{position:"absolute",top:"17%", width: '10%'}}
+                            
+                            />
                         </Box>
                     </Stack>
                     <Stack mt={2}>
@@ -664,8 +708,18 @@ export default function CustomizedTables({filtercheck}) {
                                    Share to Play only
                         </Typography> 
                         <Box sx={{display:"flex", alignItems: 'center'}}>
-                        <TextField id="sharetoplay" variant="outlined" sx={{ width: '100%',mr:"10px" }} placeholder="URL"/>
-                        <img src={usericon} alt="UserIcon" width={40} height={40} />
+                        <TextField id="sharetoplay" value = {sharetoPlay} variant="outlined" sx={{ width: '100%',mr:"10px" }} placeholder="URL"/>
+                            <img src={usericon} alt="UserIcon" width={40} height={40} onClick={sharetoplayClick} />
+
+                            
+                            <Snackbar
+                                    open={alertplayOpen}
+                                    autoHideDuration={1000}
+                                    message="Get linked"
+                                    onClose={handleClosePlayAlert}
+                                    sx={{position:"absolute",top:"48%",right:"70%", width: '10%'}}
+                                
+                            />
                         </Box>
                     </Stack>
 

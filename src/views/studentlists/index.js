@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import { IconUserCircle } from '@tabler/icons';
 import ImageListItem from '@mui/material/ImageListItem';
 import room1 from '../../assets/images/roomimg/room1.png';
-import Select from '../../components/select/select';
+// import Select from '../../components/select/select';
 import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
 import Popover from '@mui/material/Popover';
 import Button from '@mui/material/Button';
@@ -16,24 +16,47 @@ import CloseIcon from '@mui/icons-material/Close';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import DialogContent from '@mui/material/DialogContent';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select, { SelectChangeEvent } from '@mui/material/Select';   
 
 export default function Studentlists() {
     const filterstatus = [
+        { key: 'none', value: '' },
         { key: 'new', value: 'new' },
-        { key: 'submitted', value: 'submitted' },
+        { key: 'Submitted', value: 'Submitted' },
         { key: 'missing', value: 'missing' },
         { key: 'done late', value: 'done late' },
-        { key: 'grade', value: 'grade' }
+       
     ];
 
-    const userlists = [
-        { name: 'Kaya Ichizo',status:"status",grademark:"Grade/Mark", duedate: 'Edited on 28 Dec 06:16', status: 'New' },
-        { name: 'Joby Wong', status:"status",grademark:"Grade/Mark", duedate: 'Edited on 19 Dec 12:16', status: 'New' },
-        { name: 'NiKi Fung',status:"status",grademark:"Grade/Mark", duedate: 'Edited on 15 Dec  11:13', status: 'Submitted' },
-        { name: 'Noah Lau',status:"status", grademark:"Grade/Mark",duedate: 'Edited on 20 Dec  10:30', status: 'Done late', scoreable: true },
-        { name: 'Leo',status:"status",grademark:"Grade/Mark", duedate: 'Edited on 12 Dec  9:00', status: 'Submitted' },
-        { name: 'Yung',status:"status",grademark:"Grade/Mark", duedate: 'Edited on 18 Dec  7:20', status: 'Missing' }
-    ];
+  
+
+    const [userinternallists, setinternallists] = useState([
+        { name: 'Kaya Ichizo',grademark:"", duedate: 'Edited on 28 Dec 06:16', status: 'New' },
+        { name: 'Joby Wong',grademark:"", duedate: 'Edited on 19 Dec 12:16', status: 'New' },
+        { name: 'NiKi Fung', grademark:"70", duedate: 'Edited on 15 Dec  11:13', status: 'Submitted' },
+        { name: 'Noah Lau', grademark:"20",duedate: 'Edited on 20 Dec  10:30', status: 'Done late', scoreable: true },
+        { name: 'Leo',grademark:"80", duedate: 'Edited on 12 Dec  9:00', status: 'Submitted' },
+        { name: 'Yung',grademark:"", duedate: 'Edited on 18 Dec  7:20', status: 'Missing' }
+
+    ])
+
+
+
+
+
+    const [userlists, setUserlists] = useState([
+        { name: 'Kaya Ichizo',grademark:"", duedate: 'Edited on 28 Dec 06:16', status: 'New' },
+        { name: 'Joby Wong',grademark:"", duedate: 'Edited on 19 Dec 12:16', status: 'New' },
+        { name: 'NiKi Fung', grademark:"70", duedate: 'Edited on 15 Dec  11:13', status: 'Submitted' },
+        { name: 'Noah Lau', grademark:"20",duedate: 'Edited on 20 Dec  10:30', status: 'Done late', scoreable: true },
+        { name: 'Leo',grademark:"80", duedate: 'Edited on 12 Dec  9:00', status: 'Submitted' },
+        { name: 'Yung',grademark:"", duedate: 'Edited on 18 Dec  7:20', status: 'Missing' }
+
+    ])
+
+ 
 
     const sortedUserList = useMemo(() => userlists.sort((a, b) => b.duedate.localeCompare(a.duedate)), [userlists]);
 
@@ -69,6 +92,23 @@ export default function Studentlists() {
 
     const [textFileValue, setTextFieldValue] = useState(null);
 
+    const [filterValue, setFilterValue] = useState('');
+
+    const handleChangeFilter = (e) => {
+        console.log("value=",e.target.value)
+        console.log("ffffffff");
+        
+        setFilterValue(e.target.value);
+        if(e.target.value == "null"){
+            setUserlists(userinternallists)
+        }else{
+            setUserlists(userinternallists.filter((userone) => userone.status === e.target.value));
+        }
+        
+     
+       
+    }
+
     return (
         <Box>
             <Box sx={{ display: 'flex',justifyContent:"space-between", marginTop: '10px' }}>
@@ -103,20 +143,36 @@ export default function Studentlists() {
                 <Box sx={{display:"flex", alignItems:"center"}}>
                     <Stack spacing={4} direction="row">
                     <Typography variant="h3" component="h4" sx={{ borderRadius:"5%", backgroundColor:"#2CC5CE", color:"white" }}>
-                        2 Submitted 
+                        3 Submitted 
                     </Typography>
                     
                 
                     <Typography variant="h3" component="h4" sx={{ borderRadius:"5%", backgroundColor:"grey", color:"white"}}>
-                        24 Assigned
+                        6 Assigned
                     </Typography>
                     </Stack>
 
                 </Box>
                 
-                <Box>
+                <Box sx={{width:"140px"}}>
 
-                <Select defaultValue="Filter by Status" items={filterstatus} />
+                {/* <Select defaultValue="Filter by Status" items={filterstatus} onChange={statusFiter} /> */}
+                <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Filter by</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={filterValue}
+                    label="Subject"
+                    onChange={handleChangeFilter}
+                    >
+                    <MenuItem value="null">None</MenuItem>
+                    <MenuItem value="New">New</MenuItem>
+                    <MenuItem value="Submitted">Submitted</MenuItem>
+                    <MenuItem value="Missing">Missing</MenuItem>
+                    <MenuItem value="Done late">Done late</MenuItem>
+                </Select>
+                </FormControl>
                 </Box>
            
             </Box>
@@ -231,8 +287,17 @@ export default function Studentlists() {
                         <Box sx={{width:"60px"}}>
                             {userlist.status}
                         </Box>
-                        <Box sx={{width:"60px"}}>
-                            {userlist.grademark}
+                        <Box sx={{width:"85px"}}>
+                            {/* {userlist.grademark} */}
+                            <TextField
+                                label="Grade/Mark"
+                                type="text"
+                                value={userlist.grademark}
+                                // sx={{ width: 220, position: 'absolute', bottom: '30px' }}
+                                InputLabelProps={{
+                                    shrink: true
+                                }}
+                           />
                         </Box>
                    
 
