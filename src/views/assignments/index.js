@@ -413,27 +413,17 @@ export default function Assignmentlistpage() {
                                             }}
                                         >
                                             <div>
-                                                {/* <TextField
+                                                <TextField
                                                     id="datetime-local"
                                                     label="Due Date & Time:"
                                                     type="datetime-local"
                                                     defaultValue=""
-                                                    sx={{ width: 250 }}
+                                                    sx={{ width: 398 }}
                                                     InputLabelProps={{
                                                         shrink: true
                                                     }}
-                                                /> */}
-                                                   <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                    <DateTimePicker
-                                                        renderInput={(props) => <TextField {...props}  sx={{width: '370px'}} />}
-                                                        label="Due Date & Time:"
-                                                        value={value}
-                                                        onChange={(newValue) => {
-                                                        setValue(newValue);
-                                                        }}
-                                                        
-                                                    />
-                                                </LocalizationProvider>
+                                                />
+                                  
                                             </div>
                                             <div>
                                                 {/* <Button variant="contained" onClick={handleClose}>
