@@ -587,13 +587,41 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <Button
-                                        variant="contained"
-                                        className="transform"
-                                        style={{ marginTop: '-100px', marginLeft: '65%', position: 'absolute' }}
-                                    >
-                                        Done
-                                    </Button>
+                                    <div style={{display:"flex",justifyContent:"flex-end",width:"59%"}}>
+                                        <div>
+                                            <Button
+                                                variant="contained"
+                                                className="transform"
+                                                style={{ marginLeft: '5%', position: 'absolute',backgroundColor:"#818181" }}
+                                                onClick={handleClose}
+                                            >
+                                                Cancel
+                                            </Button>
+
+                                        </div>
+                                         
+                                        <div>
+                                            <Button
+                                                variant="contained"
+                                                className="transform"
+                                                style={{ marginLeft: '20%', position: 'absolute', backgroundColor:"#acaded" }}
+                                            >
+                                                Save As Draft
+                                            </Button>
+                                                
+                                        </div>            
+                                        <div>
+                                            
+                                           <Button
+                                                variant="contained"
+                                                className="transform"
+                                                style={{ marginLeft: '35%', position: 'absolute', backgroundColor:"#7983FF" }}
+                                            >
+                                                Assign
+                                            </Button>
+
+                                        </div>            
+                                    </div>
                                 </div>
                             </div>
                         )}
