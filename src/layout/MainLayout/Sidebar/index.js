@@ -138,10 +138,9 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
     };
 
 
-    const handleRemoveItem = (e) => {
-        const name = e.target.getAttribute("name")
-         setListdata(listdata.filter(item => item !== name));
-    };
+    const handleRemoveItem = (oneitem) => {
+        setListdata(listdata.filter(item => item !== oneitem));
+   };
 
     const [expanded, setExpanded] = React.useState([]);
     const [selected, setSelected] = React.useState([]);
@@ -155,10 +154,15 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
         console.log("nodeids=",nodeIds[0].trim());
         setSelected(nodeIds);
       
-        if((nodeIds[0] != 1) && (nodeIds[0] != 2) && (nodeIds[0] != 6) && (nodeIds[0] != 10) && (nodeIds[0] != 14) && (nodeIds[0] != 18) ){
-            console.log("tttttttttttttt");
-            setListdata([...listdata, event.target.innerHTML])
+        if((nodeIds[0] != 1) && (nodeIds[0] != 2) && (nodeIds[0] != 6) && (nodeIds[0] != 10) && (nodeIds[0] != 14) && (nodeIds[0] != 18) ){          
+            if(listdata.indexOf(event.target.innerHTML) !== -1) { 
+                return;
+            }
+            else{
+                setListdata([...listdata, event.target.innerHTML]);
+            }          
         }
+     
      
     };
 
@@ -391,9 +395,9 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
                                                    </TreeItem>
 
                                                    <TreeItem nodeId="10" label="1C">
-                                                       <TreeItem nodeId="11" label="Keith" />
-                                                       <TreeItem nodeId="12" label="Alan" />
-                                                       <TreeItem nodeId="13" label="Kaya" />
+                                                       <TreeItem nodeId="11" label="hhh" />
+                                                       <TreeItem nodeId="12" label="ddd" />
+                                                       <TreeItem nodeId="13" label="ccc" />
                                                    
                                                    </TreeItem>
 
@@ -431,7 +435,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
                                                        return(
                                                            <div key={id} style={{display:"flex", alignItems:"center"}}>
                                                                <div>
-                                                                <HighlightOffIcon sx={{'&:hover': {color: "black"  }}}  name={oneitem} onClick={handleRemoveItem}/>
+                                                               <HighlightOffIcon sx={{'&:hover': {color: "black"  }}}  onClick={() => handleRemoveItem(oneitem)}/>
                                                                </div>
                                                               
                                                                <li  style={{listStyleType:"none", marginLeft:"7px"}}>
