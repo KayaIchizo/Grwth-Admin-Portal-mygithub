@@ -251,7 +251,7 @@ export default function Assignmentlistpage() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                             <div>
-                                <SearchComponent onChangeHandle = {searchChange}/>
+                                <SearchComponent/>
                             </div>
                             <div style={{ marginLeft: '40px', width: '130px' }}>
                                 {/* <Select defaultValue="Subject" items={Subjectoptions} sx={{color:"red"}} />  */}
