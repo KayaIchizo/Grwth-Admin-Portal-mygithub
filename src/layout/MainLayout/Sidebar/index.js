@@ -703,7 +703,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
 
     return (
         <Box component="nav" sx={{ flexShrink: { md: 0 }, width: matchUpMd ? drawerWidth : 'auto' }} aria-label="mailbox folders">
-            <Drawer
+            {/* <Drawer
                 container={container}
                 variant={matchUpMd ? 'persistent' : 'temporary'}
                 anchor="left"
@@ -723,8 +723,8 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
                 ModalProps={{ keepMounted: true }}
                 color="inherit"
             >
-                {/* {drawer} */}
-            </Drawer>
+                {drawer}
+            </Drawer> */}
         </Box>
     );
 };
