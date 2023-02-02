@@ -206,7 +206,7 @@ const filterrowsLiberalStudies = [
     createData('E2', 'Liberal Studies', 'Grammar and Checking', '03/04/2023 06:00 PM', 6.0),
 ]
 
-export default function CustomizedTables({ filtercheck, subject, classtype }) {
+export default function CustomizedTables({ filtercheck, subject, classtype, searchvalue }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [dataRows, setDataRows] = useState(rows);
 
