@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 // material-ui
@@ -19,7 +19,6 @@ import { IconBrandChrome, IconHelp, IconHome, IconTrash, IconPlus, IconX } from 
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 
-import * as React from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
@@ -175,7 +174,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
     const month = currentDate.getMonth() + 1
     const year = currentDate.getFullYear()
     const currentYearDate = year + "-" + month + "-" + day;
-    console.log(currentYearDate)
+    console.log("angr")
 
     const [value,setValue] = useState( 
         dayjs(currentYearDate)
