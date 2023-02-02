@@ -181,6 +181,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
     )
 
 
+
     const drawer = (
         <>
             <Box sx={{ display: { xs: 'block', md: 'none' } }}>
@@ -722,7 +723,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
                 ModalProps={{ keepMounted: true }}
                 color="inherit"
             >
-                {drawer}
+                {/* {drawer} */}
             </Drawer>
         </Box>
     );
