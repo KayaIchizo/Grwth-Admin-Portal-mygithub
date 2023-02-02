@@ -7,7 +7,6 @@
         "@emotion/cache": "^11.9.3",
         "@emotion/react": "^11.9.3",
         "@emotion/styled": "^11.9.3",
-        "@mkyy/mui-search-bar": "^0.5.2",
         "@mui/icons-material": "^5.11.0",
         "@mui/lab": "^5.0.0-alpha.88",
         "@mui/material": "^5.8.6",
