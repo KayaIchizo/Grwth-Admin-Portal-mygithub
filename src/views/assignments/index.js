@@ -11,6 +11,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Radio from '@mui/material/Radio';
 import SearchComponent from 'react-material-ui-searchbar';
+import SearchBar from '@mkyy/mui-search-bar';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -235,6 +236,13 @@ export default function Assignmentlistpage() {
         dayjs(currentYearDate)
     )
 
+    const [searchValue, setSearchVaule] = useState("")
+
+    const searchChange = (event) => {
+       
+        setSearchVaule(event)
+    }
+
 
     return (
         <div className="Assignmentlist">
@@ -244,12 +252,12 @@ export default function Assignmentlistpage() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                             <div>
-                                <SearchComponent />
+                                <SearchComponent onChangeHandle = {searchChange}/>
                             </div>
                             <div style={{ marginLeft: '40px', width: '130px' }}>
                                 {/* <Select defaultValue="Subject" items={Subjectoptions} sx={{color:"red"}} />  */}
-                            <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-label">Subject</InputLabel>
+                            <FormControl fullWidth sx={{width:"150px"}}>
+                                    <InputLabel id="demo-simple-select-label" >Subject</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
@@ -260,14 +268,14 @@ export default function Assignmentlistpage() {
                                         <MenuItem value="">None</MenuItem>
                                         <MenuItem value="English">English</MenuItem>
                                         <MenuItem value="Maths">Maths</MenuItem>
-                                        <MenuItem value="Nature">Nature</MenuItem>
-                                        <MenuItem value="Music">Music</MenuItem>
+                                        <MenuItem value="Liberal Studies">Liberal Studies</MenuItem>
+                                     
                                     </Select>
                             </FormControl> 
                                     
                               
                             </div>
-                            <div style={{ marginLeft: '20px', width: '100px' }}>
+                            <div style={{ marginLeft: '55px', width: '100px' }}>
                                 {/* <Select defaultValue="Class" items={Classoptions} /> */}
                                 <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">Class</InputLabel>
@@ -278,6 +286,7 @@ export default function Assignmentlistpage() {
                                         label="Class"
                                         onChange={handleChangeClass}
                                         >
+                                        <MenuItem value="">None</MenuItem>
                                         <MenuItem value="A1">A1</MenuItem>
                                         <MenuItem value="A2">A2</MenuItem>
                                         <MenuItem value="B1">B1</MenuItem>
@@ -783,7 +792,7 @@ export default function Assignmentlistpage() {
                             </TabPanel>
                         </TabContext>
                     </Dialog>
-                    <DataGrid callbackedit={callbackedit} filtercheck={filterCheck}/>
+                    <DataGrid callbackedit={callbackedit} filtercheck={filterCheck} subject={subject} classtype={classType}  searchvalue={searchValue} />
                 </div>
             ) : (
                 <div className="header">

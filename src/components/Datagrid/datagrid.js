@@ -34,6 +34,7 @@ import data  from './data.json';
 import usericon from 'assets/images/roomimg/share_item.webp';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { useEffect } from 'react';
 
 // const data = [
 //     {
@@ -205,9 +206,69 @@ const filterrowsLiberalStudies = [
     createData('E2', 'Liberal Studies', 'Grammar and Checking', '03/04/2023 06:00 PM', 6.0),
 ]
 
-export default function CustomizedTables({filtercheck}) {
+export default function CustomizedTables({ filtercheck, subject, classtype, searchvalue }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [dataRows, setDataRows] = useState(rows);
+
+    useEffect(()=> {
+        setDataRows(rows.filter((rowone) => rowone.fat.includes(searchvalue)));
+    },[searchvalue])
+
+    useEffect(() => {
+        if(subject==""){
+            setDataRows(rows);
+        }
+        else if(subject=="English"){
+            setDataRows(rows.filter((rowone) => rowone.calories === subject));
+        }
+        else if(subject == "Maths"){
+            setDataRows(rows.filter((rowone) => rowone.calories === subject));
+        }
+        else if(subject == "Liberal Studies"){
+            console.log("ddddddddddd")
+            setDataRows(rows.filter((rowone) => rowone.calories === subject));
+        }
+    },[subject])
+
+    useEffect(() => {
+
+
+        if(classtype==""){
+        setDataRows(rows);
+        }
+        else if(classtype=="A1"){
+            setDataRows(rows.filter((rowone) => rowone.name === classtype));
+        }
+        else if(classtype == "A2"){
+            setDataRows(rows.filter((rowone) => rowone.name === classtype));
+        }
+        else if(classtype == "B1"){
+            console.log("ddddddddddd")
+            setDataRows(rows.filter((rowone) => rowone.name === classtype));
+        }
+        else if(classtype == "B2"){
+            console.log("ddddddddddd")
+            setDataRows(rows.filter((rowone) => rowone.name === classtype));
+        }
+        else if(classtype == "C1"){
+            console.log("ddddddddddd")
+            setDataRows(rows.filter((rowone) => rowone.name === classtype));
+        }
+        else if(classtype == "C2"){
+            console.log("ddddddddddd")
+            setDataRows(rows.filter((rowone) => rowone.name === classtype));
+        }
+
+    },[classtype])
+
+    
+
+      
+
+
+
+
+  
     // const [dataFilter,setDataFilter] = useState(filterrows);
     const openpoper = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -308,316 +369,7 @@ export default function CustomizedTables({filtercheck}) {
 
     return (
     <Box>
-    {
-        filtercheck === true?(
-            <Box>
-
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                sx={{ width: '20%', height: '28%', position: 'absolute', top: '40%', left: '40%' }}
-            >
-                <DialogTitle id="alert-dialog-title"></DialogTitle>
-                <DialogContent>
-                    <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                        <IconTrash />
-                        <Typography variant="h3" component="h3">
-                            {'Are you sure you '} <br />
-                            {'want to delete this?'}
-                        </Typography>
-                    </div>
-                </DialogContent>
-
-                <DialogActions>
-                    <Button onClick={handleClose} variant="outlined">
-                        {' '}
-                        <IconX /> Cancel
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            handleDelete(deleteId);
-                            handleClose();
-                        }}
-                        variant="contained"
-                    >
-                        <IconCheck /> Delete
-                    </Button>
-                    
-                </DialogActions>
-            </Dialog>
-
-
-            <Dialog
-                open={shareValue}
-                onClose={handleshareClose}
-                aria-labelledby="alert-dialog-title"
-                sx={{ width: '20%', height: '28%', position: 'absolute', top: '40%', left: '40%' }}
-            >
-                <DialogTitle id="alert-dialog-title"></DialogTitle>
-                <DialogContent>
-                    <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                        <IconTrash />
-                        <Typography variant="h3" component="h3">
-                            {'share dialog '} <br />
-                          
-                        </Typography>
-                    </div>
-                </DialogContent>
-
-                <DialogActions>
-                    <Button onClick={handleshareClose} variant="outlined">
-                        {' '}
-                        <IconX /> Cancel
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            handleDelete(deleteId);
-                            handleClose();
-                        }}
-                        variant="contained"
-                    >
-                        <IconCheck /> Delete
-                    </Button>
-                    
-                </DialogActions>
-            </Dialog>
-
-
-            <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700, marginTop:'50px' }} aria-label="customized table" size='large'>
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell align="center">Class</StyledTableCell>
-                        <StyledTableCell align="center">Subject</StyledTableCell>
-                        <StyledTableCell align="center">Assignment Title</StyledTableCell>
-                        <StyledTableCell align="center">Due Date & Time</StyledTableCell>
-                        <StyledTableCell align="center">
-                          More
-                        </StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    <StyledTableRow>
-                            <StyledTableCell  colspan="5"><Typography sx={{backgroundColor:'#7983FF', color:'white', borderRadius:'25px',width:"100%",padding:"10px"}}> English</Typography></StyledTableCell>     
-                    </StyledTableRow>
-                    {filterrowsEnglish.map((row,id) => (
-                        <StyledTableRow key={id}>
-                            <StyledTableCell component="th" scope="row" align="center">
-
-                            <Box sx={{display:"flex",alignItems:"center"}}>
-                            <Stack spacing={2} direction="row">
-                          
-                                {/* <ReplayCircleFilledIcon  sx={{color:"#2CC5CE", fontSize:"25px", cursor:"pointer"}} /> */}
-                                <Typography sx={{backgroundColor:"#2CC5CE", color:"white", borderRadius:"50%", width:"25px", height:"25px",padding:"5px"}}> G </Typography>
-                                <Box  align="center"> {row.name} </Box>
-                            </Stack>
-                            </Box>
-                            </StyledTableCell>
-                            <StyledTableCell align="center">{row.calories}</StyledTableCell>
-                            <StyledTableCell align="center">{row.fat}</StyledTableCell>
-                            <StyledTableCell align="center">{row.carbs}</StyledTableCell>
-                            <StyledTableCell align="center">
-                            <Box sx={{display:"flex", alignItems:"center"}}>
-                                <Button
-                                variant="contained"
-                                aria-haspopup="true"
-                                sx={{height:"25px", backgroundColor:"#2CC5CE"}}
-                                aria-controls={openpoper ? 'fade-menu' : undefined}
-                                aria-expanded={openpoper ? 'true' : undefined}
-                                onClick={handleClick}
-                                >
-                                Edit
-                                </Button>
-
-                                <Menu
-                                    id="fade-menu"
-                                    MenuListProps={{
-                                        'aria-labelledby': 'fade-button'
-                                    }}
-                                    anchorEl={anchorEl}
-                                    open={openpoper}
-                                    onClose={handleClose}
-                                    TransitionComponent={Fade}
-                                    sx={{width:"130px"}}
-                                >
-                                    <MenuItem onClick={handleClickOpen} sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" },  color:"#2CC5CE"}}>Share Link</MenuItem>
-                                    {/* <MenuItem onClick={handleShareOpen} sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" }}}>Share Link</MenuItem> */}
-                                    <MenuItem
-                                        onClick={() => {
-                                            handleDeleteOpen();
-                                            setDeleteId(row.calories);
-                                        }}
-                                       sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" },  color:"#2CC5CE"}}
-                                    >
-                                        Delete
-                                    </MenuItem>
-                                    {/* <MenuItem  sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" }}}>Download</MenuItem> */}
-                                    <MenuItem  sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" },  color:"#2CC5CE"}}>Download</MenuItem>
-                                 
-                               </Menu>
-
-                                <PendingOutlinedIcon 
-                                  variant="contained"
-                                  aria-haspopup="true"
-                                  aria-controls={openpoper ? 'fade-menu' : undefined}
-                                  aria-expanded={openpoper ? 'true' : undefined}
-                                  onClick={handleClick}
-                                  sx={{margin:"10px", color:"#2CC5CE"}}
-                                >
-                                </PendingOutlinedIcon>
-                                
-                            </Box> 
-                     
-                            </StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-
-                    <StyledTableRow>
-                            <StyledTableCell  colspan="5"><Typography sx={{backgroundColor:'#7983FF', color:'white', borderRadius:'25px',width:"100%",padding:"10px"}}> Maths </Typography></StyledTableCell>     
-                    </StyledTableRow>
-                    {filterrowsMaths.map((row,id) => (
-                        <StyledTableRow key={id}>
-                            <StyledTableCell component="th" scope="row" align="center">
-
-                            <Box sx={{display:"flex",alignItems:"center"}}>
-                            <Stack spacing={2} direction="row">
-                          
-                                {/* <ReplayCircleFilledIcon  sx={{color:"#2CC5CE", fontSize:"25px", cursor:"pointer"}} /> */}
-                                <Typography sx={{backgroundColor:"#2CC5CE", color:"white", borderRadius:"50%", width:"25px", height:"25px",padding:"5px"}}> G </Typography>
-                                <Box  align="center"> {row.name} </Box>
-                            </Stack>
-                            </Box>
-                            </StyledTableCell>
-                            <StyledTableCell align="center">{row.calories}</StyledTableCell>
-                            <StyledTableCell align="center">{row.fat}</StyledTableCell>
-                            <StyledTableCell align="center">{row.carbs}</StyledTableCell>
-                            <StyledTableCell align="center">
-                            <Box sx={{display:"flex", alignItems:"center"}}>
-                                <Button
-                                variant="contained"
-                                aria-haspopup="true"
-                                sx={{height:"25px", backgroundColor:"#2CC5CE"}}
-                                aria-controls={openpoper ? 'fade-menu' : undefined}
-                                aria-expanded={openpoper ? 'true' : undefined}
-                                onClick={handleClick}
-                                >
-                                Edit
-                                </Button>
-
-                                <Menu
-                                    id="fade-menu"
-                                    MenuListProps={{
-                                        'aria-labelledby': 'fade-button'
-                                    }}
-                                    anchorEl={anchorEl}
-                                    open={openpoper}
-                                    onClose={handleClose}
-                                    TransitionComponent={Fade}
-                                    sx={{width:"130px"}}
-                                >
-                                    {/* <MenuItem onClick={handleClickOpen} sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" }}}>Share Link</MenuItem> */}
-                                    <MenuItem onClick={handleClickOpen} sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" },  color:"#2CC5CE"}}>Share Link</MenuItem>
-                                    <MenuItem
-                                        onClick={() => {
-                                            handleDeleteOpen();
-                                            setDeleteId(row.calories);
-                                        }}
-                                       sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" },  color:"#2CC5CE"}}
-                                    >
-                                        Delete
-                                    </MenuItem>
-                                    {/* <MenuItem  sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" }}}>Download</MenuItem> */}
-                                    <MenuItem  sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" },  color:"#2CC5CE"}}>Download</MenuItem>
-                                 
-                               </Menu>
-
-                                <PendingOutlinedIcon 
-                                sx={{margin:"10px", color:"#2CC5CE"}}
-                                >
-                                </PendingOutlinedIcon>
-                                
-                            </Box> 
-                     
-                            </StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-
-                    <StyledTableRow>
-                            <StyledTableCell  colspan="5"><Typography sx={{backgroundColor:'#7983FF', color:'white', borderRadius:'25px',width:"100%",padding:"10px"}}> Liberal Studies</Typography></StyledTableCell>     
-                    </StyledTableRow>
-                    {filterrowsLiberalStudies.map((row,id) => (
-                        <StyledTableRow key={id}>
-                            <StyledTableCell component="th" scope="row" align="center">
-
-                            <Box sx={{display:"flex",alignItems:"center"}}>
-                            <Stack spacing={2} direction="row">
-                          
-                                {/* <ReplayCircleFilledIcon  sx={{color:"#2CC5CE", fontSize:"25px", cursor:"pointer"}} /> */}
-                                <Typography sx={{backgroundColor:"#2CC5CE", color:"white", borderRadius:"50%", width:"25px", height:"25px",padding:"5px"}}> G </Typography>
-                                <Box  align="center"> {row.name} </Box>
-                            </Stack>
-                            </Box>
-                            </StyledTableCell>
-                            <StyledTableCell align="center">{row.calories}</StyledTableCell>
-                            <StyledTableCell align="center">{row.fat}</StyledTableCell>
-                            <StyledTableCell align="center">{row.carbs}</StyledTableCell>
-                            <StyledTableCell align="center">
-                            <Box sx={{display:"flex", alignItems:"center"}}>
-                                <Button
-                                variant="contained"
-                                aria-haspopup="true"
-                                sx={{height:"25px", backgroundColor:"#2CC5CE"}}
-                                aria-controls={openpoper ? 'fade-menu' : undefined}
-                                aria-expanded={openpoper ? 'true' : undefined}
-                                onClick={handleClick}
-                                >
-                                Edit
-                                </Button>
-
-                                <Menu
-                                    id="fade-menu"
-                                    MenuListProps={{
-                                        'aria-labelledby': 'fade-button'
-                                    }}
-                                    anchorEl={anchorEl}
-                                    open={openpoper}
-                                    onClose={handleClose}
-                                    TransitionComponent={Fade}
-                                    sx={{width:"130px"}}
-                                >
-                                    <MenuItem onClick={handleClickOpen} sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" },  color:"#2CC5CE"}}>Share Link</MenuItem>
-                                    <MenuItem
-                                        onClick={() => {
-                                            handleDeleteOpen();
-                                            setDeleteId(row.calories);
-                                        }}
-                                       sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" },  color:"#2CC5CE"}}
-                                    >
-                                        Delete
-                                    </MenuItem>
-                                    {/* <MenuItem  sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" }}}>Download</MenuItem> */}
-                                    <MenuItem  sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" },  color:"#2CC5CE"}}>Download</MenuItem>
-                                 
-                               </Menu>
-
-                                <PendingOutlinedIcon
-                                 
-                                sx={{margin:"10px", color:"#2CC5CE"}}
-                                >
-                                </PendingOutlinedIcon>
-                                
-                            </Box> 
-                     
-                            </StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody>
-            </Table>
-            </TableContainer>
-            
-        </Box>
-        ):(
+   
             <Box>
 
             <Dialog
@@ -827,8 +579,7 @@ export default function CustomizedTables({filtercheck}) {
             </TableContainer>
             
         </Box>
-        )
-    }
+  
    
     
     </Box>
