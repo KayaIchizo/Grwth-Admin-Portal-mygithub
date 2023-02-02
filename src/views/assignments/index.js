@@ -11,7 +11,6 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Radio from '@mui/material/Radio';
 import SearchComponent from 'react-material-ui-searchbar';
-import SearchBar from '@mkyy/mui-search-bar';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import FormControlLabel from '@mui/material/FormControlLabel';
