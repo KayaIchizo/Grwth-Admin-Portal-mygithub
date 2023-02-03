@@ -90,20 +90,20 @@ const MenuCard = () => {
     return (
         <CardContent sx={{ p: 0 }}>
           
-            <Typography variant="h3" component="h3">
+            <Typography variant="h3" component="h3" sx={{fontFamily:"Livvic"}}>
                         Storage
             </Typography>
             <LinearProgressWithLabel value={90} />
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Box>
                    
-                    <Typography variant="caption" sx={{ color: '#CE2C2C' }}>
+                    <Typography variant="caption" sx={{ color: '#CE2C2C', fontFamily:"Livvic" }}>
                         {' '}
                         220Mb
                     </Typography>
-                    <Typography variant="caption"> /2Gb</Typography>
+                    <Typography variant="caption" sx={{fontFamily:"Livvic"}}> /2Gb</Typography>
                 </Box>
-                <Typography variant="Used"> used</Typography>
+                <Typography variant="Used" sx={{fontFamily:"Livvic"}}> used</Typography>
             </Box>
         </CardContent>
     );

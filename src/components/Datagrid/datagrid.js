@@ -36,101 +36,17 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { useEffect } from 'react';
 
-// const data = [
-//     {
-//       label: "VP Accounting",
-      
-//       children: [
-//         {
-//           label: "iWay",
-//           children: [
-//             { label: "Universidad de Especialidades del Espíritu Santo" },
-//             { label: "Marmara University" },
-//             { label: "Baghdad College of Pharmacy" }
-//           ]
-//         },
-//         {
-//           label: "KDB",
-//           children: [
-//             { label: "Latvian University of Agriculture" },
-//             { label: "Dublin Institute of Technology" }
-//           ]
-//         },
-//         {
-//           label: "Justice",
-//           children: [
-//             { label: "Baylor University" },
-//             { label: "Massachusetts College of Art" },
-//             { label: "Universidad Técnica Latinoamericana" },
-//             { label: "Saint Louis College" },
-//             { label: "Scott Christian University" }
-//           ]
-//         },
-//         {
-//           label: "Utilization Review",
-//           children: [
-//             { label: "University of Minnesota - Twin Cities Campus" },
-//             { label: "Moldova State Agricultural University" },
-//             { label: "Andrews University" },
-//             { label: "Usmanu Danfodiyo University Sokoto" }
-//           ]
-//         },
-//         {
-//           label: "Norton Utilities",
-//           children: [
-//             { label: "Universidad Autónoma del Caribe" },
-//             { label: "National University of Uzbekistan" },
-//             { label: "Ladoke Akintola University of Technology" },
-//             { label: "Kohat University of Science and Technology  (KUST)" },
-//             { label: "Hvanneyri Agricultural University" }
-//           ]
-//         }
-//       ]
-//     },
-//     {
-//         label: "V333",
-      
-//         children: [
-//           {
-//             label: "iWay",
-//             children: [
-//               { label: "Universidad de Especialidades del Espíritu Santo" },
-//               { label: "Marmara University" },
-//               { label: "Baghdad College of Pharmacy" }
-//             ]
-//           },
-//           {
-//             label: "KDB",
-//             children: [
-//               { label: "Latvian University of Agriculture" },
-//               { label: "Dublin Institute of Technology" }
-//             ]
-//           },
-//           {
-//             label: "Justice",
-//             children: [
-//               { label: "Baylor University" },
-//               { label: "Massachusetts College of Art" },
-//               { label: "Universidad Técnica Latinoamericana" },
-//               { label: "Saint Louis College" },
-//               { label: "Scott Christian University" }
-//             ]
-//           }
-//       ]
-
-//     }
-   
-//   ];
-  
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor:  '#FFFFFF',
         color: theme.palette.common.white,
-        color:'black'
+        color:'black',
+        fontFamily:"Livvic",
+        fontSize: 16,
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
+        fontSize: 18,
+        fontFamily:"Livvic"
     },  
     marginTop:30, 
     padding:'3px 94px',
@@ -173,15 +89,12 @@ function createData(
 
 const rows = [
     createData('A1', 'English', 'My Favourite Book Essay', '03/31/2023 06:50 PM', 4.0),
-    createData('A2', 'Maths', 'Differential Calculus Assignment', '03/28/2023 04:30 PM', 4.3),
+    createData('A2', 'Maths', 'Calculus Assignment', '03/28/2023 04:30 PM', 4.3),
     createData('C2', 'Liberal Studies', 'Reading/Research Proposal', '03/25/2023 10:00 AM', 4.0),
     // createData('Class', 'Nature', 'Beauty of Nature', 'Due Date & Time', 6.0),
     createData('C1', 'English', 'My Village Essay', '03/22/2023 11:30 AM', 4.0),
     createData('B2', 'Maths', 'Transformations', '03/17/2023 02:40 PM', 4.3),
     createData('D1', 'Liberal Studies', 'Importance of Music', '03/14/2023 03:10 PM', 4.3),
-    // createData('Class', 'Music', 'Song analysis', 'Due Date & Time', 4.3),
-    // createData('Class', 'Sport', 'My Favorite Sportsperson', 'Due Date & Time', 3.9),
-    // createData('Class', 'Art', 'painting', 'Due Date & Time', 3.9),
     createData('B1', 'English', 'Personal', '03/10/2023 9:20 AM', 4.0),
     createData('D2', 'Maths', 'Matrix Problems', '03/07/2023 08:00 PM', 6.0),
     createData('E2', 'Liberal Studies', 'Grammar and Checking', '03/04/2023 06:00 PM', 6.0),
@@ -496,7 +409,7 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
                         <StyledTableCell align="center">Class</StyledTableCell>
                         <StyledTableCell align="center">Subject</StyledTableCell>
                         <StyledTableCell align="center">Assignment Title</StyledTableCell>
-                        <StyledTableCell align="center">Due Date & Time</StyledTableCell>
+                        <StyledTableCell align="center" style={{fontFamily:"Livvic"}}>Due Date & Time</StyledTableCell>
                         <StyledTableCell align="center">
                           More
                         </StyledTableCell>
@@ -509,10 +422,8 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
 
                             <Box sx={{display:"flex",alignItems:"center"}}>
                             <Stack spacing={2} direction="row">
-                          
-                                {/* <ReplayCircleFilledIcon  sx={{color:"#2CC5CE", fontSize:"25px", cursor:"pointer"}} /> */}
                                 <Typography sx={{backgroundColor:"#2CC5CE", color:"white", borderRadius:"50%", width:"25px", height:"25px",padding:"5px"}}> G </Typography>
-                                <Box  align="center"> {row.name} </Box>
+                                <Box  align="center" style={{fontFamily:"Livvic"}}> {row.name} </Box>
                             </Stack>
                             </Box>
                             </StyledTableCell>
@@ -524,7 +435,7 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
                                 <Button
                                     variant="contained"
                                     aria-haspopup="true"
-                                    sx={{height:"25px", backgroundColor:"#2CC5CE",margin:"10px", color:"white"}}
+                                    sx={{height:"25px", backgroundColor:"#2CC5CE",margin:"10px", color:"white", fontFamily:"Livvic"}}
                                 >
                                 Edit
                                 </Button>

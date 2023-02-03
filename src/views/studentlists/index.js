@@ -271,29 +271,30 @@ export default function Studentlists() {
                             <img src={room1} alt="room1" loading="lazy" />
                         </ImageListItem>
 
-                        <Box sx={{alignItems:"center", justifyContent:"center", width:"50px"}}>
-                            <Typography variant="h5" component="h6" sx={{borderRadius:"50%",height:"30px", width:"30px",backgroundColor:"#9cdd73", color:"black",padding:"8px"}}>
+                        <Box sx={{alignItems:"center", justifyContent:"center", width:"50px", fontFamily:"Livicc"}}>
+                            <Typography variant="h5" component="h6" sx={{borderRadius:"50%",height:"30px", width:"30px",backgroundColor:"#9cdd73", color:"black",padding:"8.5px"}}>
                                 {userlist.name[0]}
                             
                             </Typography>
-                        <Box sx={{width:"50px"}}>
+                        <Box sx={{width:"50px",  fontFamily:"Livicc",fontSize:"20px"}}>
                         {userlist.name}
                         </Box>
                         </Box>
 
-                        <Box sx={{width:"60px"}}>
+                        <Box sx={{width:"60px",  fontFamily:"Livicc",fontSize:"20px"}}>
                             {userlist.status}
                         </Box>
-                        <Box sx={{width:"85px"}}>
+                        <Box sx={{width:"85px",  fontFamily:"Livicc",fontSize:"20px"}}>
                             {/* {userlist.grademark} */}
                             <TextField
                                 label="Grade/Mark"
                                 type="text"
-                                value={userlist.grademark}
+                                defaultValue = {userlist.grademark}
                                 // sx={{ width: 220, position: 'absolute', bottom: '30px' }}
                                 InputLabelProps={{
                                     shrink: true
                                 }}
+                                sx={{fontFamily:"Livicc"}}
                            />
                         </Box>
                    
@@ -315,7 +316,7 @@ export default function Studentlists() {
                             </div>
                         </Typography> */}
 
-                        <Box  sx={{ width: '15%' }}>
+                        <Box  sx={{ width: '15%', fontFamily:"Livicc",fontSize:"20px" }}>
                             {userlist.duedate}
                         </Box>
 
@@ -339,13 +340,13 @@ export default function Studentlists() {
                                 }}
                                 sx={{ textAlign: 'center', width: '250px' }}
                             >
-                                <MenuItem variant="contained" sx={{ "&:hover": { color: "white",backgroundColor:"#2CC5CE"}, color:"#2CC5CE" }} onClick={handleClickOpen}>
+                                <MenuItem variant="contained" sx={{ "&:hover": { color: "white",backgroundColor:"#2CC5CE"}, color:"#2CC5CE", fontFamily:"Livicc" }} onClick={handleClickOpen}>
                                     Comment
                                 </MenuItem>
-                                <MenuItem variant="contained" sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE"},  color:"#2CC5CE" }}>
+                                <MenuItem variant="contained" sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE"},  color:"#2CC5CE", fontFamily:"Livicc"  }}>
                                     Delete
                                 </MenuItem>
-                                <MenuItem variant="contained" sx={{ "&:hover": { color: "white",backgroundColor:"#2CC5CE"}, color:"#2CC5CE" }}>
+                                <MenuItem variant="contained" sx={{ "&:hover": { color: "white",backgroundColor:"#2CC5CE"}, color:"#2CC5CE", fontFamily:"Livicc"  }}>
                                     Download
                                 </MenuItem> 
                                 {/* <Button variant="contained" sx={{marginTop:"15px"}} onClick={handleClose}> Mark </Button>  */}

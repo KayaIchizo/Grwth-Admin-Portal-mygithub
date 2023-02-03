@@ -16,7 +16,7 @@ const LogoSection = () => (
             <Typography
                 variant="h2"
                 component="h3"
-                sx={{ pl: 2, fontWeight: '500', font: 'Lalezar', fontStyle: 'normal', color: '#FFFFFF', fontSize: '35px' }}
+                sx={{ pl: 2, fontWeight: '500', font: 'Lalezar', fontStyle: 'normal', color: '#FFFFFF', fontSize: '35px',fontFamily:"Livvic" }}
             >
                 Grwth.x
             </Typography>

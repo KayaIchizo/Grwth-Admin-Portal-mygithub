@@ -25,15 +25,17 @@ import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
 import UserIconGroup from 'assets/images/icons/UserIconGroup.png';
 import AssignmentTitle from 'assets/images/roomimg/Assignment Title.png';
 import Divider from '@mui/material/Divider';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    width: 300,
-    height: 250,
-    boxShadow: "3.0331px 0px 3.0331px rgba(0, 0, 0, 0.25)",
+    width: 330,
+    height: 280,
+    boxShadow: "3.0331px  3px 3.0331px rgba(0, 0, 0, 0.25)",
+    marginTop:63
     
     // transform: "rotate(90deg)",
     
@@ -76,7 +78,7 @@ function FormRow() {
   
     return (
         <React.Fragment>
-            <Grid container spacing={4}>
+            <Grid container spacing={0}>
                     {createdByMeMockdatas.map((onedata, index) => (
                         //spacing size problem
                         <Grid container spacing={0} xs={4} item  key={index}>  
@@ -92,9 +94,9 @@ function FormRow() {
                                     />
                                 </ImageListItem>
                                 {/* boxShadow:"0px 3.0331px 3.0331px rgba(0, 0, 0, 0.25)", borderRadius:"7.58274px 7.58274px 0px 0px" */}
-                                <Box sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', mt: 2,  }}>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', mt: 1.5 }}>
                                     <Box sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                                        <img src={UserIconGroup} alt="icon" loading="lazy" width={60} height={30} />
+                                        <img src={UserIconGroup} alt="icon" loading="lazy" width={60} height={40} />
                                         <Typography component="h2" variant="h5" sx={{ mr: 2 }}>
                                             {onedata.sharedNumber}
                                         </Typography>
@@ -127,16 +129,30 @@ const Sharedwithme = () => {
     return (
      
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={4} sx={{ mx: 'auto' }}>
-                <Box sx={{ mt: '30px' }}>
-                    <Typography component="h2" variant="h3">
+            <Grid container spacing={1} sx={{ mx: 'auto' }}>
+                <Box sx={{ mt: '10px' }}>
+                    <Typography component="h2" variant="h3"  sx={{fontFamily:"Livvic"}}>
                        Shared with me
                     </Typography>
                 </Box>
 
+                <PerfectScrollbar
+                    component="div"
+                    options={{ maxScrollbarLength: 150, scrollYMarginOffset: 7,wheelSpeed: 0.5,color:"#2CC5CE"}}
+                    style={{
+                        height:  'calc(100vh - 56px)',
+                        paddingLeft: '80px',
+                        paddingRight: '16px',
+                        borderRight: "6px solid #DBDBDB",
+                        
+                   
+                    }}
+                >
+
                 <Grid container item spacing={1}>
                     <FormRow />
                 </Grid>
+                </PerfectScrollbar>
         
             </Grid>
         </Box>

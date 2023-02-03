@@ -4,6 +4,12 @@
 // third-party
 @import '~react-perfect-scrollbar/dist/css/styles.css';
 
+@font-face {
+    font-family: 'Livvic';
+    font-weight: 900;
+    src: local('Livvic-Bold'), url("../../fonts/Livvic-Bold.ttf") format('opentype');
+}
+
 // ==============================|| LIGHT BOX ||============================== //
 .fullscreen .react-images__blanket {
     z-index: 1200;
@@ -16,6 +22,17 @@
 }
 
 // ==============================|| PERFECT SCROLLBAR ||============================== //
+
+.transf{
+    width: 5760px; opacity: 1; transform: translate3d(0px, 0px, 0px);
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 .scrollbar-container {
     .ps__rail-y {

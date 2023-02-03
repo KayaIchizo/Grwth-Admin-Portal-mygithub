@@ -243,16 +243,16 @@ export default function Assignmentlistpage() {
         <div className="Assignmentlist">
             {userCheck == 'teacher' ? (
                 <div className="header">
-                    <div className="widgetSmallTitle">Assignment List</div>
+                    <div className="widgetSmallTitle" style={{fontFamily:"Livvic",fontSize:"30px",fontWeight:"700", lineHeight:"37.65px"}}>Assignment List</div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                             <div>
-                                <SearchComponent onChangeHandle = {searchChange}/>
+                                <SearchComponent onChangeHandle = {searchChange} style={{fontFamily:"Livicc"}}/>
                             </div>
                             <div style={{ marginLeft: '40px', width: '130px' }}>
                                 {/* <Select defaultValue="Subject" items={Subjectoptions} sx={{color:"red"}} />  */}
                             <FormControl fullWidth sx={{width:"150px"}}>
-                                    <InputLabel id="demo-simple-select-label" >Subject</InputLabel>
+                                    <InputLabel id="demo-simple-select-label" style={{fontFamily:"Livicc"}}>Subject</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
@@ -260,10 +260,10 @@ export default function Assignmentlistpage() {
                                         label="Subject"
                                         onChange={handleChangeSubject}
                                         >
-                                        <MenuItem value="">None</MenuItem>
-                                        <MenuItem value="English">English</MenuItem>
-                                        <MenuItem value="Maths">Maths</MenuItem>
-                                        <MenuItem value="Liberal Studies">Liberal Studies</MenuItem>
+                                        <MenuItem value="" style={{fontFamily:"Livicc"}}>None</MenuItem>
+                                        <MenuItem value="English" style={{fontFamily:"Livicc"}}>English</MenuItem>
+                                        <MenuItem value="Maths" style={{fontFamily:"Livicc"}}>Maths</MenuItem>
+                                        <MenuItem value="Liberal Studies" style={{fontFamily:"Livicc"}}>Liberal Studies</MenuItem>
                                      
                                     </Select>
                             </FormControl> 
@@ -273,7 +273,7 @@ export default function Assignmentlistpage() {
                             <div style={{ marginLeft: '55px', width: '100px' }}>
                                 {/* <Select defaultValue="Class" items={Classoptions} /> */}
                                 <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-label">Class</InputLabel>
+                                    <InputLabel id="demo-simple-select-label" style={{fontFamily:"Livicc"}}>Class</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
@@ -281,19 +281,19 @@ export default function Assignmentlistpage() {
                                         label="Class"
                                         onChange={handleChangeClass}
                                         >
-                                        <MenuItem value="">None</MenuItem>
-                                        <MenuItem value="A1">A1</MenuItem>
-                                        <MenuItem value="A2">A2</MenuItem>
-                                        <MenuItem value="B1">B1</MenuItem>
-                                        <MenuItem value="B2">B2</MenuItem>
-                                        <MenuItem value="C1">C1</MenuItem>
-                                        <MenuItem value="C2">C2</MenuItem>
+                                        <MenuItem value=""  style={{fontFamily:"Livicc"}}>None</MenuItem>
+                                        <MenuItem value="A1" style={{fontFamily:"Livicc"}}>A1</MenuItem>
+                                        <MenuItem value="A2" style={{fontFamily:"Livicc"}}>A2</MenuItem>
+                                        <MenuItem value="B1" style={{fontFamily:"Livicc"}}>B1</MenuItem>
+                                        <MenuItem value="B2" style={{fontFamily:"Livicc"}}>B2</MenuItem>
+                                        <MenuItem value="C1" style={{fontFamily:"Livicc"}}>C1</MenuItem>
+                                        <MenuItem value="C2" style={{fontFamily:"Livicc"}}>C2</MenuItem>
                                     </Select>
                                 </FormControl> 
                             </div>
                         </div>
                         <div>
-                            <Button variant="contained" onClick={handleClickOpen} sx={{backgroundColor:"#7983FF",borderRadius:"25px"}}>
+                            <Button variant="contained" onClick={handleClickOpen} sx={{backgroundColor:"#7983FF",borderRadius:"25px", fontFamily:"Livicc", fontSize:"25px", fontWeight:"700"}}>
                                 + Assignment
                             </Button>
                         </div>

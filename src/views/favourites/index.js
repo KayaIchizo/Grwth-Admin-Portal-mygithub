@@ -47,11 +47,11 @@ const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    width: 300,
-    height: 250,
-    boxShadow: "3.0331px 0px 3.0331px rgba(0, 0, 0, 0.25)",
-    
-    // transform: "rotate(90deg)",
+    width: 280,
+    height: 300,
+    marginTop:0,
+    boxShadow: "0 8px 8px 3px rgb(0 0 0 / 25%)",
+    // boxShadow: "3.0331px 2px 3.0331px rgba(0, 0, 0, 0.25)",
     
 }));
 
@@ -85,29 +85,31 @@ function FavouriteRoom() {
   
     return (
         <React.Fragment>
-            <Grid container spacing={4}>
+            <Grid container spacing={4} sx={{ml:"18px"}}>
                     {roomObjectMockdatas.map((onedata, index) => (
                         //spacing size problem
                         <Grid container spacing={0} xs={3} item  key={index}>  
                             <Item>
-                                <ImageListItem >
+                                <ImageListItem sx={{ mt: 7 }}>
                                     <img
                                         src={onedata.imageurl}
                                         alt="room1"
                                         loading="lazy"
-                                        style={{height:"200px"}}
+                                        style={{width:"270px", height:"200px"}}
                                         // onClick={ () => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room2')}
                                     />
                                 </ImageListItem>
                                 {/* boxShadow:"0px 3.0331px 3.0331px rgba(0, 0, 0, 0.25)", borderRadius:"7.58274px 7.58274px 0px 0px" */}
                             <Box sx={{display:'flex',justifyContent:"space-between", padding:"0px 13px"}}>
-                                <Typography component="h2" variant="h2">
-                                    {onedata.title}
+                                <Typography component="h2" variant="h2"  sx={{fontFamily:"Livvic"}}>
                                 </Typography>
-                                    <IconHeart  style={{ fill: 'red' }}/>
+                                    <IconHeart  style={{ fill: '#CE2C2C' }}/>
                             </Box>
                                
                             </Item>
+                            <Typography component="h2" variant="h2"  sx={{fontFamily:"Livvic",mt:2}}>
+                                    {onedata.title}
+                            </Typography>
                        
                         </Grid>
                      
@@ -136,7 +138,7 @@ const Favourites = () => {
     return(
         <Box>
                 <Box>
-                    <Typography component="h2" variant="h3">
+                    <Typography component="h2" variant="h3" sx={{fontFamily:"Livvic"}}>
                        Favourites
                     </Typography>
                 </Box>

@@ -34,6 +34,7 @@ import RoomA_Items1 from 'assets/images/roomimg/RoomA_Items1.webp';
 import RoomA_Items2 from 'assets/images/roomimg/RoomA_Items2.webp';
 import RoomA_Items3 from 'assets/images/roomimg/RoomA_Items3.webp';
 import RoomA_Items4 from 'assets/images/roomimg/RoomA_Items4.webp';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 // import Paper from '@mui/material/Paper';
 import UserIconGroup from 'assets/images/icons/UserIconGroup.png';
 import {
@@ -47,10 +48,11 @@ const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    width: 300,
-    height: 250,
+    width: 280,
+    height: 300,
     // boxShadow: "3.0331px 0px 3.0331px rgba(0, 0, 0, 0.25)",
-    boxShadow: "0 0 8px 3px rgb(0 0 0 / 25%)",
+    boxShadow: "0 8px 8px 3px rgb(0 0 0 / 25%)",
+    marginTop:30
 
     // transform: "rotate(90deg)",
 
@@ -112,6 +114,7 @@ function FormRow() {
                                     src={onedata.imageurl}
                                     alt="room1"
                                     loading="lazy"
+                                    style={{width:"270px", height:"200px"}}
 
                                 // onClick={ () => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room2')}
                                 />
@@ -119,12 +122,15 @@ function FormRow() {
                             {/* boxShadow:"0px 3.0331px 3.0331px rgba(0, 0, 0, 0.25)", borderRadius:"7.58274px 7.58274px 0px 0px" */}
                             <Box sx={{ display: 'flex', justifyContent: "space-between", padding: "0px 13px" }}>
                                 <Typography component="h2" variant="h2">
-                                    {roomname}
+                                      
                                 </Typography>
                                 <IconHeart style = {iconHeart === index ?{fill:"red"}:{}} onClick = {() => iconHeartClick(index)}/>
                             </Box>
 
                         </Item>
+                        <Typography component="h2" variant="h2" sx={{mt:2,fontFamily:"Livvic"}}>
+                                    {roomname}
+                        </Typography>
 
                     </Grid>
 
@@ -182,7 +188,7 @@ function ObjectRoom() {
                     //spacing size problem
                     <Grid container spacing={0} xs={3} item key={index}>
                         <Item>
-                            <ImageListItem >
+                            <ImageListItem sx={{ mt: 7 }}>
                                 <img
                                     src={onedata.imageurl}
                                     alt="room1"
@@ -194,12 +200,14 @@ function ObjectRoom() {
                             {/* boxShadow:"0px 3.0331px 3.0331px rgba(0, 0, 0, 0.25)", borderRadius:"7.58274px 7.58274px 0px 0px" */}
                             <Box sx={{ display: 'flex', justifyContent: "space-between", padding: "0px 13px" }}>
                                 <Typography component="h2" variant="h2">
-                                    {onedata.title}
                                 </Typography>
                                 <IconHeart  style = {iconObject === index ?{fill:"red"}:{}} onClick = {() => iconObjectClick(index)}/>
                             </Box>
 
                         </Item>
+                        <Typography component="h2" variant="h2" sx={{mt:2,fontFamily:"Livvic"}}>
+                                    {roomname}
+                        </Typography>
 
                     </Grid>
 
@@ -224,33 +232,62 @@ const Library = () => {
         "&.Mui-selected": {
             color: theme.palette.background.primaryColor
         }
+      
     });
+
+    
     return (
         <Box>
             <Box sx={{ mt: '0px' }}>
-                <Typography component="h2" variant="h3">
+                <Typography component="h2" variant="h3" sx={{fontFamily:"Livvic"}}>
                     Library
                 </Typography>
             </Box>
             <TabContext value={value}>
                 {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}> */}
                 <TabList onChange={handleChange} aria-label="lab API tabs example" TabIndicatorProps={{
-                    style: { background: theme.palette.background.primaryColor }
-                }} >
+                    style: { background: theme.palette.background.primaryColor }}} 
+                 
+                    >
                     <StyledTab label="Room" value="1" />
                     <StyledTab label="Object" value="2" />
                 </TabList>
 
                 <TabPanel value="1">
-                    <Grid container item spacing={1}>
-                        <FormRow />
-                    </Grid>
+                    <PerfectScrollbar
+                        component="div"
+                        options={{ maxScrollbarLength: 150, scrollYMarginOffset: 7,wheelSpeed: 0.5,color:"#2CC5CE"}}
+                        style={{
+                            height:  'calc(100vh - 56px)',
+                            paddingLeft: '40px',
+                            paddingRight: '16px',
+                            borderRight: "6px solid #DBDBDB",
+                            
+                    
+                        }}
+                    >
+                        <Grid container item spacing={1}>
+                            <FormRow />
+                        </Grid>
+                    </PerfectScrollbar>
 
                 </TabPanel>
                 <TabPanel value="2">
+                <PerfectScrollbar
+                    component="div"
+                    options={{ maxScrollbarLength: 150, scrollYMarginOffset: 7,wheelSpeed: 0.5,color:"#2CC5CE"}}
+                    style={{
+                        height:  'calc(100vh - 56px)',
+                        paddingLeft: '40px',
+                        paddingRight: '16px',
+                        borderRight: "6px solid #DBDBDB",
+                        
+                   
+                    }}
+                >
 
-                    <ObjectRoom />
-
+                      <ObjectRoom />
+                </PerfectScrollbar>
 
                 </TabPanel>
             </TabContext>

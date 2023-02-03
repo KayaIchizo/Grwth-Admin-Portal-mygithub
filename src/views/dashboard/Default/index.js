@@ -38,6 +38,7 @@ import Fade from '@mui/material/Fade';
 
 
 
+
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -45,10 +46,9 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
     width: 300,
     height: 250,
-    boxShadow: "0 4px 10px -10px;  #ccc",
+    // boxShadow: "0 4px 0px -10px;  #ccc",
     // boxShadow: "3.0331px 3.0331px 3.0331px rgba(0, 0, 0, 0.25)",
 
-    // transform: "rotate(90deg)",
 
 }));
 
@@ -59,14 +59,34 @@ const openLinkInNewTab = (url) => {
 };
 
 function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
+    const { className, style, onClick,  currentSlide, slideCount } = props;
+
     return (
         <div
             className={className}
-            style={{ ...style, display: "block", color: "black", backgroundColor: "grey", borderRadius: "30px",marginRight:"65px",   dropShadow:"3px 2px 5px #4444dd" }}
-            onClick={onClick}
+            style={{ ...style,    display: currentSlide == 3  ?"block":"none", color: "black", backgroundColor: "grey", borderRadius: "30px",marginRight:"65px",left:"-43px", dropShadow:"3px 2px 5px #4444dd" }}
+            onClick={() => onClick()}
         />
     );
+}
+
+
+function SampleNextArrow(props) {
+    const { className, style, onClick, currentSlide, slideCount } = props;
+    console.log("current=",currentSlide);
+    console.log("slideCount=",slideCount);
+
+    return (
+        <div
+            className={className}
+            style={{ ...style,  display: currentSlide == 0   ?"block":"none", color: "black", backgroundColor: "grey", borderRadius: "30px",marginRight:"65px",dropShadow:"3px 2px 5px #4444dd" }}
+            onClick={() => onClick()}
+        />
+    );
+}
+
+const onPrev = () => {
+    console.log("ddd")
 }
 
 const settings = {
@@ -74,10 +94,11 @@ const settings = {
     infinite: true,
     speed: 500,
     slidesToShow: 3,
-    slidesToScroll: 1,
+    slidesToScroll: 3,
     initialSlide: 0,
-    nextArrow: <SamplePrevArrow />,
-    // prevArrow: <SamplePrevArrow />
+    nextArrow: <SampleNextArrow   onClick={onPrev}/>,
+    prevArrow: <SamplePrevArrow />,
+  
 };
 
 
@@ -100,43 +121,38 @@ function FormRow() {
     const createdByMeMockdatas = [
         { imageurl: RoomA1, title: "Maths Calculation", sharedNumber: '' },
         { imageurl: RoomA1, title: "English Grammar", sharedNumber: '+5' },
-        { imageurl: RoomA1, title: "Art", sharedNumber: '+5' },
+        { imageurl: RoomA1, title: "Analytic", sharedNumber: '+5' },
 
-        { imageurl: RoomA1, title: "Chemical Storage", sharedNumber: '' },
-        { imageurl: RoomA1, title: "Painting", sharedNumber: '+5' },
-        { imageurl: RoomA1, title: "Mathematics Problem", sharedNumber: '+5' },
-
-        { imageurl: RoomA1, title: "Economics", sharedNumber: '' },
         { imageurl: RoomA1, title: "Artistic Elements", sharedNumber: '+5' },
         { imageurl: RoomA1, title: "Texture and Space", sharedNumber: '+5' },
+        { imageurl: RoomA1, title: "Mathematics Problem", sharedNumber: '+5' },
 
-        { imageurl: RoomA1, title: "History", sharedNumber: '' },
-        { imageurl: RoomA1, title: "Analytic", sharedNumber: '+5' },
-        { imageurl: RoomA1, title: "Listening", sharedNumber: '+5' }
     ];
 
-
+  
 
     return (
         <React.Fragment>
             <Container>
-                <Slider {...settings}>
+                <Slider {...settings}  >
                     {createdByMeMockdatas.map((onedata, id) => (
                         // <Tilt  key={id}>
+                       
                             <Item key={id}>
-                              
+                               <ImageListItem sx={{ width: 300 }}>
                                     <img
                                         src={onedata.imageurl}
                                         alt="room1"
                                         loading="lazy"
-                                        width={290}
-                                        style={{boxShadow:"1px 0px 10px -4px #ccc"}}
+                                        style={{ height: "170px", boxShadow: "3.0331px 3.0331px 3.0331px rgba(0, 0, 0, 0.25)"}}
+                                     
                                     // onClick={ () => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room2')}
                                     />
+                               </ImageListItem>
                                 {/* boxShadow:"0px 3.0331px 3.0331px rgba(0, 0, 0, 0.25)", borderRadius:"7.58274px 7.58274px 0px 0px" */}
-                                <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', mt: 2, width:"300px" }}>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding:"10px", width:"300px", boxShadow: "3.0331px 8px 8px rgba(0, 0, 0, 0.25)"}}>
                                     <Box sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                                        <img src={UserIconGroup} alt="icon" loading="lazy" width={60} height={40} />
+                                        <img src={UserIconGroup} alt="icon" loading="lazy" width={60} height={40}  />
                                         <Typography component="h2" variant="h5" sx={{ mr: 2 }}>
                                             {onedata.sharedNumber}
                                         </Typography>
@@ -158,178 +174,6 @@ function FormRow() {
         </React.Fragment>
     );
 
-    //   return (
-
-    //     <React.Fragment>
-    //       <Grid item xs={3}>
-
-    //         <Dialog
-    //         open={openstudentlist}
-    //         onClose={handleclickstudentlistclose}
-    //         aria-labelledby="alert-dialog-title"
-    //         aria-describedby="alert-dialog-description"
-    //         className='studentlistdialog'
-    //         >
-    //                 <div style={{marginTop:"30px",alignSelf:"center"}}>
-    //                     <Typography component="h2" variant="h3">
-    //                        Assign to
-    //                     </Typography>
-
-    //                     <Stack spacing={2} sx={{ width: 300,mt:"10px" }}>
-    //                     <Autocomplete
-    //                         multiple
-    //                         id="free-solo-demo"
-    //                         options={Userlist.map((option) => option.title)}
-    //                         renderInput={(params) => <TextField {...params} label="Userlist" />}
-    //                     />
-    //                     </Stack>
-
-    //                     <Box sx={{mt:"30px"}}>
-    //                       <TextField
-    //                                   id="datetime-local"
-    //                                   label="Current Time"
-    //                                   type="datetime-local"
-    //                                   defaultValue={ toIsodate1 }
-    //                                   sx={{ width: 300 }}
-    //                                   InputLabelProps={{
-    //                                   shrink: true,
-    //                                   }}
-    //                       />
-
-    //                     </Box>
-
-    //                     <Box sx={{display:"flex",mt:"30px"}}>
-
-    //                         <TextField
-    //                                 id="datetime-local"
-    //                                 label="Available from"
-    //                                 type="datetime-local"
-    //                                 defaultValue=""
-    //                                 sx={{ width: 150 }}
-    //                                 InputLabelProps={{
-    //                                 shrink: true,
-    //                                 }}
-    //                             />
-    //                             <TextField
-    //                                 id="datetime-local"
-    //                                 label="Until"
-    //                                 type="datetime-local"
-    //                                 defaultValue=""
-    //                                 sx={{ width: 150 }}
-    //                                 InputLabelProps={{
-    //                                 shrink: true,
-    //                                 }}
-    //                             />
-    //                     </Box>
-    //                     <Button variant="contained" style={{position: "absolute",bottom: "30px",right: "30px"}} > + Add </Button>
-    //                 </div>
-    //         </Dialog>
-    //         <Item>
-    //             <ImageListItem sx={{ width: 170, height: 130 }}>
-    //                 <img
-    //                     src={room1}
-    //                     alt="room1"
-    //                     loading="lazy"
-    //                     // onClick={ () => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room1')}
-    //                 />
-    //             </ImageListItem>
-    //             <Box sx={{display:'flex',justifyContent:"space-evenly", alignItems:'center'}}>
-    //                 <Box>
-    //                 <Typography component="h2" variant="h2">
-    //                     Char
-    //                 </Typography>
-    //                 </Box>
-    //                 <Box sx={{display:'flex',alignItems:'center'}} >
-    //                     <GroupOutlinedIcon fontSize='large'/>
-    //                     <Typography component="h2" variant="h5">
-    //                     +7
-    //                     </Typography>
-    //                 </Box>
-
-    //             </Box>
-    //         </Item>
-    //       </Grid>
-    //         <Grid item xs={3}>
-    //         <Item>
-    //                 <ImageListItem sx={{ width: 170, height: 130 }}>
-    //                     <img
-    //                         src={room1}
-    //                         alt="room1"
-    //                         loading="lazy"
-    //                         // onClick={ () => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room2')}
-    //                     />
-    //                 </ImageListItem>
-    //                 <Box sx={{display:'flex',justifyContent:"space-evenly", alignItems:'center'}}>
-    //                 <Box>
-    //                     <Typography component="h2" variant="h2">
-    //                         Door
-    //                     </Typography>
-    //                 </Box>
-    //                 <Box sx={{display:'flex',alignItems:'center'}} onClick={handleclickstudentlistopen}>
-    //                         <GroupOutlinedIcon fontSize='large'/>
-    //                         <Typography component="h2" variant="h5">
-    //                         +3
-    //                     </Typography>
-    //                 </Box>
-
-    //                 </Box>
-    //             </Item>
-    //         </Grid>
-    //         <Grid item xs={3}>
-    //         <Item>
-    //                 <ImageListItem sx={{ width: 170, height: 130 }}>
-    //                     <img
-    //                         src={room1}
-    //                         alt="room1"
-    //                         loading="lazy"
-    //                         // onClick={ () => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room2')}
-    //                     />
-    //                 </ImageListItem>
-    //                 <Box sx={{display:'flex',justifyContent:"space-evenly", alignItems:'center'}}>
-    //                 <Box>
-    //                     <Typography component="h2" variant="h2">
-    //                         Table
-    //                     </Typography>
-    //                 </Box>
-    //                 <Box sx={{display:'flex',alignItems:'center'}}>
-    //                         <GroupOutlinedIcon fontSize='large'/>
-    //                         <Typography component="h2" variant="h5">
-    //                         +2
-    //                     </Typography>
-    //                 </Box>
-
-    //                 </Box>
-    //             </Item>
-    //         </Grid>
-    //         <Grid item xs={3}>
-    //         <Item>
-    //                 <ImageListItem sx={{ width: 170, height: 130 }}>
-
-    //                     <img
-    //                         src={room1}
-    //                         alt="room1"
-    //                         loading="lazy"
-    //                         // onClick={ () => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room1')}
-    //                     />
-    //                 </ImageListItem>
-    //                 <Box sx={{display:'flex',justifyContent:"space-evenly", alignItems:'center'}}>
-    //                 <Box>
-    //                     <Typography component="h2" variant="h2">
-    //                         Car
-    //                     </Typography>
-    //                 </Box>
-    //                 <Box sx={{display:'flex',alignItems:'center'}}>
-    //                         <GroupOutlinedIcon fontSize='large'/>
-    //                         <Typography component="h2" variant="h5">
-    //                         +7
-    //                     </Typography>
-    //                 </Box>
-
-    //                 </Box>
-    //             </Item>
-    //         </Grid>
-    //     </React.Fragment>
-    //   );
 }
 
 const RecentAssignmentsFormRow = () => {
@@ -349,21 +193,16 @@ const RecentAssignmentsFormRow = () => {
 
 
     const assignmentTitle = [
-        { imageurl: AssignmentTitle, title: 'My Village Essay', sharedNumber: '' },
+     
         { imageurl: AssignmentTitle, title: 'Grammar Assignment', sharedNumber: '+5' },
         { imageurl: AssignmentTitle, title: 'Calculation Problems', sharedNumber: '+5' },
 
-        { imageurl: AssignmentTitle, title: 'Importance of Music', sharedNumber: '' },
         { imageurl: AssignmentTitle, title: 'Reading/Research Proposal', sharedNumber: '+5' },
         { imageurl: AssignmentTitle, title: 'My Favourite Book Essay', sharedNumber: '+5' },
 
         { imageurl: AssignmentTitle, title: 'Painting Assignment', sharedNumber: '' },
         { imageurl: AssignmentTitle, title: 'Personal Assignment', sharedNumber: '+5' },
-        { imageurl: AssignmentTitle, title: 'Science Assignment', sharedNumber: '+5' },
-
-        { imageurl: AssignmentTitle, title: 'Nature Assignment', sharedNumber: '' },
-        { imageurl: AssignmentTitle, title: 'Sports Assignment', sharedNumber: '+5' },
-        { imageurl: AssignmentTitle, title: 'Differential Calculus Assignment', sharedNumber: '+5' }
+    
     ];
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -390,9 +229,9 @@ const RecentAssignmentsFormRow = () => {
             <Container>
                 <Slider {...settings}>
                     {assignmentTitle.map((oneassignment, id) => (
-                      <Tilt key={id}>
+                    //   <Tilt key={id}>
                         <Item key={id}>
-                            <ImageListItem sx={{ width: 280 }}  onClick={() => navigate('/studentlists')}>
+                            <ImageListItem sx={{ width: 300 }}  onClick={() => navigate('/studentlists')}>
                                 <img
                                     src={oneassignment.imageurl}
                                     alt="room1"
@@ -406,9 +245,9 @@ const RecentAssignmentsFormRow = () => {
                                     {oneassignment.title}
                                 </Typography>
                             </ImageListItem>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: "6px 38px" }}>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: "6px 32px" }}>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <img src={UserIconGroup} alt="icon" loading="lazy" width={60} height={30} />
+                                    <img src={UserIconGroup} alt="icon" loading="lazy" width={60} height={40} />
 
                                     <Typography component="h2" variant="h5" sx={{ mr: 2 }}>
                                         {oneassignment.sharedNumber}
@@ -423,7 +262,7 @@ const RecentAssignmentsFormRow = () => {
                                     aria-controls={openpoper ? 'fade-menu' : undefined}
                                     aria-expanded={openpoper ? 'true' : undefined}
                                     onClick={handleClick}
-                                    sx={{margin:"10px", color:"#2CC5CE"}}
+                                    sx={{margin:"15px 75px", color:"#2CC5CE"}}
                                     >
                                     </PendingOutlinedIcon>
 
@@ -455,7 +294,7 @@ const RecentAssignmentsFormRow = () => {
                                 </Box>
                             </Box>
                         </Item>
-                      </Tilt>
+                    //   </Tilt>
                     ))}
 
                 </Slider>
@@ -463,157 +302,6 @@ const RecentAssignmentsFormRow = () => {
         </React.Fragment>
     );
 
-    // return(
-    //     <React.Fragment>
-    //     <Grid item xs={3}>
-
-    //       <Dialog
-    //       open={openstudentlist}
-    //       onClose={handleclickstudentlistclose}
-    //       aria-labelledby="alert-dialog-title"
-    //       aria-describedby="alert-dialog-description"
-    //       className='studentlistdialog'
-    //       >
-    //               <div style={{marginTop:"30px",alignSelf:"center"}}>
-    //                   <Typography component="h2" variant="h3">
-    //                      Assign to
-    //                   </Typography>
-
-    //                   <Stack spacing={2} sx={{ width: 300,mt:"10px" }}>
-    //                   <Autocomplete
-    //                       multiple
-    //                       id="free-solo-demo"
-    //                       options={Userlist.map((option) => option.title)}
-    //                       renderInput={(params) => <TextField {...params} label="Userlist" />}
-    //                   />
-    //                   </Stack>
-
-    //                   <Box sx={{mt:"30px"}}>
-    //                     <TextField
-    //                                 id="datetime-local"
-    //                                 label="Current Time"
-    //                                 type="datetime-local"
-    //                                 defaultValue={ toIsodate1 }
-    //                                 sx={{ width: 300 }}
-    //                                 InputLabelProps={{
-    //                                 shrink: true,
-    //                                 }}
-    //                     />
-
-    //                   </Box>
-
-    //                   <Box sx={{display:"flex",mt:"30px"}}>
-
-    //                       <TextField
-    //                               id="datetime-local"
-    //                               label="Available from"
-    //                               type="datetime-local"
-    //                               defaultValue=""
-    //                               sx={{ width: 150 }}
-    //                               InputLabelProps={{
-    //                               shrink: true,
-    //                               }}
-    //                           />
-    //                           <TextField
-    //                               id="datetime-local"
-    //                               label="Until"
-    //                               type="datetime-local"
-    //                               defaultValue=""
-    //                               sx={{ width: 150 }}
-    //                               InputLabelProps={{
-    //                               shrink: true,
-    //                               }}
-    //                           />
-    //                   </Box>
-    //                   <Button variant="contained" style={{position: "absolute",bottom: "30px",right: "30px"}} > + Add </Button>
-    //               </div>
-    //       </Dialog>
-
-    //       <Item>
-    //           <Item sx={{ width: 170, height: 130 }}>
-    //              <Box sx={{padding:"30px 30px"}} onClick={handleOnCellClick}>
-    //               <Typography component="h2" variant="h2">
-    //                  Chapter 1
-    //               </Typography>
-    //              </Box>
-    //           </Item>
-    //           <Box sx={{alignItems:'center'}}>
-
-    //              <Box sx={{display:'flex',alignItems:'center'}} >
-    //                   <GroupOutlinedIcon fontSize='large'/>
-    //                   <Typography component="h2" variant="h5">
-    //                   +7
-    //                  </Typography>
-    //              </Box>
-
-    //           </Box>
-    //       </Item>
-    //     </Grid>
-    //     <Grid item xs={3}>
-    //     <Item>
-    //           <Item sx={{ width: 170, height: 130 }}>
-    //              <Box sx={{padding:"30px 30px"}} onClick={handleOnCellClick}>
-    //               <Typography component="h2" variant="h2">
-    //                  Chapter 2
-    //               </Typography>
-    //              </Box>
-    //           </Item>
-    //           <Box sx={{alignItems:'center'}}>
-
-    //              <Box sx={{display:'flex',alignItems:'center'}} >
-    //                   <GroupOutlinedIcon fontSize='large'/>
-    //                   <Typography component="h2" variant="h5">
-    //                   +3
-    //                  </Typography>
-    //              </Box>
-
-    //           </Box>
-    //       </Item>
-    //     </Grid>
-    //     <Grid item xs={3}>
-    //     <Item>
-    //           <Item sx={{ width: 170, height: 130 }}>
-    //              <Box sx={{padding:"30px 30px"}}>
-    //               <Typography component="h2" variant="h2">
-    //                  Chapter 3
-    //               </Typography>
-    //              </Box>
-    //           </Item>
-    //           <Box sx={{alignItems:'center'}}>
-
-    //              <Box sx={{display:'flex',alignItems:'center'}} >
-    //                   <GroupOutlinedIcon fontSize='large'/>
-    //                   <Typography component="h2" variant="h5">
-    //                   +2
-    //                  </Typography>
-    //              </Box>
-
-    //           </Box>
-    //       </Item>
-    //     </Grid>
-    //     <Grid item xs={3}>
-    //     <Item>
-    //           <Item sx={{ width: 170, height: 130 }}>
-    //              <Box sx={{padding:"30px 30px"}}>
-    //               <Typography component="h2" variant="h2">
-    //                  Chapter 4
-    //               </Typography>
-    //              </Box>
-    //           </Item>
-    //           <Box sx={{alignItems:'center'}}>
-
-    //              <Box sx={{display:'flex',alignItems:'center'}} >
-    //                   <GroupOutlinedIcon fontSize='large'/>
-    //                   <Typography component="h2" variant="h5">
-    //                   +5
-    //                  </Typography>
-    //              </Box>
-
-    //           </Box>
-    //       </Item>
-    //     </Grid>
-    //   </React.Fragment>
-    // );
 };
 
 const Dashboard = () => {
@@ -655,40 +343,7 @@ const Dashboard = () => {
         </Box>
     );
 
-    // return (
-    //     <Grid container spacing={gridSpacing}>
-    //         <Grid item xs={12}>
-    //             <Grid container spacing={gridSpacing}>
-    //                 <Grid item lg={4} md={6} sm={6} xs={12}>
-    //                     <EarningCard isLoading={isLoading} />
-    //                 </Grid>
-    //                 <Grid item lg={4} md={6} sm={6} xs={12}>
-    //                     <TotalOrderLineChartCard isLoading={isLoading} />
-    //                 </Grid>
-    //                 <Grid item lg={4} md={12} sm={12} xs={12}>
-    //                     <Grid container spacing={gridSpacing}>
-    //                         <Grid item sm={6} xs={12} md={6} lg={12}>
-    //                             <TotalIncomeDarkCard isLoading={isLoading} />
-    //                         </Grid>
-    //                         <Grid item sm={6} xs={12} md={6} lg={12}>
-    //                             <TotalIncomeLightCard isLoading={isLoading} />
-    //                         </Grid>
-    //                     </Grid>
-    //                 </Grid>
-    //             </Grid>
-    //         </Grid>
-    //         <Grid item xs={12}>
-    //             <Grid container spacing={gridSpacing}>
-    //                 <Grid item xs={12} md={8}>
-    //                     <TotalGrowthBarChart isLoading={isLoading} />
-    //                 </Grid>
-    //                 <Grid item xs={12} md={4}>
-    //                     <PopularCard isLoading={isLoading} />
-    //                 </Grid>
-    //             </Grid>
-    //         </Grid>
-    //     </Grid>
-    // );
+
 };
 
 export default Dashboard;

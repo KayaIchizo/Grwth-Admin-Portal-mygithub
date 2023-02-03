@@ -200,7 +200,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
                         </div>
                         <TabContext value={dialogvalue}>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                <TabList onChange={handleChange} aria-label="lab API tabs example" indicatorColor={'#7983FF'} >
+                                <TabList onChange={handleChange} aria-label="lab API tabs example"  indicator={{backgroundColor: '#e77600'}} >
                                     <Tab label="Assignment Info" value="1" />
                                     <Tab label="Individual/Group" value="2" />
                                 </TabList>
@@ -632,7 +632,8 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
                                 margin: '10px 20px',
                                 width: '67%',
                                 fontWeight: '500',
-                                fontSize: '20px'
+                                fontSize: '20px',
+                                fontFamily:"Livvic"
                             }}
                             id="fade-button"
                             aria-controls={openpoper ? 'fade-menu' : undefined}
@@ -645,7 +646,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
                     ) : (
                         <Button
                             variant="contained"
-                            style={{ borderRadius: '20px', margin: '10px 20px', width: '67%' }}
+                            style={{ borderRadius: '20px', margin: '10px 20px', width: '67%', fontFamily:"Livvic" }}
                             id="fade-button"
                             aria-haspopup="true"
                             onClick={() => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room1')}
