@@ -104,13 +104,11 @@ export default function Assignmentlistpage() {
         setCalendarvalue(date);
     };
     const callbackedit = (id) => {
-        console.log('id====', id);
-        // mockup[id]
+      
     };
 
     const [data, setData] = useState(userRows);
     const handleDelete = (id) => {
-        console.log('deelee=', id);
         setData(data.filter((item) => item.id !== id));
     };
 
@@ -162,12 +160,11 @@ export default function Assignmentlistpage() {
         }
    
         setSubject(e.target.value)
-        console.log(e.target.value);
+     
     }
 
     const handleChangeClass =  (e) => {
         setClassType(e.target.value);
-        console.log(e.target.value);
     }
 
     const nexttabvalue = () => {
@@ -189,7 +186,6 @@ export default function Assignmentlistpage() {
     const [listdata, setListdata ] = useState([]);
 
     const handleSelect = (event, nodeIds) => {
-        console.log("nodeids=",nodeIds[0].trim());
         setSelected(nodeIds);
       
         if((nodeIds[0] != 1) && (nodeIds[0] != 2) && (nodeIds[0] != 6) && (nodeIds[0] != 10) && (nodeIds[0] != 14) && (nodeIds[0] != 18) ){          
@@ -229,7 +225,7 @@ export default function Assignmentlistpage() {
     const month = currentDate.getMonth() + 1
     const year = currentDate.getFullYear()
     const currentYearDate = year + "-" + month + "-" + day;
-    console.log(currentYearDate)
+  
 
     const [value,setValue] = useState( 
         dayjs(currentYearDate)

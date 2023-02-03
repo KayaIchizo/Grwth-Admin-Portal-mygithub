@@ -60,7 +60,6 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const openpoper = Boolean(anchorEl);
-    console.log('open', openpoper);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -79,7 +78,6 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
     };
 
     const openLinkInNewTab = (url) => {
-        console.log('angry');
         const newTab = window.open(url, '_blank');
         if (newTab) newTab.opener = null;
         setAnchorEl(null);
@@ -117,7 +115,6 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
     const [classType, setClassType] = useState('');
     const handleChangeClass =  (e) => {
         setClassType(e.target.value);
-        console.log(e.target.value);
     }
 
     const nexttabvalue = () => {
@@ -150,7 +147,6 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
     const [listdata, setListdata ] = useState([]);
 
     const handleSelect = (event, nodeIds) => {
-        console.log("nodeids=",nodeIds[0].trim());
         setSelected(nodeIds);
       
         if((nodeIds[0] != 1) && (nodeIds[0] != 2) && (nodeIds[0] != 6) && (nodeIds[0] != 10) && (nodeIds[0] != 14) && (nodeIds[0] != 18) ){          
@@ -204,7 +200,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
                         </div>
                         <TabContext value={dialogvalue}>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                <TabList onChange={handleChange} aria-label="lab API tabs example">
+                                <TabList onChange={handleChange} aria-label="lab API tabs example" indicatorColor={'#7983FF'} >
                                     <Tab label="Assignment Info" value="1" />
                                     <Tab label="Individual/Group" value="2" />
                                 </TabList>
@@ -669,13 +665,13 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
                         TransitionComponent={Fade}
                     >
                         <MenuItem onClick={handleClickOpen} sx={{ color: theme.palette.background.primaryColor, fontWeight: '500' }}>
-                            <CreateNewFolderIcon sx={{ color: theme.palette.background.primaryColor }} /> Create Assignment
+                            <CreateNewFolderIcon sx={{ color: '#2CC5CE', mr:"5px" }} /> Create Assignment
                         </MenuItem>
                         <MenuItem
                             onClick={() => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room1')}
-                            sx={{ color: theme.palette.background.primaryColor, fontWeight: '500' }}
+                            sx={{ color: theme.palette.background.primaryColor, fontWeight: '500'}}
                         >
-                            <AddHomeIcon sx={{ color: '#F7C005' }} /> Create Room
+                            <AddHomeIcon sx={{ color: '#F7C005', mr:"5px"  }} /> Create Room
                         </MenuItem>
                     </Menu>
 
@@ -684,7 +680,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
 
                     <Calendarview />
                     <QuestionMarkSharpIcon
-                        style={{ marginTop: '25px', color: '#7983FF', borderRadius: '50%', backgroundColor: '#F2F2F2' }}
+                        style={{ position:"absolute", bottom: '0px', color: '#7983FF', borderRadius: '50%', backgroundColor: '#F2F2F2' }}
                     />
                 </PerfectScrollbar>
             </BrowserView>

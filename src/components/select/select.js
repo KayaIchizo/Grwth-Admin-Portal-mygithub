@@ -8,7 +8,6 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 const BasicSelect = ({ defaultValue, items }) => {
     const [age, setAge] = useState('');
     const handleChange = (event) => {
-        console.log(event.target.value);
         setAge(event.target.value);
     };
 

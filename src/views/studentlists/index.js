@@ -94,10 +94,7 @@ export default function Studentlists() {
 
     const [filterValue, setFilterValue] = useState('');
 
-    const handleChangeFilter = (e) => {
-        console.log("value=",e.target.value)
-        console.log("ffffffff");
-        
+    const handleChangeFilter = (e) => {     
         setFilterValue(e.target.value);
         if(e.target.value == "null"){
             setUserlists(userinternallists)
@@ -123,7 +120,7 @@ export default function Studentlists() {
 
                <Box sx={{display:"flex", justifyContent:"space-around"}}>
                     <Box sx={{marginRight:"100px"}}>
-                            Subject:Maths
+                            Subject.Maths
                     </Box>
                     <Box>
                             Class:1A
@@ -143,7 +140,7 @@ export default function Studentlists() {
                 <Box sx={{display:"flex", alignItems:"center"}}>
                     <Stack spacing={4} direction="row">
                     <Typography variant="h3" component="h4" sx={{ borderRadius:"5%", backgroundColor:"#2CC5CE", color:"white" }}>
-                        3 Submitted 
+                        3.\Submitted 
                     </Typography>
                     
                 

@@ -88,51 +88,22 @@ const MenuCard = () => {
     const theme = useTheme();
 
     return (
-        <CardContent sx={{ p: 2 }}>
-            <List sx={{ p: 0, m: 0 }}>
-                {/* <ListItem alignItems="flex-start" disableGutters sx={{ p: 0 }}>
-                        <ListItemAvatar sx={{ mt: 0 }}>
-                            <Avatar
-                                variant="rounded"
-                                sx={{
-                                    ...theme.typography.commonAvatar,
-                                    ...theme.typography.largeAvatar,
-                                    color: theme.palette.primary.main,
-                                    border: 'none',
-                                    borderColor: theme.palette.primary.main,
-                                    background: '#fff',
-                                    marginRight: '12px'
-                                }}
-                            >
-                                <TableChartOutlinedIcon fontSize="inherit" />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                            sx={{ mt: 0 }}
-                            primary={
-                                <Typography variant="subtitle1" sx={{ color: theme.palette.primary[800] }}>
-                                    Storage
-                                </Typography>
-                            }
-                            secondary={<Typography variant="caption"> 220Mb/2GB        used</Typography>}
-                        />
-                    </ListItem> */}
-            </List>
+        <CardContent sx={{ p: 0 }}>
+          
+            <Typography variant="h3" component="h3">
+                        Storage
+            </Typography>
             <LinearProgressWithLabel value={90} />
-            {/* <ListItemText
-                            sx={{ mt: 0 }}
-                            secondary={<Typography variant="caption"> 220Mb/2GB        used</Typography>}
-                /> */}
-            {/* <Calendarview /> */}
-            <Box sx={{ mt: 1, display: 'flex', justifyContent: 'space-between' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Box>
+                   
                     <Typography variant="caption" sx={{ color: '#CE2C2C' }}>
                         {' '}
                         220Mb
                     </Typography>
                     <Typography variant="caption"> /2Gb</Typography>
                 </Box>
-                <Typography variant="Used"> Used</Typography>
+                <Typography variant="Used"> used</Typography>
             </Box>
         </CardContent>
     );

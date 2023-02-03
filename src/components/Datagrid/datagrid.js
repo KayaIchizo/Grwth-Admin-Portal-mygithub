@@ -225,7 +225,7 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
             setDataRows(rows.filter((rowone) => rowone.calories === subject));
         }
         else if(subject == "Liberal Studies"){
-            console.log("ddddddddddd")
+         
             setDataRows(rows.filter((rowone) => rowone.calories === subject));
         }
     },[subject])
@@ -243,19 +243,19 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
             setDataRows(rows.filter((rowone) => rowone.name === classtype));
         }
         else if(classtype == "B1"){
-            console.log("ddddddddddd")
+         
             setDataRows(rows.filter((rowone) => rowone.name === classtype));
         }
         else if(classtype == "B2"){
-            console.log("ddddddddddd")
+       
             setDataRows(rows.filter((rowone) => rowone.name === classtype));
         }
         else if(classtype == "C1"){
-            console.log("ddddddddddd")
+         
             setDataRows(rows.filter((rowone) => rowone.name === classtype));
         }
         else if(classtype == "C2"){
-            console.log("ddddddddddd")
+       
             setDataRows(rows.filter((rowone) => rowone.name === classtype));
         }
 
@@ -308,7 +308,6 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
 
     const navigate = useNavigate();
     const handleDelete = (id) => {
-        console.log("id=", id);
         setDataRows(dataRows.filter((item) => item.calories !== id));
     };
 
@@ -316,13 +315,11 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
     
 
     const onMultipleChange = value => {
-        console.log('onMultipleChange', value);
         setMultipleValue([]);
       };
 
     const onSelect = (...args) => {
     // use onChange instead
-    console.log(args);
     };
 
     const [gData, SetgData] = useState([]);
@@ -343,7 +340,6 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
     const [alertOpen,setAlertOpen] = useState(false);
 
     const sharetoeditClick = () => {
-        console.log("dssssss")
        setAlertOpen(true);
        setShareToEdit('https://grwthx.com/file/d/1awregsdf5/view?usp=sharing')
     }
@@ -412,7 +408,7 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
                 open={shareOpen}
                 onClose={handleshareClose}
                 aria-labelledby="alert-dialog-title"
-                sx={{ width: '25%', height: '70%', position: 'absolute', top: '10%', left: '40%' }}
+                sx={{ width: '25%', height: '70%', position: 'absolute', top: '10%', left: '40%', }}
             >
              
                 <div style={{display:"flex",backgroundColor:"#2CC5CE",padding:"10px"}}>
@@ -425,7 +421,7 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
              
                         
             
-                <DialogContent>
+                <DialogContent sx={{backgroundColor:"#f3efef"}}>
                  
                         {/* <IconTrash /> */}
                         {/* <Typography variant="h3" component="h3" sx={{backgroundColor:"#2CC5CE", color:"black",width:"100%",textAlign:"center", marginBottom:"10px" }}>
@@ -433,7 +429,7 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
                         </Typography> */}
                     
 
-                    <DropdownTreeSelectHOC data={data} onChange={onChange}  />
+                    <DropdownTreeSelectHOC data={data} onChange={onChange}    />
 
                     
                     <Stack mt={28}>
@@ -443,7 +439,7 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
                         <Box sx={{display:"flex", alignItems: 'center'}}>
                      
                             <TextField id="sharetoedit" value = {sharetoEdit} variant="outlined" sx={{ width: '100%',mr:"10px" }} placeholder="URL"/>
-                            <img src={usericon} alt="UserIcon" width={40} height={40}  onClick={sharetoeditClick}/>
+                            <img src={usericon} alt="UserIcon" width={40} height={40}  onClick={sharetoeditClick} sx={{backgroundColor:"red"}}/>
                             
                             <Snackbar
                                 open={alertOpen}

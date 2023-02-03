@@ -53,7 +53,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const openLinkInNewTab = (url) => {
-    console.log('angry');
+
     const newTab = window.open(url, '_blank');
     if (newTab) newTab.opener = null;
 };
@@ -63,7 +63,7 @@ function SamplePrevArrow(props) {
     return (
         <div
             className={className}
-            style={{ ...style, display: "block", color: "black", backgroundColor: "grey", borderRadius: "30px",marginRight:"65px" }}
+            style={{ ...style, display: "block", color: "black", backgroundColor: "grey", borderRadius: "30px",marginRight:"65px",   dropShadow:"3px 2px 5px #4444dd" }}
             onClick={onClick}
         />
     );
@@ -77,7 +77,7 @@ const settings = {
     slidesToScroll: 1,
     initialSlide: 0,
     nextArrow: <SamplePrevArrow />,
-    prevArrow: <SamplePrevArrow />
+    // prevArrow: <SamplePrevArrow />
 };
 
 
@@ -122,22 +122,21 @@ function FormRow() {
             <Container>
                 <Slider {...settings}>
                     {createdByMeMockdatas.map((onedata, id) => (
-                        <Tilt  key={id}>
+                        // <Tilt  key={id}>
                             <Item key={id}>
-                                <ImageListItem  >
+                              
                                     <img
                                         src={onedata.imageurl}
                                         alt="room1"
                                         loading="lazy"
-                                        width={300}
-
+                                        width={290}
+                                        style={{boxShadow:"1px 0px 10px -4px #ccc"}}
                                     // onClick={ () => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room2')}
                                     />
-                                </ImageListItem>
                                 {/* boxShadow:"0px 3.0331px 3.0331px rgba(0, 0, 0, 0.25)", borderRadius:"7.58274px 7.58274px 0px 0px" */}
-                                <Box sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', mt: 2, }}>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', mt: 2, width:"300px" }}>
                                     <Box sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                                        <img src={UserIconGroup} alt="icon" loading="lazy" width={60} height={30} />
+                                        <img src={UserIconGroup} alt="icon" loading="lazy" width={60} height={40} />
                                         <Typography component="h2" variant="h5" sx={{ mr: 2 }}>
                                             {onedata.sharedNumber}
                                         </Typography>
@@ -152,7 +151,7 @@ function FormRow() {
                                     </Box>
                                 </Box>
                             </Item>
-                        </Tilt>
+                        // </Tilt>
                     ))}
                 </Slider>
             </Container>
@@ -370,7 +369,7 @@ const RecentAssignmentsFormRow = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const openpoper = Boolean(anchorEl);
 
-    console.log("openeee", openpoper);
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
