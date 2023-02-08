@@ -11,7 +11,7 @@ const Client = () => {
     const location = useLocation();
     const [queryParameters] = useSearchParams();
     const [code, setCode] = useState(queryParameters.get("code"));
-    const url = `https://uatgrwth.app360.cn/grwth-as/oauth/token?grant_type=authorization_code&code=` + code + `&client_id=grwth_x&client_secret=12345678&redirect_uri=http://localhost:8081/sso-demo-client/callback`;
+    const url = `https://corsproxy.io/?https://uatgrwth.app360.cn/grwth-as/oauth/token?grant_type=authorization_code&code=` + code + `&client_id=grwth_x&client_secret=12345678&redirect_uri=http://localhost:8081/sso-demo-client/callback`;
 
     const postdata = {
         grant_type: "authorization_code",
@@ -23,9 +23,11 @@ const Client = () => {
 
     var config = {
         method: 'post',
+        mode: 'no-cors',
         url: url,
         headers: {
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            'Access-Control-Allow-Origin' : '*',
         }
     };
 
