@@ -11,7 +11,7 @@ const Client = () => {
     const location = useLocation();
     const [queryParameters] = useSearchParams();
     const [code, setCode] = useState(queryParameters.get("code"));
-    const url = `https://uatgrwth.app360.cn/grwth-as/oauth/token?grant_type=authorization_code&code=` + code + `&client_id=grwth_x&client_secret=12345678&redirect_uri=https://grwthx/sso-demo-client/callback`;
+    const url = `https://uatgrwth.app360.cn/grwth-as/oauth/token?grant_type=authorization_code&code=` + code + `&client_id=grwth_x&client_secret=12345678&redirect_uri=https://grwthx.netlify.app/sso-demo-client/callback`;
 
     const postdata = {
         grant_type: "authorization_code",
