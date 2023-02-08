@@ -85,7 +85,7 @@ function FavouriteRoom() {
   
     return (
         <React.Fragment>
-            <Grid container spacing={4} sx={{ml:"18px"}}>
+            <Grid container spacing={9} sx={{ml:"18px"}}>
                     {roomObjectMockdatas.map((onedata, index) => (
                         //spacing size problem
                         <Grid container spacing={0} xs={3} item  key={index}>  

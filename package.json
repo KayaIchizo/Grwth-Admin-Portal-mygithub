@@ -1,8 +1,8 @@
 {
-    "name": "berry-material-react-free",
-    "version": "3.2.0",
+    "name": "Grwthx project",
+    "version": "0.0.1",
     "private": true,
-    "homepage": "https://berrydashboard.io/",
+    "homepage": "https://grwthx.io",
     "dependencies": {
         "@emotion/cache": "^11.9.3",
         "@emotion/react": "^11.9.3",
@@ -17,6 +17,7 @@
         "@tabler/icons": "^1.72.0",
         "@types/react-select": "^5.0.1",
         "apexcharts": "^3.35.3",
+        "axios": "^1.3.2",
         "dayjs": "^1.11.7",
         "formik": "^2.2.9",
         "framer-motion": "^6.3.16",
@@ -44,7 +45,7 @@
         "yup": "^0.32.11"
     },
     "scripts": {
-        "start": "react-scripts start",
+        "start": "cross-env PORT=8081 react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
@@ -75,6 +76,7 @@
         "@babel/core": "^7.18.6",
         "@babel/eslint-parser": "^7.18.2",
         "@babel/preset-react": "^7.18.6",
+        "cross-env": "^7.0.3",
         "eslint": "^8.19.0",
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-config-airbnb-typescript": "^17.0.0",
