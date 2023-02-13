@@ -31,10 +31,12 @@ import './index.css';
 import DropdownTreeSelectHOC from "./HOC";
 // import 'react-dropdown-tree-select/dist/styles.css'
 import data  from './data.json';
-import usericon from 'assets/images/roomimg/share_item.webp';
+import usericon from 'assets/images/roomimg/Vector.png';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { useEffect } from 'react';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -95,7 +97,7 @@ const rows = [
     createData('C1', 'English', 'My Village Essay', '03/22/2023 11:30 AM', 4.0),
     createData('B2', 'Maths', 'Transformations', '03/17/2023 02:40 PM', 4.3),
     createData('D1', 'Liberal Studies', 'Importance of Music', '03/14/2023 03:10 PM', 4.3),
-    createData('B1', 'English', 'Personal', '03/10/2023 9:20 AM', 4.0),
+    createData('B1', 'English', 'Personal', '03/10/2023 09:20 AM', 4.0),
     createData('D2', 'Maths', 'Matrix Problems', '03/07/2023 08:00 PM', 6.0),
     createData('E2', 'Liberal Studies', 'Grammar and Checking', '03/04/2023 06:00 PM', 6.0),
    
@@ -104,7 +106,7 @@ const rows = [
 const filterrowsEnglish = [
     createData('A1', 'English', 'My Favourite Book Essay', '03/31/2023 06:50 PM', 4.0),
     createData('C1', 'English', 'My Village Essay', '03/22/2023 11:30 AM', 4.3),
-    createData('B1', 'English', 'Personal', '03/10/2023 9:20 AM', 6.0),
+    createData('B1', 'English', 'Personal', '03/10/2023 09:20 AM', 6.0),
 ]
 
 const filterrowsMaths = [
@@ -246,33 +248,42 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
     }
 
 
-    const [sharetoEdit,setShareToEdit] = useState('');
-
-    const [sharetoPlay,setShareToPlay] = useState('')
+    const [sharetoEdit,setShareToEdit] = useState('https://grwthx.com/file/d/1awregsdf5/view?usp=sharing');
+    const [sharetoPlay,setShareToPlay] = useState('https://grwthx.com/file/d/2awregege3/view?usp=sharing')
     
     const [alertOpen,setAlertOpen] = useState(false);
 
     const sharetoeditClick = () => {
        setAlertOpen(true);
-       setShareToEdit('https://grwthx.com/file/d/1awregsdf5/view?usp=sharing')
     }
 
-    const handleCloseAlert = () => {
-     
+    const handleCloseAlert = () => { 
         setAlertOpen(false);
     };
 
+    useEffect(() => {
+        document.addEventListener('keydown', keyPressHandler, false);
+    },[])
 
     const [alertplayOpen,setAlertPlayOpen] = useState(false);
-    const  sharetoplayClick =  () => {
+
+    const [shareallow2, setShareallow2] = useState(false)
+    const  sharetoplayClick =  () => {     
         setAlertPlayOpen(true);
-        setShareToPlay('https://grwthx.com/file/d/2awregege3/view?usp=sharing')
     }
 
     const handleClosePlayAlert = () => {
      
         setAlertPlayOpen(false);
     };
+
+
+    const keyPressHandler = (event) => {
+
+        if (event.keyCode === 86) {
+            setShareToPlay('https://grwthx.com/file/d/2awregege3/view?usp=sharing')
+        }
+    }
 
 
 
@@ -324,7 +335,7 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
                 sx={{ width: '25%', height: '70%', position: 'absolute', top: '10%', left: '40%', }}
             >
              
-                <div style={{display:"flex",backgroundColor:"#2CC5CE",padding:"10px"}}>
+                <div style={{display:"flex",backgroundColor:"#DFDFDF",padding:"10px"}}>
                     <Typography variant="h3" component="h3" sx={{ color:"black",width:"100%", margin:"0px", padding:"0px" }}>
                                 {'Share Link'} <br />
                     </Typography> 
@@ -352,12 +363,17 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
                         <Box sx={{display:"flex", alignItems: 'center'}}>
                      
                             <TextField id="sharetoedit" value = {sharetoEdit} variant="outlined" sx={{ width: '100%',mr:"10px" }} placeholder="URL"/>
-                            <img src={usericon} alt="UserIcon" width={40} height={40}  onClick={sharetoeditClick} sx={{backgroundColor:"red"}}/>
+
+                            <CopyToClipboard text={sharetoEdit}>
+                          
+                              <img src={usericon} alt="UserIcon" width={15} height={15}  onClick={sharetoeditClick} sx={{backgroundColor:"red"}}/>
+                            </CopyToClipboard>
+                          
                             
                             <Snackbar
                                 open={alertOpen}
                                 autoHideDuration={1000}
-                                message="Get linked"
+                                message="Link Copied"
                                 onClose={handleCloseAlert}
                                 sx={{position:"absolute",top:"17%", width: '10%'}}
                             
@@ -370,13 +386,22 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
                         </Typography> 
                         <Box sx={{display:"flex", alignItems: 'center'}}>
                         <TextField id="sharetoplay" value = {sharetoPlay} variant="outlined" sx={{ width: '100%',mr:"10px" }} placeholder="URL"/>
-                            <img src={usericon} alt="UserIcon" width={40} height={40} onClick={sharetoplayClick} />
+
+                        
+                        <CopyToClipboard text={sharetoPlay}>
+                          
+                             <img src={usericon} alt="UserIcon"  width={15} height={15} onClick={sharetoplayClick} />
+                        </CopyToClipboard>
+                           
+                           
+                       
+                         
 
                             
                             <Snackbar
                                     open={alertplayOpen}
                                     autoHideDuration={1000}
-                                    message="Get linked"
+                                    message="Link Copied"
                                     onClose={handleClosePlayAlert}
                                     sx={{position:"absolute",top:"48%",right:"70%", width: '10%'}}
                                 
@@ -436,6 +461,7 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
                                     variant="contained"
                                     aria-haspopup="true"
                                     sx={{height:"25px", backgroundColor:"#2CC5CE",margin:"10px", color:"white", fontFamily:"Livvic"}}
+                                    onClick={()=>navigate('/assignmentedit/:id',{state:{eachvalue:row}})}
                                 >
                                 Edit
                                 </Button>

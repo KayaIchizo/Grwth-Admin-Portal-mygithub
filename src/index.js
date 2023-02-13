@@ -13,9 +13,12 @@ import { store } from 'store';
 // style + assets
 import 'assets/scss/style.scss';
 import config from './config';
+import { registerLicense } from '@syncfusion/ej2-base';
 
 // ==============================|| REACT DOM RENDER  ||============================== //
 
+
+registerLicense('ORg4AjUWIQA/Gnt2VVhkQlFacldJXnxIfEx0RWFab1Z6cVVMZF9BNQtUQF1hSn5Rd0VjUXpfcnVVQWZY');
 const container = document.getElementById('root');
 // const root = createRoot(container);  createRoot(container!) if you use TypeScript
 ReactDOM.render(
