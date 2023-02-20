@@ -340,30 +340,5 @@ const Roomobj = () => (
     </Box>
 );
 
-// function Rowsdata(){
-//   console.log("Cccccc")
-//   return(
-//     <React.Fragment>
-//       <Grid item xs={3}>
-//           <Item>Item</Item>
-//       </Grid>
-//     </React.Fragment>
-//   )
-
-// }
-
-// const Roomobj = () => {
-//     <Box sx={{ flexGrow: 1 }}>
-//       <Grid container spacing={10} sx={{mx:'auto'}}>
-//          <Rowsdata />
-//           {/* {
-//             Griddatas.map((data) => (
-//                 <Rowsdata key={data.id} contents={data} />
-//             ))
-//           }   */}
-//       </Grid>
-
-//     </Box>
-// }
 
 export default Roomobj;

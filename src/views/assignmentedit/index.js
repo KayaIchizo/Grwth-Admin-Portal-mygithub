@@ -18,14 +18,12 @@ import {useLocation} from 'react-router-dom';
 export default function AssignmentEdit() {
      
     const location = useLocation();
-    console.log(location.state.eachvalue)
     const datevalue = location.state.eachvalue.carbs;
     const datevalue1 = datevalue.replace("PM","");
     const datevalue2 = datevalue1.replace("AM","");
     const datevalue3 = datevalue2.split(" ");
     const datevalue4 = datevalue3[0].split("/");
     const realdatevalue = datevalue4[2] + "-" +  datevalue4[0] + "-" +  datevalue4[1] + " " + datevalue3[1];
-     console.log(realdatevalue)
     return (
         <Container fixed>
             <Box>

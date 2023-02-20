@@ -41,8 +41,10 @@ import {
     IconHeart,
     IconArchive
 } from '@tabler/icons';
-const icons = { IconHeart, IconArchive };
+import axios from 'axios';
 
+
+const icons = { IconHeart, IconArchive };
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -53,96 +55,119 @@ const Item = styled(Paper)(({ theme }) => ({
     // boxShadow: "3.0331px 0px 3.0331px rgba(0, 0, 0, 0.25)",
     boxShadow: "0 8px 8px 3px rgb(0 0 0 / 25%)",
     marginTop:30
-
     // transform: "rotate(90deg)",
-
 }));
 
-
-function FormRow() {
-    const Userlist = [{ title: 'Everyone' }, { title: 'Joby' }, { title: 'Alan' }, { title: 'Kaya' }, { title: 'Noah' }];
-    const [openstudentlist, Setopenstudentlist] = useState(false);
-    const handleclickstudentlistopen = () => {
-        Setopenstudentlist(true);
+// Library page 
+const Library = () => {
+    const [value, setValue] = useState('1');
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
     };
-    const handleclickstudentlistclose = () => {
-        Setopenstudentlist(false);
-    };
+    const theme = useTheme();
+    const StyledTab = styled(Tab)({
+        "&.Mui-selected": {
+            color: theme.palette.background.primaryColor
+        }
+    });
 
-    const currentDate = new Date();
-    const toIsodate = currentDate.toISOString();
-    const toIsodate1 = toIsodate.slice(0, -5);
+    const [roomdata, setRoomdata] = useState([]);
+    const [objectdata, setObjectdata] = useState([]);
+
+
+    useEffect(() => {
+  
+        const getlibraryroom = async () => {
+            const res = await axios.post('http://localhost:3000/api/library/usericon',{   // get favourite icon status setting
+                userinfo:localStorage.getItem("userinfo"),
+                type:"Room"
+            })
+            setRoomdata(res.data);
+          }
+        getlibraryroom();
+
+        const getlibraryobject = async () => {
+            const res = await axios.post('http://localhost:3000/api/library/getobject',{ 
+                userinfo:localStorage.getItem("userinfo"),
+                type:"Object"
+            })
+        
+            setObjectdata(res.data);
+        }
+        getlibraryobject();  
+    },[])
 
 
 
-    const createdByMeMockdatas = [
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '', heart: true },
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '+5', heart: false },
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '+5', heart: true },
-
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '', heart: false },
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '+5', heart: true },
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '+5', heart: false },
-
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '', heart: false },
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '+5', heart: false },
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '+5', heart: false },
-
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '', heart: true },
-        { imageurl: RoomA1, title: "Room Name last", sharedNumber: '+5', heart: false },
-        { imageurl: RoomA1, title: "Room Name", sharedNumber: '+5', heart: false }
-    ];
+    const FormRow = () => {
+        const Userlist = [{ title: 'Everyone' }, { title: 'Joby' }, { title: 'Alan' }, { title: 'Kaya' }, { title: 'Noah' }];
+        const [openstudentlist, Setopenstudentlist] = useState(false);
+        const handleclickstudentlistopen = () => {
+            Setopenstudentlist(true);
+        };
+        const handleclickstudentlistclose = () => {
+            Setopenstudentlist(false);
+        };
     
-    const roomname = "Room A";
-    const [iconHeart, SetIconHeart] = useState(-1);
-    const iconHeartClick = (index) => {
-        if(iconHeart === index)
-            SetIconHeart(-1);
-        else
-            SetIconHeart(index)
+        const currentDate = new Date();
+        const toIsodate = currentDate.toISOString();
+        const toIsodate1 = toIsodate.slice(0, -5);    
+        const roomname = "Room A";
+        const [iconHeart, SetIconHeart] = useState(-1);
+     
+
+        async function iconheartclickdatabase(title, check) {
+            const userinfo = localStorage.getItem('userinfo');
+         
+            const updateresult = await axios.post("http://localhost:3000/api/library/favourite", {
+               userinfo,title,check,type:"Room"
+            })
+            setRoomdata(updateresult.data);
+
+        }
+    
+        return (
+            <React.Fragment>
+                <Grid container spacing={4}>
+                    {roomdata.map((onedata, index) => (
+                        //spacing size problem
+                        <Grid container spacing={0} xs={3} item key={index}>
+                            <Item>
+                                <ImageListItem sx={{ mt: 7 }}>
+                                    <img
+                                        src={RoomA1}
+                                        alt="room1"
+                                        loading="lazy"
+                                        style={{width:"270px", height:"200px"}}
+    
+                                    // onClick={ () => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room2')}
+                                    />
+                                </ImageListItem>
+                                {/* boxShadow:"0px 3.0331px 3.0331px rgba(0, 0, 0, 0.25)", borderRadius:"7.58274px 7.58274px 0px 0px" */}
+                                <Box sx={{ display: 'flex', justifyContent: "space-between", padding: "0px 13px" }}>
+                                    <Typography component="h2" variant="h2">
+                                          
+                                    </Typography>
+                                    <IconHeart style = {onedata.favourite == true ?{fill:"#CE2C2C"}:{}} onClick = {() => iconheartclickdatabase(onedata.title,onedata.favourite)}/>
+                                </Box>
+    
+                            </Item>
+                            <Typography component="h2" variant="h2" sx={{mt:2,fontFamily:"Livvic"}}>
+                                        {onedata.title}
+                            </Typography>
+    
+                        </Grid>
+    
+                    ))}
+    
+                </Grid>
+            </React.Fragment>
+        );
+
     }
 
-    return (
-        <React.Fragment>
-            <Grid container spacing={4}>
-                {createdByMeMockdatas.map((onedata, index) => (
-                    //spacing size problem
-                    <Grid container spacing={0} xs={3} item key={index}>
-                        <Item>
-                            <ImageListItem sx={{ mt: 7 }}>
-                                <img
-                                    src={onedata.imageurl}
-                                    alt="room1"
-                                    loading="lazy"
-                                    style={{width:"270px", height:"200px"}}
 
-                                // onClick={ () => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room2')}
-                                />
-                            </ImageListItem>
-                            {/* boxShadow:"0px 3.0331px 3.0331px rgba(0, 0, 0, 0.25)", borderRadius:"7.58274px 7.58274px 0px 0px" */}
-                            <Box sx={{ display: 'flex', justifyContent: "space-between", padding: "0px 13px" }}>
-                                <Typography component="h2" variant="h2">
-                                      
-                                </Typography>
-                                <IconHeart style = {iconHeart === index ?{fill:"red"}:{}} onClick = {() => iconHeartClick(index)}/>
-                            </Box>
-
-                        </Item>
-                        <Typography component="h2" variant="h2" sx={{mt:2,fontFamily:"Livvic"}}>
-                                    {roomname}
-                        </Typography>
-
-                    </Grid>
-
-                ))}
-
-            </Grid>
-        </React.Fragment>
-    );
-
-}
-
-
+    
 
 function ObjectRoom() {
 
@@ -152,48 +177,31 @@ function ObjectRoom() {
     const toIsodate1 = toIsodate.slice(0, -5);
 
 
+    async function iconObjectClick(id, check) {
+        const userinfo = localStorage.getItem('userinfo');
+     
+        const updateresult = await axios.post("http://localhost:3000/api/library/objectfavourite", {
+           id:id, check, type:"Object", userinfo
+        })
+ 
+        setObjectdata(updateresult.data);
 
-    const roomObjectMockdatas = [
-        { imageurl: RoomA_Items1, title: "Bookshelf", sharedNumber: '', heart: true },
-        { imageurl: RoomA_Items2, title: "Desk", sharedNumber: '+5', heart: false },
-        { imageurl: RoomA_Items3, title: "Chair", sharedNumber: '+5', heart: true },
-
-        { imageurl: RoomA_Items4, title: "Drawing Desk", sharedNumber: '', heart: false },
-        { imageurl: RoomA_Items1, title: "Bookshelf", sharedNumber: '+5', heart: true },
-        { imageurl: RoomA_Items2, title: "Desk", sharedNumber: '+5', heart: false },
-
-        { imageurl: RoomA_Items3, title: "Chair", sharedNumber: '', heart: false },
-        { imageurl: RoomA_Items4, title: "Drawing Desk", sharedNumber: '+5', heart: false },
-        { imageurl: RoomA_Items1, title: "Bookshelf", sharedNumber: '+5', heart: false },
-
-        { imageurl: RoomA_Items2, title: "Desk", sharedNumber: '', heart: true },
-        { imageurl: RoomA_Items3, title: "Chair", sharedNumber: '+5', heart: false },
-        { imageurl: RoomA_Items4, title: "Drawing Desk", sharedNumber: '+5', heart: false }
-    ];
-    const roomname = "Room A"
-
-
-    const [iconObject, SetIconObject] = useState(-1);
-    const iconObjectClick = (index) => {
-        if(iconObject === index)
-            SetIconObject(-1);
-        else
-            SetIconObject(index)
     }
 
+    const [iconObject, SetIconObject] = useState(-1);
     return (
         <React.Fragment>
             <Grid container spacing={4}>
-                {roomObjectMockdatas.map((onedata, index) => (
+                {objectdata.map((onedata, index) => (
                     //spacing size problem
-                    <Grid container spacing={0} xs={3} item key={index}>
+                    <Grid container spacing={-2} xs={3} item key={index}>
                         <Item>
                             <ImageListItem sx={{ mt: 7 }}>
                                 <img
                                     src={onedata.imageurl}
                                     alt="room1"
                                     loading="lazy"
-                                    style={{ height: "200px" }}
+                                    style={{width:"270px", height:"200px"}}
                                 // onClick={ () => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room2')}
                                 />
                             </ImageListItem>
@@ -201,12 +209,12 @@ function ObjectRoom() {
                             <Box sx={{ display: 'flex', justifyContent: "space-between", padding: "0px 13px" }}>
                                 <Typography component="h2" variant="h2">
                                 </Typography>
-                                <IconHeart  style = {iconObject === index ?{fill:"red"}:{}} onClick = {() => iconObjectClick(index)}/>
+                                <IconHeart  style = {onedata.favourite == true ?{fill:"#CE2C2C"}:{}} onClick = {() => iconObjectClick(onedata._id,onedata.favourite)}/>
                             </Box>
 
                         </Item>
                         <Typography component="h2" variant="h2" sx={{mt:2,fontFamily:"Livvic"}}>
-                                    {roomname}
+                                    {onedata.title}
                         </Typography>
 
                     </Grid>
@@ -220,21 +228,7 @@ function ObjectRoom() {
 }
 
 
-
-const Library = () => {
-    const [value, setValue] = useState('1');
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-    const theme = useTheme();
-
-    const StyledTab = styled(Tab)({
-        "&.Mui-selected": {
-            color: theme.palette.background.primaryColor
-        }
-      
-    });
-
+   
     
     return (
         <Box>
@@ -285,8 +279,10 @@ const Library = () => {
                    
                     }}
                 >
-
-                      <ObjectRoom />
+                        <Grid container item spacing={1}> 
+                            <ObjectRoom />
+                        </Grid>
+                     
                 </PerfectScrollbar>
 
                 </TabPanel>

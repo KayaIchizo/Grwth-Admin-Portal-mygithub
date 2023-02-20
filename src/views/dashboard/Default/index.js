@@ -1,4 +1,4 @@
-import React,{ useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // material-ui
 import { Container, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -16,7 +16,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import room1 from '../../../assets/images/roomimg/room1.png';
 import ImageListItem from '@mui/material/ImageListItem';
-import { Typography,Divider } from '@mui/material';
+import { Typography, Divider } from '@mui/material';
 import { Card } from '@mui/material';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -59,12 +59,12 @@ const openLinkInNewTab = (url) => {
 };
 
 function SamplePrevArrow(props) {
-    const { className, style, onClick,  currentSlide, slideCount } = props;
+    const { className, style, onClick, currentSlide, slideCount } = props;
 
     return (
         <div
             className={className}
-            style={{ ...style,    display: currentSlide == 3  ?"block":"none", color: "black", backgroundColor: "grey", borderRadius: "30px",marginRight:"65px",left:"-43px", dropShadow:"3px 2px 5px #4444dd" }}
+            style={{ ...style, display: currentSlide == 3 ? "block" : "none", color: "black", backgroundColor: "grey", borderRadius: "30px", marginRight: "65px", left: "-43px", dropShadow: "3px 2px 5px #4444dd" }}
             onClick={() => onClick()}
         />
     );
@@ -73,20 +73,18 @@ function SamplePrevArrow(props) {
 
 function SampleNextArrow(props) {
     const { className, style, onClick, currentSlide, slideCount } = props;
-    console.log("current=",currentSlide);
-    console.log("slideCount=",slideCount);
 
     return (
         <div
             className={className}
-            style={{ ...style,  display: currentSlide == 0   ?"block":"none", color: "black", backgroundColor: "grey", borderRadius: "30px",marginRight:"65px",dropShadow:"3px 2px 5px #4444dd" }}
+            style={{ ...style, display: currentSlide == 0 ? "block" : "none", color: "black", backgroundColor: "grey", borderRadius: "30px", marginRight: "65px", dropShadow: "3px 2px 5px #4444dd" }}
             onClick={() => onClick()}
         />
     );
 }
 
 const onPrev = () => {
-    console.log("ddd")
+
 }
 
 const settings = {
@@ -96,9 +94,9 @@ const settings = {
     slidesToShow: 3,
     slidesToScroll: 3,
     initialSlide: 0,
-    nextArrow: <SampleNextArrow   onClick={onPrev}/>,
+    nextArrow: <SampleNextArrow onClick={onPrev} />,
     prevArrow: <SamplePrevArrow />,
-  
+
 };
 
 
@@ -129,7 +127,7 @@ function FormRow() {
 
     ];
 
-  
+
 
     return (
         <React.Fragment>
@@ -137,36 +135,36 @@ function FormRow() {
                 <Slider {...settings}  >
                     {createdByMeMockdatas.map((onedata, id) => (
                         // <Tilt  key={id}>
-                       
-                            <Item key={id}>
-                               <ImageListItem sx={{ width: 300 }}>
-                                    <img
-                                        src={onedata.imageurl}
-                                        alt="room1"
-                                        loading="lazy"
-                                        style={{ height: "170px", boxShadow: "3.0331px 3.0331px 3.0331px rgba(0, 0, 0, 0.25)"}}
-                                     
-                                    // onClick={ () => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room2')}
-                                    />
-                               </ImageListItem>
-                                {/* boxShadow:"0px 3.0331px 3.0331px rgba(0, 0, 0, 0.25)", borderRadius:"7.58274px 7.58274px 0px 0px" */}
-                                <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding:"10px", width:"300px", boxShadow: "3.0331px 8px 8px rgba(0, 0, 0, 0.25)"}}>
-                                    <Box sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                                        <img src={UserIconGroup} alt="icon" loading="lazy" width={60} height={40}  />
-                                        <Typography component="h2" variant="h5" sx={{ mr: 2 }}>
-                                            {onedata.sharedNumber}
-                                        </Typography>
-                                        <Typography component="h3" variant="h4">
-                                            {onedata.title}
-                                        </Typography>
-                                    </Box>
-                                    {/* // boxShadow:" 0px 4px 4px rgba(0, 0, 0, 0.15)",background:"#F2F2F2",borderRadius:"30px" */}
-                                    <Box sx={{ display: 'flex', alignItems: 'center' }} onClick={handleclickstudentlistopen}>
-                                        <PendingOutlinedIcon sx={{ color: '#2CC5CE', }} />
 
-                                    </Box>
+                        <Item key={id}>
+                            <ImageListItem sx={{ width: 300 }}>
+                                <img
+                                    src={onedata.imageurl}
+                                    alt="room1"
+                                    loading="lazy"
+                                    style={{ height: "170px", boxShadow: "3.0331px 3.0331px 3.0331px rgba(0, 0, 0, 0.25)" }}
+
+                                // onClick={ () => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room2')}
+                                />
+                            </ImageListItem>
+                            {/* boxShadow:"0px 3.0331px 3.0331px rgba(0, 0, 0, 0.25)", borderRadius:"7.58274px 7.58274px 0px 0px" */}
+                            <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: "10px", width: "300px", boxShadow: "3.0331px 8px 8px rgba(0, 0, 0, 0.25)" }}>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
+                                    <img src={UserIconGroup} alt="icon" loading="lazy" width={60} height={40} />
+                                    <Typography component="h2" variant="h5" sx={{ mr: 2 }}>
+                                        {onedata.sharedNumber}
+                                    </Typography>
+                                    <Typography component="h3" variant="h4">
+                                        {onedata.title}
+                                    </Typography>
                                 </Box>
-                            </Item>
+                                {/* // boxShadow:" 0px 4px 4px rgba(0, 0, 0, 0.15)",background:"#F2F2F2",borderRadius:"30px" */}
+                                <Box sx={{ display: 'flex', alignItems: 'center' }} onClick={handleclickstudentlistopen}>
+                                    <PendingOutlinedIcon sx={{ color: '#2CC5CE', }} />
+
+                                </Box>
+                            </Box>
+                        </Item>
                         // </Tilt>
                     ))}
                 </Slider>
@@ -193,7 +191,7 @@ const RecentAssignmentsFormRow = () => {
 
 
     const assignmentTitle = [
-     
+
         { imageurl: AssignmentTitle, title: 'Grammar Assignment', sharedNumber: '+5' },
         { imageurl: AssignmentTitle, title: 'Calculation Problems', sharedNumber: '+5' },
 
@@ -202,7 +200,7 @@ const RecentAssignmentsFormRow = () => {
 
         { imageurl: AssignmentTitle, title: 'Painting Assignment', sharedNumber: '' },
         { imageurl: AssignmentTitle, title: 'Personal Assignment', sharedNumber: '+5' },
-    
+
     ];
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -229,19 +227,18 @@ const RecentAssignmentsFormRow = () => {
             <Container>
                 <Slider {...settings}>
                     {assignmentTitle.map((oneassignment, id) => (
-                    //   <Tilt key={id}>
                         <Item key={id}>
-                            <ImageListItem sx={{ width: 300 }}  onClick={() => navigate('/studentlists')}>
+                            <ImageListItem sx={{ width: 300 }} onClick={() => navigate('/studentlists')}>
                                 <img
                                     src={oneassignment.imageurl}
                                     alt="room1"
                                     loading="lazy"
                                     style={{ height: "200px" }}
-                                   
+
 
                                 // onClick={ () => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room2')}
                                 />
-                                <Typography component="h2" variant="h2" sx={{position:"absolute",top:"30%",margin:"0 25px",textAlign:"center",  }}>
+                                <Typography component="h2" variant="h2" sx={{ position: "absolute", top: "30%", margin: "0 25px", textAlign: "center", }}>
                                     {oneassignment.title}
                                 </Typography>
                             </ImageListItem>
@@ -256,45 +253,45 @@ const RecentAssignmentsFormRow = () => {
 
                                 </Box>
                                 <Box sx={{ display: 'flex', alignItems: 'center' }} onClick={handleclickstudentlistopen}>
-                                    <PendingOutlinedIcon 
-                                    variant="contained"
-                                    aria-haspopup="true"
-                                    aria-controls={openpoper ? 'fade-menu' : undefined}
-                                    aria-expanded={openpoper ? 'true' : undefined}
-                                    onClick={handleClick}
-                                    sx={{margin:"15px 75px", color:"#2CC5CE"}}
+                                    <PendingOutlinedIcon
+                                        variant="contained"
+                                        aria-haspopup="true"
+                                        aria-controls={openpoper ? 'fade-menu' : undefined}
+                                        aria-expanded={openpoper ? 'true' : undefined}
+                                        onClick={handleClick}
+                                        sx={{ margin: "15px 75px", color: "#2CC5CE" }}
                                     >
                                     </PendingOutlinedIcon>
 
                                     <Menu
-                                    id="fade-menu"
-                                    MenuListProps={{
-                                        'aria-labelledby': 'fade-button'
-                                    }}
-                                    anchorEl={anchorEl}
-                                    open={openpoper}
-                                    onClose={handleClose}
-                                    TransitionComponent={Fade}
-                                    sx={{width:"130px"}}
-                                >
-                                    {/* <MenuItem onClick={handleClickOpen} sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" }}}>Share Link</MenuItem> */}
-                                    <MenuItem onClick={handleShareOpen} sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" }, color:"#2CC5CE"}}>Share Link</MenuItem>
-                                    <MenuItem
-                                        onClick={() => {
-                                            handleDeleteOpen();
-                                            setDeleteId(row.calories);
+                                        id="fade-menu"
+                                        MenuListProps={{
+                                            'aria-labelledby': 'fade-button'
                                         }}
-                                       sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" },  color:"#2CC5CE"}}
+                                        anchorEl={anchorEl}
+                                        open={openpoper}
+                                        onClose={handleClose}
+                                        TransitionComponent={Fade}
+                                        sx={{ width: "130px" }}
                                     >
-                                        Delete
-                                    </MenuItem>
-                                    <MenuItem  sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" },  color:"#2CC5CE"}}>Download</MenuItem>
-                                 
-                                   </Menu>
+                                        {/* <MenuItem onClick={handleClickOpen} sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" }}}>Share Link</MenuItem> */}
+                                        <MenuItem onClick={handleShareOpen} sx={{ "&:hover": { color: "white", backgroundColor: "#2CC5CE" }, color: "#2CC5CE" }}>Share Link</MenuItem>
+                                        <MenuItem
+                                            onClick={() => {
+                                                handleDeleteOpen();
+                                                setDeleteId(row.calories);
+                                            }}
+                                            sx={{ "&:hover": { color: "white", backgroundColor: "#2CC5CE" }, color: "#2CC5CE" }}
+                                        >
+                                            Delete
+                                        </MenuItem>
+                                        <MenuItem sx={{ "&:hover": { color: "white", backgroundColor: "#2CC5CE" }, color: "#2CC5CE" }}>Download</MenuItem>
+
+                                    </Menu>
                                 </Box>
                             </Box>
                         </Item>
-                    //   </Tilt>
+                        //   </Tilt>
                     ))}
 
                 </Slider>
@@ -304,14 +301,14 @@ const RecentAssignmentsFormRow = () => {
 
 };
 
-const Dashboard = () => {
+const Dashboard = () => {    // dashboard page
     const [isLoading, setLoading] = useState(true);
     const theme = useTheme();
     useEffect(() => {
         setLoading(false);
     }, []);
     const navigate = useNavigate();
-  
+
 
     return (
 
@@ -326,10 +323,7 @@ const Dashboard = () => {
                 <Grid container item spacing={1}>
                     <FormRow />
                 </Grid>
-                {/* <Grid container item spacing={1}>
-                <FormRow />
-            </Grid> */}
-                <Divider sx={{ mt: 3, mb: 1, backgroundColor: '#DBDBDB' }} style={{ height: 3,width:"100%" }} />
+                <Divider sx={{ mt: 3, mb: 1, backgroundColor: '#DBDBDB' }} style={{ height: 3, width: "100%" }} />
 
                 <Box sx={{ mt: '30px' }}>
                     <Typography component="h2" variant="h3">

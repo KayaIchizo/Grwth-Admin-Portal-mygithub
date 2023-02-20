@@ -7,58 +7,60 @@
           "label": "1A",
           "children": [
             {
-              "label": "keith"
+              "label": "李大明1"
             },
             {
-              "label": "Alan"
-            },
-            {
-              "label": "Kaya"
+              "label": "李大明2"
             }
+        
           ]
         },
         {
           "label": "1B",
           "children": [
             {
-              "label": "Joby"
+              "label": "李大明3"
             },
             {
-              "label": "Sharon"
+              "label": "李大明4"
             }
           ]
         },
         {
-          "label": "1C",
+          "label": "2A",
           "children": [
             {
-              "label": "Niki"
-            },
-            {
-              "label": "Leo"
-            },
-            {
-              "label": "Yung"
-            },
-            {
-              "label": "aaaa"
+              "label": "李大明5"
             }
           ]
         },
         {
-          "label": "1D",
+          "label": "2B",
           "children": [
             {
-              "label": "bbbb"
-            },
+              "label": "李大明6"
+            }
+          ]
+        },{
+          "label": "5A",
+          "children": [
             {
-              "label": "ccccc"
-            },
+              "label": "李大明7"
+            }
+          ]
+        },{
+          "label": "5B",
+          "children": [
             {
-              "label": "ddddd"
+              "label": "李大明8"
+            },{
+              "label": "李大明9"
+            },{
+              "label": "李大明10"
             }
           ]
         }
+        
       ]
     },
     {
@@ -69,19 +71,7 @@
             "label": "Teacher Group",
             "children": [
               {
-                "label": "English teacher"
-              },
-              {
-                "label": "Maths teacher"
-              },
-              {
-                "label": "Art teacher"
-              },
-              {
-                "label":"Music teacher"
-              },
-              {
-                "label":"Sport teacher"
+                "label": "ZAHO"
               }
             ]
           }

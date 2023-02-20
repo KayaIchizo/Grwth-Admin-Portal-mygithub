@@ -6,14 +6,10 @@ const AccessToken  = () => {
 
     const location = useLocation();
     const [queryParameters] = useSearchParams();
-    console.log("queryparam", queryParameters)
 
     useEffect(()=> {
     
     },[]);
-
- 
-    console.log("accesshref=", window.location.href);
     
     return(
         <div>

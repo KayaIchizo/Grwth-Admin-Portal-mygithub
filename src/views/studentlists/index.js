@@ -19,8 +19,47 @@ import DialogContent from '@mui/material/DialogContent';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';   
+import { useLocation } from "react-router-dom";
+import { useEffect } from 'react';
+import axios from 'axios';
+import { date } from 'yup';
+
+
 
 export default function Studentlists() {
+
+
+
+    const location = useLocation();
+    let rowtitle = location.state.rowtitle;
+    const [assignmentusers, setAssignmentusers] = useState([]);
+    const [newnumber, setNewnumber] = useState();
+    const [submittednumber, setSubmittednumber] = useState();
+    const [donelate, setDonelate] = useState();
+    const [assignmentsubmitteddata, setAssignmentsubmitteddata] = useState([]);
+
+    useEffect(() => {
+        const get_assignmentusers = async () => {
+            const assignmentdata = await axios.post('http://localhost:3000/api/assignments/getusers', { rowtitle });
+            setAssignmentusers(assignmentdata.data);
+            // setAssignmentslist(assignmentdata.data);
+        }
+        get_assignmentusers();
+
+        const get_calculationsubmitted =  async () => {
+            const assignmentsubmitted = await axios.post('http://localhost:3000/api/assignments/getsubmitted', { rowtitle });
+            setAssignmentsubmitteddata(assignmentsubmitted.data);
+           
+        }
+
+        get_calculationsubmitted();
+
+    },[])
+
+
+
+
+
     const filterstatus = [
         { key: 'none', value: '' },
         { key: 'new', value: 'new' },
@@ -29,9 +68,6 @@ export default function Studentlists() {
         { key: 'done late', value: 'done late' },
        
     ];
-
-  
-
     const [userinternallists, setinternallists] = useState([
         { name: 'Kaya Ichizo',grademark:"", duedate: 'Edited on 28 Dec 06:16', status: 'New' },
         { name: 'Joby Wong',grademark:"", duedate: 'Edited on 19 Dec 12:16', status: 'New' },
@@ -39,13 +75,7 @@ export default function Studentlists() {
         { name: 'Noah Lau', grademark:"20",duedate: 'Edited on 20 Dec  10:30', status: 'Done late', scoreable: true },
         { name: 'Leo',grademark:"80", duedate: 'Edited on 12 Dec  9:00', status: 'Submitted' },
         { name: 'Yung',grademark:"", duedate: 'Edited on 18 Dec  7:20', status: 'Missing' }
-
     ])
-
-
-
-
-
     const [userlists, setUserlists] = useState([
         { name: 'Kaya Ichizo',grademark:"", duedate: 'Edited on 28 Dec 06:16', status: 'New' },
         { name: 'Joby Wong',grademark:"", duedate: 'Edited on 19 Dec 12:16', status: 'New' },
@@ -113,7 +143,7 @@ export default function Studentlists() {
               <Box sx={{display:"flex", alignItems:"center"}}>
                  
                   <Typography variant="h3" component="h4" sx={{ color:"#7983FF" }}>
-                      Assignment Title
+                     {rowtitle}
                   </Typography>
               </Box>
 
@@ -139,14 +169,25 @@ export default function Studentlists() {
               
                 <Box sx={{display:"flex", alignItems:"center"}}>
                     <Stack spacing={4} direction="row">
-                    <Typography variant="h3" component="h4" sx={{ borderRadius:"5%", backgroundColor:"#2CC5CE", color:"white" }}>
-                        3.\Submitted 
-                    </Typography>
-                    
-                
-                    <Typography variant="h3" component="h4" sx={{ borderRadius:"5%", backgroundColor:"grey", color:"white"}}>
-                        6 Assigned
-                    </Typography>
+
+                        {
+                            assignmentsubmitteddata.map((datanumber, index) => {
+                                return(<Box>
+                                    <Typography variant="h3" component="h4" key={index}    sx={{ borderRadius:"5%", backgroundColor:datanumber._id=="New"?"#2CC5CE":"grey", color:"white" }}>
+                                    {datanumber.count} {datanumber._id} 
+                                    </Typography>
+                                    
+                                
+                                    {/* <Typography variant="h3" component="h4" sx={{ borderRadius:"5%", backgroundColor:"grey", color:"white"}}>
+                                        6 Assigned
+                                    </Typography> */}
+                                </Box>
+                                )
+                             
+                                
+                            })
+                        }
+                 
                     </Stack>
 
                 </Box>
@@ -253,10 +294,10 @@ export default function Studentlists() {
                    
               
             </Dialog>
-            {sortedUserList.map((userlist, index) => {
+            {assignmentusers.map((userlist, index) => {
                 return (
                     <Box
-                        key={userlist.name}
+                        key={index}
                         sx={{
                             display: 'flex',
                             justifyContent: 'space-evenly',
@@ -289,7 +330,7 @@ export default function Studentlists() {
                             <TextField
                                 label="Grade/Mark"
                                 type="text"
-                                defaultValue = {userlist.grademark}
+                                defaultValue = {userlist.gradeormark}
                                 // sx={{ width: 220, position: 'absolute', bottom: '30px' }}
                                 InputLabelProps={{
                                     shrink: true
@@ -317,7 +358,7 @@ export default function Studentlists() {
                         </Typography> */}
 
                         <Box  sx={{ width: '15%', fontFamily:"Livicc",fontSize:"20px" }}>
-                            {userlist.duedate}
+                            {userlist.duedate.replace("T","")}
                         </Box>
 
                         <PendingOutlinedIcon  

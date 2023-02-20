@@ -53,8 +53,6 @@ import { ListViewComponent } from '@syncfusion/ej2-react-lists';
 import { TreeViewComponent } from '@syncfusion/ej2-react-navigations';
 import { closest } from '@syncfusion/ej2-base';
 import axios from 'axios';
-import * as dataSource from './drag-data.json';
-import './drag.css';
 
 // ==============================|| SIDEBAR DRAWER ||============================== //
 
@@ -103,7 +101,10 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
     }
 
     const [assigninsertdata, setAssignmentinsertdata] = useState([]);
+
+
     const assignmentassignClick = (async () => {
+     
         listdata.map(async (onedata, index) => {
         assigninsertdata.push( { "name": onedata,
                 "subject": sendsubject,
@@ -119,7 +120,10 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
         }).then((response)=>{
             setAssignmentinsertdata([]);
         });
-   
+
+     
+
+      
     })
 
 
@@ -244,83 +248,10 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
     const forloop = () => {
         let content = [];
         for (let i = 0; i < textInput; i++) {
-            content.push(<div className="col-lg-4 tree3-data">  <h6>Group {i + 1}</h6> <div className='content'><div id="list">   <ListViewComponent id="list" className="e-droppable" dataSource={[]} ref={(list) => { listObj = list }} actionComplete={actionBegin.bind(this)} cssClass={'custom-list'} template="<div><span>${text}</span><span id=${iconId} class=${class}></span></div>" /> </div>   </div>
-                    </div>);
+            content.push(<div> <h6>Group {i + 1}</h6> <ListViewComponent width="25%" /> </div>);
         }
         return content;
     }
-
-
-
-    
-
-
-    const data = dataSource;
-    let listObj;
-    let id = 1;
-    // Render the first TreeView by mapping its fields property with data source properties
-    const field = { dataSource: data.dragData1, id: 'id', text: 'name', child: 'child' };
-    const allowDragAndDrop = true;
-    // Render the second TreeView by mapping its fields property with data source properties     
-    const fields = { dataSource: data.dragData2, id: 'id', text: 'name', child: 'child', selected: 'isSelected' };
-    const allowDragAndDrops = true;
-    const onDragStop = (args) => {
-        let targetEle = closest(args.target, '.e-droppable');
-        targetEle = targetEle ? targetEle : args.target;
-        // Check the target as ListView or not
-        if (targetEle && targetEle.classList.contains('custom-list')) {
-            args.cancel = true;
-            let newData = [];
-            if (args.draggedNode.classList.contains('e-active')) {
-                let dragNode = closest(args.draggedNode, '.e-treeview');
-                let selNodes = dragNode.ej2_instances[0].selectedNodes;
-                for (let i = 0, len = selNodes.length; i < len; i++) {
-                    let nodeEle = document.querySelector('[data-uid="' + selNodes[i] + '"]').querySelector('.e-list-text');
-                    let nodeText = nodeEle.textContent;
-                    let newNode = { id: 'l' + id, text: nodeText, class: 'custom-delete', iconId: 'i' + id };
-                    id++;
-                    newData.push(newNode);
-                }
-            }
-            else {
-                let text = 'text';
-                let nodeText = args.draggedNodeData[text];
-                let newNode = { id: 'l' + id, text: nodeText, class: 'custom-delete', iconId: 'i' + id };
-                id++;
-                newData.push(newNode);
-            }
-            // Add collection of node to ListView
-            listObj.addItem(newData, undefined);
-        }
-    }
-    // Add the custom action for delete icon in ListView
-    const onCreate = () => {
-   
-        document.getElementById('list').addEventListener('mousedown', (event) => {
-            if (event.target.classList.contains('custom-delete')) {
-                let node = closest(event.target, 'li');
-                listObj.removeItem(node);
-            }
-        });
-        document.getElementById('overlay').addEventListener('mousedown', (event) => {
-            document.getElementById('overlay').style.display = 'none';
-        });
-    }
-    const actionBegin = () => {
-        let listObj = this;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     const drawer = (
@@ -637,58 +568,121 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
                             <div>
                                 <div>
                                     <div className="body" style={{ display: 'flex' }}>
-<div className="sidebar" style={{ width: '25%', backgroundColor: '#b7b4b4' }}>                
-    <div className="control-pane">
-      <div className="col-lg-12 control-section custom-tree">
-        <div className="control-wrapper">
-     
-          <div className="col-lg-4 tree2-data">
-            {/* <h4>TreeView-2</h4> */}
-            <div className="content">
-              <TreeViewComponent
-                id="tree2"
-                fields={fields}
-                nodeDragStop={onDragStop.bind(this)}
-                allowDragAndDrop={allowDragAndDrops}
+                                        <div className="sidebar" style={{ width: '25%', backgroundColor: '#b7b4b4' }}>
+                                            <div style={{ textAlign: 'center', fontWeight: 'bold', padding: '15px', alignItems: "center" }}>
+                                                <span>Number of Groups </span>
+                                                {/* <input placeholder="..." style={{ width: '15%', height: '40px', textAlign: 'center' }} /> */}
+                                                <TextField
 
-                created={onCreate.bind(this)}
+                                                    value={textInput}
+                                                    onChange={handleTextInputChange}
+                                                    placeholder="..."
+                                                    sx={{ width: "35px", height: "0px", marginTop: "-15px" }}
+                                                />
+                                            </div>
+                                            <div style={{ backgroundColor: '#ede6e6' }}>
+                                                <Box sx={{ height: 400, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}>
+                                                    <Box sx={{ mb: 1 }}>
+                                                        <Button onClick={handleExpandClick}>
+                                                            {expanded.length === 0 ? 'Expand all' : 'Collapse all'}
+                                                        </Button>
+                                                        {/* <Button onClick={handleSelectClick}>
+                                                        {selected.length === 0 ? 'Select all' : 'Unselect all'}
+                                                        </Button> */}
+                                                    </Box>
+                                                    <TreeView
+                                                        aria-label="controlled"
+                                                        defaultCollapseIcon={<ExpandMoreIcon />}
+                                                        defaultExpandIcon={<ChevronRightIcon />}
+                                                        expanded={expanded}
+                                                        selected={selected}
+                                                        onNodeToggle={handleToggle}
+                                                        onNodeSelect={handleSelect}
+                                                        multiSelect
+                                                    >
 
-              />
-            </div>
-          </div>
-          </div>
-      </div>
-    </div>
-</div>
+                                                        <TreeItem nodeId="1" label="All Students">
+                                                            <TreeItem nodeId="2" label="1A">
+                                                                <TreeItem nodeId="3" label="李大明1" />
+                                                                <TreeItem nodeId="4" label="李大明2" />
+                                                            </TreeItem>
 
-<div
-    className="flex-container"
-    style={{ width: '75%', backgroundColor: 'white' }}>
-           {/* {forloop()} */}
-          <div className="col-lg-4 tree3-data">
-            <h4>Group</h4>
-            <div className="content">
-              <div id="list">
-                <ListViewComponent
-                  id="list"
-                  className="e-droppable"
-                  dataSource={[]}
-                  ref={(list) => {
-                    listObj = list;
-                  }}
-                  actionComplete={actionBegin.bind(this)}
-                  cssClass={'custom-list'}
-                  
-                  template="<div><span>${text}</span><span id=${iconId} class=${class}></span></div>"
-                />
-              </div>
-            </div>
-          </div>
-</div>
-                              {/* <div id="overlay"></div> */}
-     
+                                                            <TreeItem nodeId="5" label="1B">
+                                                                <TreeItem nodeId="6" label="李大明3" />
+                                                                <TreeItem nodeId="7" label="李大明4" />
 
-                                        {/* <div>
+
+                                                            </TreeItem>
+
+                                                            <TreeItem nodeId="8" label="2A">
+                                                                <TreeItem nodeId="9" label="李大明5" />
+
+                                                            </TreeItem>
+
+                                                            <TreeItem nodeId="10" label="2B">
+                                                                <TreeItem nodeId="11" label="李大明6" />
+
+                                                            </TreeItem>
+
+                                                            <TreeItem nodeId="12" label="5A">
+                                                                <TreeItem nodeId="13" label="李大明7" />
+
+                                                            </TreeItem>
+
+                                                            <TreeItem nodeId="14" label="5B">
+                                                                <TreeItem nodeId="15" label="李大明8" />
+                                                                <TreeItem nodeId="16" label="李大明9" />
+                                                                <TreeItem nodeId="17" label="李大明10" />
+
+                                                            </TreeItem>
+                                                        </TreeItem>
+
+
+                                                        <TreeItem nodeId="18" label="All Teachers">
+                                                            <TreeItem nodeId="19" label="ZAHO" />
+
+                                                        </TreeItem>
+
+                                                    </TreeView>
+                                                </Box>
+                                            </div>
+                                        </div>
+                                        <div
+                                            className="flex-container"
+                                            style={{ width: '75%', backgroundColor: 'white' }}
+                                        >
+
+                                            {forloop()}
+
+
+                                            {/* <div style={{ width: '30%', height: '40%', backgroundColor: '#ede6e6', textAlign: 'center' }}>
+                                                Group 1
+                                            </div>
+                                            <div style={{ width: '30%', height: '40%', backgroundColor: '#ede6e6', textAlign: 'center' }}>
+                                                Group 2
+                                            </div>
+                                            <div style={{ width: '30%', height: '40%', backgroundColor: '#ede6e6', textAlign: 'center' }}>
+                                                Group 3
+                                            </div>
+                                            <div style={{ width: '30%', height: '40%', backgroundColor: '#ede6e6', textAlign: 'center' }}>
+                                                Group 4
+                                            </div> */}
+                                        </div>
+                                    </div>
+                                    <div style={{ display: "flex", justifyContent: "flex-end", width: "59%" }}>
+                                        <div>
+                                            <Button
+                                                variant="contained"
+                                                className="transform"
+                                                style={{ marginLeft: '5%', position: 'absolute', backgroundColor: "#818181" }}
+                                                onClick={handleClose}
+                                            >
+                                                Cancel
+                                            </Button>
+
+                                        </div>
+
+                                        <div>
                                             <Button
                                                 variant="contained"
                                                 className="transform"
@@ -708,7 +702,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, windowobject }) => {
                                                 Assign
                                             </Button>
 
-                                        </div> */}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

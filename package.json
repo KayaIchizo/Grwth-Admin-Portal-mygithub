@@ -24,6 +24,7 @@
         "dayjs": "^1.11.7",
         "formik": "^2.2.9",
         "framer-motion": "^6.3.16",
+        "js-file-download": "^0.4.12",
         "material-ui-popup-state": "^4.0.1",
         "prop-types": "^15.8.1",
         "rc-dialog": "^9.0.2",

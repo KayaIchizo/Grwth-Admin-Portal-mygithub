@@ -47,8 +47,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs, { Dayjs } from 'dayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { element } from 'prop-types';
+import { useEffect } from 'react';
+import axios from 'axios';
 
-// ==============================|| SAMPLE PAGE ||============================== //
+// ==============================|| Assignments PAGE ||============================== //
 
 export default function Assignmentlistpage() {
 
@@ -170,6 +172,41 @@ export default function Assignmentlistpage() {
     const nexttabvalue = () => {
         setdialogValue("2");
     }
+
+    const [checkusertype, setCheckusertype] = useState([]);
+    const [selectclass, setSelectclass] = useState([]);
+    const [selectsubject, setSelectsubject] = useState([]);
+    const [assignmentslist, setAssignmentslist] = useState([]);
+
+    useEffect(async () => {
+ 
+        const get_assignments = async () => {
+            const assignmentdata = await axios.get('http://localhost:3000/api/assignments/getdata');
+            setAssignmentslist(assignmentdata.data);
+        }
+        get_assignments();
+        const gettype = async () => {
+            
+            const res = await axios.post('http://localhost:3000/api/auth/userinfo', {
+                access_token: JSON.parse(localStorage.getItem("accesstoken"))
+            });
+            setCheckusertype(res.data.type);
+
+            const resclassdata = await axios.post('http://localhost:3000/api/findClass', { 
+                    Authorization:'Bearer' + JSON.parse(localStorage.getItem("accesstoken"))
+                  });
+                  setSelectclass(resclassdata.data)
+
+            const ressubjectdata = await axios.post('http://localhost:3000/api/findSubjects', { 
+                    Authorization:'Bearer' + JSON.parse(localStorage.getItem("accesstoken"))
+                  });
+                  setSelectsubject(ressubjectdata.data);
+            
+        }    
+        gettype();
+
+       
+    }, [])
   
 
 
@@ -188,7 +225,7 @@ export default function Assignmentlistpage() {
     const handleSelect = (event, nodeIds) => {
         setSelected(nodeIds);
       
-        if((nodeIds[0] != 1) && (nodeIds[0] != 2) && (nodeIds[0] != 6) && (nodeIds[0] != 10) && (nodeIds[0] != 14) && (nodeIds[0] != 18) ){          
+        if((nodeIds[0] != 1) && (nodeIds[0] != 2) && (nodeIds[0] != 10) && (nodeIds[0] != 14) && (nodeIds[0] != 18) && (nodeIds[0] != 5) && (nodeIds[0] != 8) && (nodeIds[0] != 12) ){          
             if(listdata.indexOf(event.target.innerHTML) !== -1) { 
                 return;
             }
@@ -260,17 +297,26 @@ export default function Assignmentlistpage() {
                                         label="Subject"
                                         onChange={handleChangeSubject}
                                         >
-                                        <MenuItem value="" style={{fontFamily:"Livicc"}}>None</MenuItem>
+
+                                    {selectsubject.map((u, i) => (
+                                        
+                                        <MenuItem value={u} key={i} style={{fontFamily:"Livicc"}}>
+                                            {u}
+                                        </MenuItem>
+                                    ))}
+                                        {/* <MenuItem value="" style={{fontFamily:"Livicc"}}>None</MenuItem>
                                         <MenuItem value="English" style={{fontFamily:"Livicc"}}>English</MenuItem>
                                         <MenuItem value="Maths" style={{fontFamily:"Livicc"}}>Maths</MenuItem>
-                                        <MenuItem value="Liberal Studies" style={{fontFamily:"Livicc"}}>Liberal Studies</MenuItem>
+                                        <MenuItem value="Liberal Studies" style={{fontFamily:"Livicc"}}>Liberal Studies</MenuItem> */}
                                      
                                     </Select>
                             </FormControl> 
                                     
                               
                             </div>
-                            <div style={{ marginLeft: '55px', width: '100px' }}>
+                           {
+                            
+                            checkusertype == 1 && <div style={{ marginLeft: '55px', width: '100px' }}>
                                 {/* <Select defaultValue="Class" items={Classoptions} /> */}
                                 <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label" style={{fontFamily:"Livicc"}}>Class</InputLabel>
@@ -281,21 +327,33 @@ export default function Assignmentlistpage() {
                                         label="Class"
                                         onChange={handleChangeClass}
                                         >
-                                        <MenuItem value=""  style={{fontFamily:"Livicc"}}>None</MenuItem>
+                                        
+
+                                        {selectclass.map((u, i) => (
+                                        
+                                            <MenuItem value={u} key={i} style={{fontFamily:"Livicc"}}>
+                                                {u}
+                                            </MenuItem>
+                                        ))}
+                                        {/* <MenuItem value=""  style={{fontFamily:"Livicc"}}>None</MenuItem>
                                         <MenuItem value="A1" style={{fontFamily:"Livicc"}}>A1</MenuItem>
                                         <MenuItem value="A2" style={{fontFamily:"Livicc"}}>A2</MenuItem>
                                         <MenuItem value="B1" style={{fontFamily:"Livicc"}}>B1</MenuItem>
                                         <MenuItem value="B2" style={{fontFamily:"Livicc"}}>B2</MenuItem>
                                         <MenuItem value="C1" style={{fontFamily:"Livicc"}}>C1</MenuItem>
-                                        <MenuItem value="C2" style={{fontFamily:"Livicc"}}>C2</MenuItem>
+                                        <MenuItem value="C2" style={{fontFamily:"Livicc"}}>C2</MenuItem> */}
                                     </Select>
                                 </FormControl> 
                             </div>
+
+                           } 
                         </div>
                         <div>
-                            <Button variant="contained" onClick={handleClickOpen} sx={{backgroundColor:"#7983FF",borderRadius:"25px", fontFamily:"Livicc", fontSize:"25px", fontWeight:"700"}}>
-                                + Assignment
+                          {
+                            checkusertype == 1 && <Button variant="contained" onClick={handleClickOpen} sx={{backgroundColor:"#7983FF",borderRadius:"25px", fontFamily:"Livicc", fontSize:"25px", fontWeight:"700"}}>
+                                 + Assignment
                             </Button>
+                          }  
                         </div>
                     </div>
 
@@ -357,11 +415,12 @@ export default function Assignmentlistpage() {
                                                     label="Subject"
                                                     onChange={handlechangeSubjectdialog}
                                                     >
-                                                    <MenuItem value="">None</MenuItem>
-                                                    <MenuItem value="English">English</MenuItem>
-                                                    <MenuItem value="Maths">Maths</MenuItem>
-                                                    <MenuItem value="Nature">Nature</MenuItem>
-                                                    <MenuItem value="Music">Music</MenuItem>
+                                                   {selectsubject.map((u, i) => (
+                                        
+                                                        <MenuItem value={u} key={i} style={{fontFamily:"Livicc"}}>
+                                                            {u}
+                                                        </MenuItem>
+                                                    ))}
                                                 </Select>
                                         </FormControl> 
                                         </div>
@@ -376,12 +435,13 @@ export default function Assignmentlistpage() {
                                                     label="Class"
                                                     onChange={handleChangeClass}
                                                     >
-                                                    <MenuItem value="A1">A1</MenuItem>
-                                                    <MenuItem value="A2">A2</MenuItem>
-                                                    <MenuItem value="B1">B1</MenuItem>
-                                                    <MenuItem value="B2">B2</MenuItem>
-                                                    <MenuItem value="C1">C1</MenuItem>
-                                                    <MenuItem value="C2">C2</MenuItem>
+                                                 
+                                                    {selectclass.map((u, i) => (
+                                                        
+                                                        <MenuItem value={u} key={i} style={{fontFamily:"Livicc"}}>
+                                                            {u}
+                                                        </MenuItem>
+                                                    ))}
                                                 </Select>
                                             </FormControl> 
                                         </div>
@@ -392,7 +452,7 @@ export default function Assignmentlistpage() {
                                                 <TextField id="title" label="Title" variant="outlined" sx={{ width: '100%' }} placeholder="Text Area" />
                                             </Stack>
                                         </div>
-                                        <div>
+                                        {/* <div>
                                             <Stack mt={4}>
                                                 <TextareaAutosize
                                                     aria-label="minimum height"
@@ -401,7 +461,7 @@ export default function Assignmentlistpage() {
                                                     style={{ width: '100%' }}
                                                 />
                                             </Stack>
-                                        </div>
+                                        </div> */}
                                         <div>
                                             <Stack mt={4}>
                                                 <TextField id="grade" label="Type in the highest mark or grade" variant="outlined" sx={{ width: '100%' }}  />
@@ -501,42 +561,44 @@ export default function Assignmentlistpage() {
                                                     >
                                                         <TreeItem nodeId="1" label="All Students">
                                                             <TreeItem nodeId="2" label="1A">
-                                                                <TreeItem nodeId="3" label="Keith" />
-                                                                <TreeItem nodeId="4" label="Alan" />
-                                                                <TreeItem nodeId="5" label="Kaya" />
+                                                                <TreeItem nodeId="3" label="李大明1" />
+                                                                <TreeItem nodeId="4" label="李大明2" />
+                                                            </TreeItem>
+
+                                                            <TreeItem nodeId="5" label="1B">
+                                                                <TreeItem nodeId="6" label="李大明3" />
+                                                                <TreeItem nodeId="7" label="李大明4" />
+                                                          
                                                             
                                                             </TreeItem>
 
-                                                            <TreeItem nodeId="6" label="1B">
-                                                                <TreeItem nodeId="7" label="Joby" />
-                                                                <TreeItem nodeId="8" label="Niki" />
-                                                                <TreeItem nodeId="9" label="Sharon" />
+                                                            <TreeItem nodeId="8" label="2A">
+                                                                <TreeItem nodeId="9" label="李大明5" />
+                                                
+                                                            </TreeItem>
                                                             
+                                                            <TreeItem nodeId="10" label="2B">
+                                                                <TreeItem nodeId="11" label="李大明6" />
+                                                
                                                             </TreeItem>
 
-                                                            <TreeItem nodeId="10" label="1C">
-                                                                <TreeItem nodeId="11" label="hhh" />
-                                                                <TreeItem nodeId="12" label="ddd" />
-                                                                <TreeItem nodeId="13" label="ccc" />
-                                                            
+                                                            <TreeItem nodeId="12" label="5A">
+                                                                <TreeItem nodeId="13" label="李大明7" />
+                                                
                                                             </TreeItem>
 
-                                                            <TreeItem nodeId="14" label="1D">
-                                                                <TreeItem nodeId="15" label="aaa" />
-                                                                <TreeItem nodeId="16" label="bbb" />
-                                                                <TreeItem nodeId="17" label="ccc" />
+                                                            <TreeItem nodeId="14" label="5B">
+                                                                <TreeItem nodeId="15" label="李大明8" />
+                                                                <TreeItem nodeId="16" label="李大明9" />
+                                                                <TreeItem nodeId="17" label="李大明10" />
                                                             
                                                             </TreeItem>
                                                         </TreeItem>
 
                                                       
                                                         <TreeItem nodeId="18" label="All Teachers">
-                                                            <TreeItem nodeId="19" label="Ms K wang" />
-                                                            <TreeItem nodeId="20" label="Mr K Chen" />
-                                                            <TreeItem nodeId="21" label="Ms K bbbbb" />
-                                                            <TreeItem nodeId="22" label="Mr G ggggg" />
-                                                            <TreeItem nodeId="23" label="Ms T ttttt" />
-                                                       
+                                                            <TreeItem nodeId="19" label="ZAHO" />
+                                                          
                                                         </TreeItem>
                                                     
                                                     </TreeView>
@@ -652,45 +714,49 @@ export default function Assignmentlistpage() {
                                                         onNodeSelect={handleSelect}
                                                         multiSelect
                                                     >
-                                                        <TreeItem nodeId="1" label="All Students">
+                                                    
+                                                    <TreeItem nodeId="1" label="All Students">
                                                             <TreeItem nodeId="2" label="1A">
-                                                                <TreeItem nodeId="3" label="Keith" />
-                                                                <TreeItem nodeId="4" label="Alan" />
-                                                                <TreeItem nodeId="5" label="Kaya" />
+                                                                <TreeItem nodeId="3" label="李大明1" />
+                                                                <TreeItem nodeId="4" label="李大明2" />
+                                                            </TreeItem>
+
+                                                            <TreeItem nodeId="5" label="1B">
+                                                                <TreeItem nodeId="6" label="李大明3" />
+                                                                <TreeItem nodeId="7" label="李大明4" />
+                                                          
                                                             
                                                             </TreeItem>
 
-                                                            <TreeItem nodeId="6" label="1B">
-                                                                <TreeItem nodeId="7" label="Joby" />
-                                                                <TreeItem nodeId="8" label="Niki" />
-                                                                <TreeItem nodeId="9" label="Sharon" />
+                                                            <TreeItem nodeId="8" label="2A">
+                                                                <TreeItem nodeId="9" label="李大明5" />
+                                                
+                                                            </TreeItem>
                                                             
+                                                            <TreeItem nodeId="10" label="2B">
+                                                                <TreeItem nodeId="11" label="李大明6" />
+                                                
                                                             </TreeItem>
 
-                                                            <TreeItem nodeId="10" label="1C">
-                                                                <TreeItem nodeId="11" label="Keith" />
-                                                                <TreeItem nodeId="12" label="Alan" />
-                                                                <TreeItem nodeId="13" label="Kaya" />
-                                                            
+                                                            <TreeItem nodeId="12" label="5A">
+                                                                <TreeItem nodeId="13" label="李大明7" />
+                                                
                                                             </TreeItem>
 
-                                                            <TreeItem nodeId="14" label="1D">
-                                                                <TreeItem nodeId="15" label="aaa" />
-                                                                <TreeItem nodeId="16" label="bbb" />
-                                                                <TreeItem nodeId="17" label="ccc" />
+                                                            <TreeItem nodeId="14" label="5B">
+                                                                <TreeItem nodeId="15" label="李大明8" />
+                                                                <TreeItem nodeId="16" label="李大明9" />
+                                                                <TreeItem nodeId="17" label="李大明10" />
                                                             
                                                             </TreeItem>
                                                         </TreeItem>
 
                                                       
                                                         <TreeItem nodeId="18" label="All Teachers">
-                                                            <TreeItem nodeId="19" label="Ms K wang" />
-                                                            <TreeItem nodeId="20" label="Mr K Chen" />
-                                                            <TreeItem nodeId="21" label="Ms K bbbbb" />
-                                                            <TreeItem nodeId="22" label="Mr G ggggg" />
-                                                            <TreeItem nodeId="23" label="Ms T ttttt" />
-                                                       
+                                                            <TreeItem nodeId="19" label="ZAHO" />
+                                                          
                                                         </TreeItem>
+                                                    
                                                     
                                                     </TreeView>
                                                     </Box>
@@ -787,7 +853,7 @@ export default function Assignmentlistpage() {
                             </TabPanel>
                         </TabContext>
                     </Dialog>
-                    <DataGrid callbackedit={callbackedit} filtercheck={filterCheck} subject={subject} classtype={classType}  searchvalue={searchValue} />
+                    <DataGrid callbackedit={callbackedit} filtercheck={filterCheck} subject={subject} classtype={classType}  searchvalue={searchValue} assignmentslist={assignmentslist}/>
                 </div>
             ) : (
                 <div className="header">
@@ -803,10 +869,10 @@ export default function Assignmentlistpage() {
                         </div>
                     </div>
                     <div style={{ padding: '5px 0px', fontWeight: 'bold' }}> English </div>
-                    {studentlists.map((userlist) => {
+                    {studentlists.map((userlist, index) => {
                         return (
                             <Box
-                                key={userlist.assignmenttitle}
+                                key={index}
                                 sx={{
                                     display: 'flex',
                                     justifyContent: 'space-evenly',
@@ -857,10 +923,10 @@ export default function Assignmentlistpage() {
                         );
                     })}
                     <div style={{ padding: '5px 0px', fontWeight: 'bold' }}> Maths </div>
-                    {studentlistsmaths.map((userlist) => {
+                    {studentlistsmaths.map((userlist,index) => {
                         return (
                             <Box
-                                key={userlist.assignmenttitle}
+                                key={index}
                                 sx={{
                                     display: 'flex',
                                     justifyContent: 'space-evenly',

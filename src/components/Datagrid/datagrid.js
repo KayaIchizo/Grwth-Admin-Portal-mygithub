@@ -36,6 +36,9 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { useEffect } from 'react';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import  Studentlists  from '../../views/studentlists';
+import fileDownload from 'js-file-download';
+import axios from 'axios';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -52,24 +55,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },  
     marginTop:30, 
     padding:'3px 94px',
-    // paddingBottom: 10,
-    // paddingTop: 20,
-    // boxShadow: "0 4px 15px -10px;  #ccc",
+
 }));
 
-
-// using material class custom type:  
-// '&.fdasojfdoas': {
-//     fd
-// }
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     cursor: 'pointer',
-    // boxShadow: "0 0 8px 3px rgb(0 0 0 / 25%)"
-    // '&:nth-of-type(odd)': {
-    //     backgroundColor: theme.palette.action.selected,
-    //     padding:"20px 30px"
-    // },
-    // hide last border
+
     '&:last-child td, &:last-child th': {
         border: 0,
     },
@@ -124,6 +115,21 @@ const filterrowsLiberalStudies = [
 export default function CustomizedTables({ filtercheck, subject, classtype, searchvalue }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [dataRows, setDataRows] = useState(rows);
+
+
+
+    const [assignmentslist, setAssignmentslist] = useState([]);
+    const [fetchData, setFetchData] = useState(true);
+
+    useEffect(() => {
+        const get_assignments = async () => {
+            const assignmentdata = await axios.get('http://localhost:3000/api/assignments/getdata');
+            setAssignmentslist(assignmentdata.data);
+        }
+        get_assignments();
+    }, [fetchData])
+
+    
 
     useEffect(()=> {
         setDataRows(rows.filter((rowone) => rowone.fat.includes(searchvalue)));
@@ -240,11 +246,12 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
     const [gData, SetgData] = useState([]);
 
     const onChange = (currentNode, selectedNodes) => {
-        console.log("path::", currentNode.path);
+  
       };
 
-    const TableRowonClick = () => {
-        navigate('/studentlists');
+    const TableRowonClick = (title) => {
+        navigate('/studentlists',{state:{rowtitle:title}});
+    
     }
 
 
@@ -285,6 +292,23 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
         }
     }
 
+    const handleDownload = (data, filename) => {
+   
+          fileDownload(JSON.stringify(data), filename)
+
+      }
+    const rowdelete = async (title) => {
+    
+
+        const res = await axios.delete('http://localhost:3000/api/assignments/rowdelete', {
+            data: { title}
+        });
+ 
+        setFetchData(t => !t);
+       
+    }
+
+   
 
 
     return (
@@ -335,8 +359,8 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
                 sx={{ width: '25%', height: '70%', position: 'absolute', top: '10%', left: '40%', }}
             >
              
-                <div style={{display:"flex",backgroundColor:"#DFDFDF",padding:"10px"}}>
-                    <Typography variant="h3" component="h3" sx={{ color:"black",width:"100%", margin:"0px", padding:"0px" }}>
+                <div style={{display:"flex",padding:"10px", backgroundColor:"#2CC5CE"}}>
+                    <Typography variant="h3" component="h3" sx={{ color:"black",width:"100%", margin:"0px", padding:"0px"}}>
                                 {'Share Link'} <br />
                     </Typography> 
                     <IconX style={{backgroundColor:"#7983FF",color:"white"}} onClick={handleshareClose}/>
@@ -347,12 +371,6 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
             
                 <DialogContent sx={{backgroundColor:"#f3efef"}}>
                  
-                        {/* <IconTrash /> */}
-                        {/* <Typography variant="h3" component="h3" sx={{backgroundColor:"#2CC5CE", color:"black",width:"100%",textAlign:"center", marginBottom:"10px" }}>
-                            {'Share Link'} <br />
-                        </Typography> */}
-                    
-
                     <DropdownTreeSelectHOC data={data} onChange={onChange}    />
 
                     
@@ -441,20 +459,20 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {dataRows.map((row,id) => (
-                        <StyledTableRow key={id}>
-                            <StyledTableCell component="th" scope="row" align="center"  onClick={TableRowonClick}>
+                    {assignmentslist.map((row,id) => (
+                        <StyledTableRow key={id}  >
+                            <StyledTableCell component="th" scope="row" align="center"  onClick={() => TableRowonClick(row.title)} >
 
                             <Box sx={{display:"flex",alignItems:"center"}}>
                             <Stack spacing={2} direction="row">
                                 <Typography sx={{backgroundColor:"#2CC5CE", color:"white", borderRadius:"50%", width:"25px", height:"25px",padding:"5px"}}> G </Typography>
-                                <Box  align="center" style={{fontFamily:"Livvic"}}> {row.name} </Box>
+                                <Box  align="center" style={{fontFamily:"Livvic"}}> {row.class} </Box>
                             </Stack>
                             </Box>
                             </StyledTableCell>
-                            <StyledTableCell align="center"  onClick={TableRowonClick}>{row.calories}</StyledTableCell>
-                            <StyledTableCell align="center"  onClick={TableRowonClick}>{row.fat}</StyledTableCell>
-                            <StyledTableCell align="center"  onClick={TableRowonClick}>{row.carbs}</StyledTableCell>
+                            <StyledTableCell align="center"  onClick={() => TableRowonClick(row.title)} >{row.subject}</StyledTableCell>
+                            <StyledTableCell align="center"  onClick={() => TableRowonClick(row.title)}>{row.title}</StyledTableCell>
+                            <StyledTableCell align="center"  onClick={() => TableRowonClick(row.title)}>{row.duedate.replace("T","")} </StyledTableCell>
                             <StyledTableCell align="center">
                             <Box sx={{display:"flex", alignItems:"center"}}>
                                 <Button
@@ -481,14 +499,13 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
                                     <MenuItem onClick={handleShareOpen} sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" }, color:"#2CC5CE"}}>Share Link</MenuItem>
                                     <MenuItem
                                         onClick={() => {
-                                            handleDeleteOpen();
-                                            setDeleteId(row.calories);
+                                         rowdelete(row.title)
                                         }}
                                        sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" },  color:"#2CC5CE"}}
                                     >
                                         Delete
                                     </MenuItem>
-                                    <MenuItem  sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" },  color:"#2CC5CE"}}>Download</MenuItem>
+                                    <MenuItem  sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" },  color:"#2CC5CE"}} onClick={() => {handleDownload(row, `${row.title}.csv`)}}>Download</MenuItem>
                                  
                                </Menu>
 
@@ -518,225 +535,3 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
     </Box>
     );
 }
-
-// import React, { useState } from 'react';
-// import { DataGrid, GridCellParams } from '@mui/x-data-grid';
-// import { userRows } from './dummyData';
-// import { Link } from 'react-router-dom';
-// import DialogActions from '@mui/material/DialogActions';
-// import DialogContent from '@mui/material/DialogContent';
-// import DialogContentText from '@mui/material/DialogContentText';
-// import DialogTitle from '@mui/material/DialogTitle';
-// import Box from '@mui/material/Box';
-// import Dialog from '@mui/material/Dialog';
-// import Button from '@mui/material/Button';
-// import { useNavigate } from 'react-router-dom';
-// import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
-// import Menu from '@mui/material/Menu';
-// import MenuItem from '@mui/material/MenuItem';
-// import Fade from '@mui/material/Fade';
-// import { IconTrash, IconX, IconCheck } from '@tabler/icons';
-// import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-// import { Typography } from '@mui/material';
-// import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
-// import PerfectScrollbar from 'react-perfect-scrollbar';
-// import 'react-perfect-scrollbar/dist/css/styles.css';
-
-// const DataGridtable = ({ callbackedit }) => {
-//     const icons = { IconTrash };
-//     const navigate = useNavigate();
-//     const [data, setData] = useState(userRows);
-//     const [deleteId, setDeleteId] = useState();
-//     const data1 = data.slice().sort((a, b) => b.Duedate.localeCompare(a.Duedate));
-//     const handleDelete = (id) => {
-//         setData(data.filter((item) => item.id !== id));
-//     };
-
-//     const [anchorEl, setAnchorEl] = React.useState(null);
-//     const openpoper = Boolean(anchorEl);
-//     const handleClick = (event) => {
-//         setAnchorEl(event.currentTarget);
-//     };
-//     const handleClickOpen = () => {
-//         navigate('/studentlists');
-//     };
-
-//     const columns = [
-//         { field: 'Class', headerName: 'Class', width: 250,align:'center', headerAlign: 'center',
-//         renderCell: (params) => {
-//             console.log(params);
-//             return (
-//                 <>
-//                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly"}}>
-//                   <ReplayCircleFilledIcon  sx={{color:"#2CC5CE", fontSize:"25px", cursor:"pointer"}} />
-//                   <Box sx={{margin:"60px"}}> {params.row.Class} </Box>
-//                 </Box>
-//                 </>
-//             );
-//         }
-    
-//         },
-//         {
-//             field: 'Subject',
-//             headerName: 'Subject',
-//             width: 250
-//         },
-//         {
-//             field: 'Assignment',
-//             headerName: 'Assignment Title',
-//             width: 300
-//         },
-//         {
-//             field: 'Duedate',
-//             headerName: 'Due Date+ Time',
-//             width: 300
-//         },
-//         // {
-//         //     field: 'Studentlist',
-//         //     headerName: 'Student List',
-//         //     width: 250,
-//         //     renderCell: (params) => {
-//         //         return (
-//         //             <>
-//         //                 <p style={{ width: '23%' }}> {params.formattedValue} </p>
-//         //                 {/* <Link to={'/user/'+params.row.id} />
-//         //                  <Link to={'/studentlists'}>
-//         //                     <button className="StudentListEditBtn" >Student List</button>
-//         //                 </Link>  */}
-//         //             </>
-//         //         );
-//         //     }
-//         // },
-//         {
-//             field: 'Action',
-//             headerName: 'More',
-//             width: 200,
-//             renderCell: (params) => {
-//                 return (
-//                     <>
-//                         <Button
-//                           aria-describedby={params.row.id}
-//                           variant="contained"
-//                           aria-controls={openpoper ? 'fade-menu' : undefined}
-//                           aria-haspopup="true"
-//                           aria-expanded={openpoper ? 'true' : undefined}
-//                           onClick={handleClick}
-//                           sx={{height:"25px", width:"20px", backgroundColor:"#2CC5CE"}}
-//                         >
-//                             Edit
-//                         </Button>
-//                         {/* <Link to={'/assignmentedit/'+params.row.id}>
-//                             <button className="UserListEditBtn" onClick={() => callbackedit(params.row.id)}>Edit</button>
-//                         </Link>
-//                         <IconTrash className="UserListDelete" onClick={() => {
-//                             handleClickOpen();
-//                             setDeleteId(params.row.id);
-//                         }} /> */}
-
-//                         <Menu
-//                             id="fade-menu"
-//                             MenuListProps={{
-//                                 'aria-labelledby': 'fade-button'
-//                             }}
-//                             anchorEl={anchorEl}
-//                             open={openpoper}
-//                             onClose={handleClose}
-//                             TransitionComponent={Fade}
-//                             sx={{width:"130px"}}  
-//                         >
-//                             <MenuItem onClick={handleClickOpen} >Edit</MenuItem>
-//                             <MenuItem
-//                                 onClick={() => {
-//                                     handleDeleteOpen();
-//                                     setDeleteId(params.row.id);
-//                                 }}
-//                             >
-//                                 Delete
-//                             </MenuItem>
-//                             <MenuItem>Download</MenuItem>
-//                             {/* <MenuItem  onClick={ () => openLinkInNewTab('https://grwth.leoluca.io/?assignments=room1')}>Delete</MenuItem> */}
-//                         </Menu>
-//                         <PendingOutlinedIcon 
-//                          sx={{margin:"10px"}}
-//                         ></PendingOutlinedIcon>
-//                     </>
-//                 );
-//             }
-//         }
-//     ];
-
-//     const [open, setOpen] = useState(false);
-//     const handleDeleteOpen = () => {
-//         setOpen(true);
-//         setAnchorEl(null);
-//     };
-//     const handleClose = () => {
-//         setOpen(false);
-//     };
-
-//     const handleOnCellClick = (params) => {
-//         const value = params.colDef.field;
-//         console.log(value);
-//         if (value === 'Action') {
-//             return;
-//         }
-//         navigate('/studentlists');
-//     };
-
-//     return (
-//         <>
-        
-//             <Box>
-//                 <Dialog
-//                     open={open}
-//                     onClose={handleClose}
-//                     aria-labelledby="alert-dialog-title"
-//                     sx={{ width: '20%', height: '28%', position: 'absolute', top: '40%', left: '40%' }}
-//                 >
-//                     <DialogTitle id="alert-dialog-title"></DialogTitle>
-//                     <DialogContent>
-//                         <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-//                             <IconTrash />
-//                             <Typography variant="h3" component="h3">
-//                                 {'Are you sure you '} <br />
-//                                 {'want to delete this?'}
-//                             </Typography>
-//                         </div>
-//                     </DialogContent>
-
-//                     <DialogActions>
-//                         <Button onClick={handleClose} variant="outlined">
-//                             {' '}
-//                             <IconX /> Cancel
-//                         </Button>
-//                         <Button
-//                             onClick={() => {
-//                                 handleDelete(deleteId);
-//                                 handleClose();
-//                             }}
-//                             variant="contained"
-//                         >
-//                             <IconCheck /> Delete
-//                         </Button>
-//                     </DialogActions>
-//                 </Dialog>
-//                 <PerfectScrollbar>
-//                 <DataGrid
-//                     sx={{ height: '100%', width: '100%', marginTop: '30px' }}
-//                     autoHeight
-//                     rows={data}
-//                     columns={columns}
-//                     pageSize={20}
-//                     rowsPerPageOptions={[20]}
-//                     onCellClick={handleOnCellClick}
-//                     // checkboxSelection
-//                     // disableSelectionOnClick
-//                 />
-//                  </PerfectScrollbar>
-//             </Box>
-       
-//         </>
-//     );
-// };
-
-// export default DataGridtable;

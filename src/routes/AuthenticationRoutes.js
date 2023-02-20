@@ -15,7 +15,7 @@ const Grwthgetaccesstoken =  Loadable(lazy(() => import('views/grwth/AccessToken
 
 const AuthenticationRoutes = {
     path: '/',
-    // element: <MinimalLayout />,
+ 
     children: [
         {
             path: '/pages/login/login3',
@@ -27,7 +27,7 @@ const AuthenticationRoutes = {
         },
         {
             path: '/',
-            element: <GrwthLogin />
+            element: <GrwthLogin />    //thirty party login page
         },
         {
             path:'/sso-demo-client/callback',
@@ -35,7 +35,7 @@ const AuthenticationRoutes = {
         },
         {
             path:'/getaccestoken',
-            element:<Grwthgetaccesstoken />
+            element:<Grwthgetaccesstoken />  // get accesstoken
         }
     ],
   
