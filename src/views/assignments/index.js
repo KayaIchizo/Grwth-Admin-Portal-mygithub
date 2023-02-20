@@ -115,16 +115,16 @@ export default function Assignmentlistpage() {
     };
 
     const [userCheck, setUserCheck] = useState('teacher');
-    const studentlists = [
+    const studentlists = [ // This is mock data
         { assignmenttitle: 'This is an english chapter 3 assignment.', duedate: '-', status: 'New' },
         { assignmenttitle: 'This is an english chapter 1 assignment.', duedate: 'Edited on 19 Dec 2022 12:16', status: 'A' },
         { assignmenttitle: 'This is an english chapter 2 assignment.', duedate: 'Edited on 15 Dec 2022 11:13', status: 'Submitted' }
     ];
-    const studentlistsmaths = [
+    const studentlistsmaths = [ // This is mock data
         { assignmenttitle: 'This is a math chapter 1 assignment.', duedate: 'Edited on 24 Dec 2022 12:33', status: 'Done late' },
         { assignmenttitle: 'This is a math chapter 2 assignment.', duedate: 'Edited on 15 Dec 2022 11:13', status: 'Submitted' }
     ];
-    const studentlistsstudies = [
+    const studentlistsstudies = [ // This is mock data
         { assignmenttitle: 'This is  liberal chapter 3 assignment.', duedate: 'Edited on 19 Dec 2022 12:10', status: 'Submitted' },
         { assignmenttitle: 'This is  liberal chapter 1 assignment.', duedate: 'Edited on 23 Dec 2022 17:35', status: 'Missing' }
     ];
@@ -166,6 +166,7 @@ export default function Assignmentlistpage() {
     }
 
     const handleChangeClass =  (e) => {
+        console.log(e)
         setClassType(e.target.value);
     }
 
@@ -181,7 +182,7 @@ export default function Assignmentlistpage() {
     useEffect(async () => {
  
         const get_assignments = async () => {
-            const assignmentdata = await axios.get('http://localhost:3000/api/assignments/getdata');
+            const assignmentdata = await axios.get('http://localhost:3000/api/assignments/getdata'); // get all data in the assignment page
             setAssignmentslist(assignmentdata.data);
         }
         get_assignments();
@@ -192,15 +193,16 @@ export default function Assignmentlistpage() {
             });
             setCheckusertype(res.data.type);
 
-            const resclassdata = await axios.post('http://localhost:3000/api/findClass', { 
+            const resclassdata = await axios.post('http://localhost:3000/api/findClass', {  // get class information from thirty party api
                     Authorization:'Bearer' + JSON.parse(localStorage.getItem("accesstoken"))
                   });
-                  setSelectclass(resclassdata.data)
+                  setSelectclass(resclassdata.data.concat("None")); //push none value to select array
 
-            const ressubjectdata = await axios.post('http://localhost:3000/api/findSubjects', { 
+            const ressubjectdata = await axios.post('http://localhost:3000/api/findSubjects', { // get subject information from thirty party api
                     Authorization:'Bearer' + JSON.parse(localStorage.getItem("accesstoken"))
                   });
-                  setSelectsubject(ressubjectdata.data);
+             
+                  setSelectsubject(ressubjectdata.data.concat("None"));
             
         }    
         gettype();
@@ -304,10 +306,6 @@ export default function Assignmentlistpage() {
                                             {u}
                                         </MenuItem>
                                     ))}
-                                        {/* <MenuItem value="" style={{fontFamily:"Livicc"}}>None</MenuItem>
-                                        <MenuItem value="English" style={{fontFamily:"Livicc"}}>English</MenuItem>
-                                        <MenuItem value="Maths" style={{fontFamily:"Livicc"}}>Maths</MenuItem>
-                                        <MenuItem value="Liberal Studies" style={{fontFamily:"Livicc"}}>Liberal Studies</MenuItem> */}
                                      
                                     </Select>
                             </FormControl> 
@@ -335,13 +333,7 @@ export default function Assignmentlistpage() {
                                                 {u}
                                             </MenuItem>
                                         ))}
-                                        {/* <MenuItem value=""  style={{fontFamily:"Livicc"}}>None</MenuItem>
-                                        <MenuItem value="A1" style={{fontFamily:"Livicc"}}>A1</MenuItem>
-                                        <MenuItem value="A2" style={{fontFamily:"Livicc"}}>A2</MenuItem>
-                                        <MenuItem value="B1" style={{fontFamily:"Livicc"}}>B1</MenuItem>
-                                        <MenuItem value="B2" style={{fontFamily:"Livicc"}}>B2</MenuItem>
-                                        <MenuItem value="C1" style={{fontFamily:"Livicc"}}>C1</MenuItem>
-                                        <MenuItem value="C2" style={{fontFamily:"Livicc"}}>C2</MenuItem> */}
+                                      
                                     </Select>
                                 </FormControl> 
                             </div>

@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -30,31 +30,31 @@ import { Typography } from '@mui/material';
 import './index.css';
 import DropdownTreeSelectHOC from "./HOC";
 // import 'react-dropdown-tree-select/dist/styles.css'
-import data  from './data.json';
+import data from './data.json';
 import usericon from 'assets/images/roomimg/Vector.png';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { useEffect } from 'react';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
-import  Studentlists  from '../../views/studentlists';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import Studentlists from '../../views/studentlists';
 import fileDownload from 'js-file-download';
 import axios from 'axios';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor:  '#FFFFFF',
+        backgroundColor: '#FFFFFF',
         color: theme.palette.common.white,
-        color:'black',
-        fontFamily:"Livvic",
+        color: 'black',
+        fontFamily: "Livvic",
         fontSize: 16,
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: 18,
-        fontFamily:"Livvic"
-    },  
-    marginTop:30, 
-    padding:'3px 94px',
+        fontFamily: "Livvic"
+    },
+    marginTop: 30,
+    padding: '3px 94px',
 
 }));
 
@@ -67,7 +67,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     borderSpacing: "0 5px !important",
     borderCollapse: "separate !important",
     boxShadow: "0 4px 20px -10px;  #ccc",
-   
+
 }));
 
 function createData(
@@ -91,105 +91,59 @@ const rows = [
     createData('B1', 'English', 'Personal', '03/10/2023 09:20 AM', 4.0),
     createData('D2', 'Maths', 'Matrix Problems', '03/07/2023 08:00 PM', 6.0),
     createData('E2', 'Liberal Studies', 'Grammar and Checking', '03/04/2023 06:00 PM', 6.0),
-   
+
 ];
 
-const filterrowsEnglish = [
-    createData('A1', 'English', 'My Favourite Book Essay', '03/31/2023 06:50 PM', 4.0),
-    createData('C1', 'English', 'My Village Essay', '03/22/2023 11:30 AM', 4.3),
-    createData('B1', 'English', 'Personal', '03/10/2023 09:20 AM', 6.0),
-]
-
-const filterrowsMaths = [
-    createData('A2', 'Maths', 'Differential Calculus Assignment', '03/28/2023 04:30 PM', 4.0),
-    createData('B2', 'Maths', 'Transformations', '03/17/2023 02:40 PM', 4.3),
-    createData('D2', 'Maths', 'Matrix Problems', '03/07/2023 08:00 PM', 6.0),
-]
-
-const filterrowsLiberalStudies = [
-    createData('C2', 'Liberal Studies', 'Reading/Research Proposal', '03/25/2023 10:00 AM', 4.0),
-    createData('D1', 'Liberal Studies', 'Importance of Music', '03/14/2023 03:10 PM', 4.3),
-    createData('E2', 'Liberal Studies', 'Grammar and Checking', '03/04/2023 06:00 PM', 6.0),
-]
 
 export default function CustomizedTables({ filtercheck, subject, classtype, searchvalue }) {
+
+    console.log("subject=", classtype   )
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [dataRows, setDataRows] = useState(rows);
 
 
 
     const [assignmentslist, setAssignmentslist] = useState([]);
+    const [filterassignmentlist, setFilterassignmentlist] = useState([]);
     const [fetchData, setFetchData] = useState(true);
 
     useEffect(() => {
         const get_assignments = async () => {
-            const assignmentdata = await axios.get('http://localhost:3000/api/assignments/getdata');
+            const assignmentdata = await axios.get('http://localhost:3000/api/assignments/getdata'); // get assignments table data from assignment mongodb collection
             setAssignmentslist(assignmentdata.data);
+            setFilterassignmentlist(assignmentdata.data);
         }
         get_assignments();
     }, [fetchData])
 
-    
 
-    useEffect(()=> {
-        setDataRows(rows.filter((rowone) => rowone.fat.includes(searchvalue)));
-    },[searchvalue])
 
     useEffect(() => {
-        if(subject==""){
-            setDataRows(rows);
-        }
-        else if(subject=="English"){
-            setDataRows(rows.filter((rowone) => rowone.calories === subject));
-        }
-        else if(subject == "Maths"){
-            setDataRows(rows.filter((rowone) => rowone.calories === subject));
-        }
-        else if(subject == "Liberal Studies"){
-         
-            setDataRows(rows.filter((rowone) => rowone.calories === subject));
-        }
-    },[subject])
+        setFilterassignmentlist(assignmentslist.filter((rowone) => rowone.title.includes(searchvalue) || rowone.subject.includes(searchvalue) || rowone.class.includes(searchvalue)));
+    }, [searchvalue])
 
     useEffect(() => {
+        if(subject == "None"){
+            setFilterassignmentlist(assignmentslist.filter((rowone) => rowone.subject != subject)); // get all assignments 
+        }
+        else
+        {
+            setFilterassignmentlist(assignmentslist.filter((rowone) => rowone.subject == subject));//get filtered assignments by subject information
+        }
+    }, [subject])
 
-
-        if(classtype==""){
-        setDataRows(rows);
+    useEffect(() => {
+        if(classtype == "None"){
+            setFilterassignmentlist(assignmentslist.filter((rowone) => rowone.class != classtype)); // get all assignments 
         }
-        else if(classtype=="A1"){
-            setDataRows(rows.filter((rowone) => rowone.name === classtype));
+        else
+        {
+            setFilterassignmentlist(assignmentslist.filter((rowone) => rowone.class == classtype));//get filtered assignments by class information
         }
-        else if(classtype == "A2"){
-            setDataRows(rows.filter((rowone) => rowone.name === classtype));
-        }
-        else if(classtype == "B1"){
-         
-            setDataRows(rows.filter((rowone) => rowone.name === classtype));
-        }
-        else if(classtype == "B2"){
-       
-            setDataRows(rows.filter((rowone) => rowone.name === classtype));
-        }
-        else if(classtype == "C1"){
-         
-            setDataRows(rows.filter((rowone) => rowone.name === classtype));
-        }
-        else if(classtype == "C2"){
-       
-            setDataRows(rows.filter((rowone) => rowone.name === classtype));
-        }
-
-    },[classtype])
-
     
-
-      
-
+    }, [classtype])
 
 
-
-  
     // const [dataFilter,setDataFilter] = useState(filterrows);
     const openpoper = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -201,14 +155,14 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
     }
     const [deleteId, setDeleteId] = useState();
     const handleClickOpen = () => {
-            navigate('/studentlists');
+        navigate('/studentlists');
     };
     const [open, setOpen] = useState(false);
     const handleDeleteOpen = () => {
         setOpen(true);
         setAnchorEl(null);
     };
-    
+
     const handleClose = () => {
         setOpen(false);
         setAnchorEl(null);
@@ -233,54 +187,54 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
     };
 
     const [multipleValue, setMultipleValue] = useState([]);
-    
+
 
     const onMultipleChange = value => {
         setMultipleValue([]);
-      };
+    };
 
     const onSelect = (...args) => {
-    // use onChange instead
+        // use onChange instead
     };
 
     const [gData, SetgData] = useState([]);
 
     const onChange = (currentNode, selectedNodes) => {
-  
-      };
+
+    };
 
     const TableRowonClick = (title) => {
-        navigate('/studentlists',{state:{rowtitle:title}});
-    
+        navigate('/studentlists', { state: { rowtitle: title } });
+
     }
 
 
-    const [sharetoEdit,setShareToEdit] = useState('https://grwthx.com/file/d/1awregsdf5/view?usp=sharing');
-    const [sharetoPlay,setShareToPlay] = useState('https://grwthx.com/file/d/2awregege3/view?usp=sharing')
-    
-    const [alertOpen,setAlertOpen] = useState(false);
+    const [sharetoEdit, setShareToEdit] = useState('https://grwthx.com/file/d/1awregsdf5/view?usp=sharing');
+    const [sharetoPlay, setShareToPlay] = useState('https://grwthx.com/file/d/2awregege3/view?usp=sharing')
+
+    const [alertOpen, setAlertOpen] = useState(false);
 
     const sharetoeditClick = () => {
-       setAlertOpen(true);
+        setAlertOpen(true);
     }
 
-    const handleCloseAlert = () => { 
+    const handleCloseAlert = () => {
         setAlertOpen(false);
     };
 
     useEffect(() => {
         document.addEventListener('keydown', keyPressHandler, false);
-    },[])
+    }, [])
 
-    const [alertplayOpen,setAlertPlayOpen] = useState(false);
+    const [alertplayOpen, setAlertPlayOpen] = useState(false);
 
     const [shareallow2, setShareallow2] = useState(false)
-    const  sharetoplayClick =  () => {     
+    const sharetoplayClick = () => {
         setAlertPlayOpen(true);
     }
 
     const handleClosePlayAlert = () => {
-     
+
         setAlertPlayOpen(false);
     };
 
@@ -293,245 +247,245 @@ export default function CustomizedTables({ filtercheck, subject, classtype, sear
     }
 
     const handleDownload = (data, filename) => {
-   
-          fileDownload(JSON.stringify(data), filename)
 
-      }
+        fileDownload(JSON.stringify(data), filename)
+
+    }
     const rowdelete = async (title) => {
-    
+
 
         const res = await axios.delete('http://localhost:3000/api/assignments/rowdelete', {
-            data: { title}
+            data: { title }
         });
- 
+
         setFetchData(t => !t);
-       
+
     }
 
-   
+
 
 
     return (
-    <Box>
-   
+        <Box>
+
             <Box>
 
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                sx={{ width: '20%', height: '28%', position: 'absolute', top: '40%', left: '40%' }}
-            >
-                <DialogTitle id="alert-dialog-title"></DialogTitle>
-                <DialogContent>
-                    <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                        <IconTrash />
-                        <Typography variant="h3" component="h3">
-                            {'Are you sure you '} <br />
-                            {'want to delete this?'}
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    sx={{ width: '20%', height: '28%', position: 'absolute', top: '40%', left: '40%' }}
+                >
+                    <DialogTitle id="alert-dialog-title"></DialogTitle>
+                    <DialogContent>
+                        <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                            <IconTrash />
+                            <Typography variant="h3" component="h3">
+                                {'Are you sure you '} <br />
+                                {'want to delete this?'}
+                            </Typography>
+                        </div>
+                    </DialogContent>
+
+                    <DialogActions>
+                        <Button onClick={handleClose} variant="outlined">
+                            {' '}
+                            <IconX /> Cancel
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                handleDelete(deleteId);
+                                handleClose();
+                            }}
+                            variant="contained"
+                        >
+                            <IconCheck /> Delete
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+
+
+
+                <Dialog
+                    open={shareOpen}
+                    onClose={handleshareClose}
+                    aria-labelledby="alert-dialog-title"
+                    sx={{ width: '25%', height: '70%', position: 'absolute', top: '10%', left: '40%', }}
+                >
+
+                    <div style={{ display: "flex", padding: "10px", backgroundColor: "#2CC5CE" }}>
+                        <Typography variant="h3" component="h3" sx={{ color: "black", width: "100%", margin: "0px", padding: "0px" }}>
+                            {'Share Link'} <br />
                         </Typography>
+                        <IconX style={{ backgroundColor: "#7983FF", color: "white" }} onClick={handleshareClose} />
+
                     </div>
-                </DialogContent>
-
-                <DialogActions>
-                    <Button onClick={handleClose} variant="outlined">
-                        {' '}
-                        <IconX /> Cancel
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            handleDelete(deleteId);
-                            handleClose();
-                        }}
-                        variant="contained"
-                    >
-                        <IconCheck /> Delete
-                    </Button>
-                </DialogActions>
-            </Dialog>
 
 
 
-            <Dialog
-                open={shareOpen}
-                onClose={handleshareClose}
-                aria-labelledby="alert-dialog-title"
-                sx={{ width: '25%', height: '70%', position: 'absolute', top: '10%', left: '40%', }}
-            >
-             
-                <div style={{display:"flex",padding:"10px", backgroundColor:"#2CC5CE"}}>
-                    <Typography variant="h3" component="h3" sx={{ color:"black",width:"100%", margin:"0px", padding:"0px"}}>
-                                {'Share Link'} <br />
-                    </Typography> 
-                    <IconX style={{backgroundColor:"#7983FF",color:"white"}} onClick={handleshareClose}/>
+                    <DialogContent sx={{ backgroundColor: "#f3efef" }}>
 
-                </div>
-             
-                        
-            
-                <DialogContent sx={{backgroundColor:"#f3efef"}}>
-                 
-                    <DropdownTreeSelectHOC data={data} onChange={onChange}    />
+                        <DropdownTreeSelectHOC data={data} onChange={onChange} />
 
-                    
-                    <Stack mt={28}>
-                        <Typography variant="h3" component="h3">
-                                   Share to Edit
-                        </Typography> 
-                        <Box sx={{display:"flex", alignItems: 'center'}}>
-                     
-                            <TextField id="sharetoedit" value = {sharetoEdit} variant="outlined" sx={{ width: '100%',mr:"10px" }} placeholder="URL"/>
 
-                            <CopyToClipboard text={sharetoEdit}>
-                          
-                              <img src={usericon} alt="UserIcon" width={15} height={15}  onClick={sharetoeditClick} sx={{backgroundColor:"red"}}/>
-                            </CopyToClipboard>
-                          
-                            
-                            <Snackbar
-                                open={alertOpen}
-                                autoHideDuration={1000}
-                                message="Link Copied"
-                                onClose={handleCloseAlert}
-                                sx={{position:"absolute",top:"17%", width: '10%'}}
-                            
-                            />
-                        </Box>
-                    </Stack>
-                    <Stack mt={2}>
-                        <Typography variant="h3" component="h3">
-                                   Share to Play only
-                        </Typography> 
-                        <Box sx={{display:"flex", alignItems: 'center'}}>
-                        <TextField id="sharetoplay" value = {sharetoPlay} variant="outlined" sx={{ width: '100%',mr:"10px" }} placeholder="URL"/>
+                        <Stack mt={28}>
+                            <Typography variant="h3" component="h3">
+                                Share to Edit
+                            </Typography>
+                            <Box sx={{ display: "flex", alignItems: 'center' }}>
 
-                        
-                        <CopyToClipboard text={sharetoPlay}>
-                          
-                             <img src={usericon} alt="UserIcon"  width={15} height={15} onClick={sharetoplayClick} />
-                        </CopyToClipboard>
-                           
-                           
-                       
-                         
+                                <TextField id="sharetoedit" value={sharetoEdit} variant="outlined" sx={{ width: '100%', mr: "10px" }} placeholder="URL" />
 
-                            
-                            <Snackbar
+                                <CopyToClipboard text={sharetoEdit}>
+
+                                    <img src={usericon} alt="UserIcon" width={15} height={15} onClick={sharetoeditClick} sx={{ backgroundColor: "red" }} />
+                                </CopyToClipboard>
+
+
+                                <Snackbar
+                                    open={alertOpen}
+                                    autoHideDuration={1000}
+                                    message="Link Copied"
+                                    onClose={handleCloseAlert}
+                                    sx={{ position: "absolute", top: "17%", width: '10%' }}
+
+                                />
+                            </Box>
+                        </Stack>
+                        <Stack mt={2}>
+                            <Typography variant="h3" component="h3">
+                                Share to Play only
+                            </Typography>
+                            <Box sx={{ display: "flex", alignItems: 'center' }}>
+                                <TextField id="sharetoplay" value={sharetoPlay} variant="outlined" sx={{ width: '100%', mr: "10px" }} placeholder="URL" />
+
+
+                                <CopyToClipboard text={sharetoPlay}>
+
+                                    <img src={usericon} alt="UserIcon" width={15} height={15} onClick={sharetoplayClick} />
+                                </CopyToClipboard>
+
+
+
+
+
+
+                                <Snackbar
                                     open={alertplayOpen}
                                     autoHideDuration={1000}
                                     message="Link Copied"
                                     onClose={handleClosePlayAlert}
-                                    sx={{position:"absolute",top:"48%",right:"70%", width: '10%'}}
-                                
-                            />
-                        </Box>
-                    </Stack>
+                                    sx={{ position: "absolute", top: "48%", right: "70%", width: '10%' }}
 
-                    <Box sx={{display:"flex", justifyContent:"flex-end"}}>
-                        <Button
-                            variant="contained"
-                            aria-haspopup="true"
-                            sx={{height:"25px", backgroundColor:"#7983FF", color:"white", marginTop: '15px' , marginRight:'10px'}}
-                            onClick={handleshareClose}
-                        >
-                            Done
-                        </Button>
-
-                    </Box>
-
-                 
-                </DialogContent>
-
-            </Dialog>
-
-
-            <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700, marginTop:'50px' }} aria-label="customized table" size='large'>
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell align="center">Class</StyledTableCell>
-                        <StyledTableCell align="center">Subject</StyledTableCell>
-                        <StyledTableCell align="center">Assignment Title</StyledTableCell>
-                        <StyledTableCell align="center" style={{fontFamily:"Livvic"}}>Due Date & Time</StyledTableCell>
-                        <StyledTableCell align="center">
-                          More
-                        </StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {assignmentslist.map((row,id) => (
-                        <StyledTableRow key={id}  >
-                            <StyledTableCell component="th" scope="row" align="center"  onClick={() => TableRowonClick(row.title)} >
-
-                            <Box sx={{display:"flex",alignItems:"center"}}>
-                            <Stack spacing={2} direction="row">
-                                <Typography sx={{backgroundColor:"#2CC5CE", color:"white", borderRadius:"50%", width:"25px", height:"25px",padding:"5px"}}> G </Typography>
-                                <Box  align="center" style={{fontFamily:"Livvic"}}> {row.class} </Box>
-                            </Stack>
+                                />
                             </Box>
-                            </StyledTableCell>
-                            <StyledTableCell align="center"  onClick={() => TableRowonClick(row.title)} >{row.subject}</StyledTableCell>
-                            <StyledTableCell align="center"  onClick={() => TableRowonClick(row.title)}>{row.title}</StyledTableCell>
-                            <StyledTableCell align="center"  onClick={() => TableRowonClick(row.title)}>{row.duedate.replace("T","")} </StyledTableCell>
-                            <StyledTableCell align="center">
-                            <Box sx={{display:"flex", alignItems:"center"}}>
-                                <Button
-                                    variant="contained"
-                                    aria-haspopup="true"
-                                    sx={{height:"25px", backgroundColor:"#2CC5CE",margin:"10px", color:"white", fontFamily:"Livvic"}}
-                                    onClick={()=>navigate('/assignmentedit/:id',{state:{eachvalue:row}})}
-                                >
-                                Edit
-                                </Button>
+                        </Stack>
 
-                                <Menu
-                                    id="fade-menu"
-                                    MenuListProps={{
-                                        'aria-labelledby': 'fade-button'
-                                    }}
-                                    anchorEl={anchorEl}
-                                    open={openpoper}
-                                    onClose={handleClose}
-                                    TransitionComponent={Fade}
-                                    sx={{width:"130px"}}
-                                >
-                                    {/* <MenuItem onClick={handleClickOpen} sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" }}}>Share Link</MenuItem> */}
-                                    <MenuItem onClick={handleShareOpen} sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" }, color:"#2CC5CE"}}>Share Link</MenuItem>
-                                    <MenuItem
-                                        onClick={() => {
-                                         rowdelete(row.title)
-                                        }}
-                                       sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" },  color:"#2CC5CE"}}
-                                    >
-                                        Delete
-                                    </MenuItem>
-                                    <MenuItem  sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" },  color:"#2CC5CE"}} onClick={() => {handleDownload(row, `${row.title}.csv`)}}>Download</MenuItem>
-                                 
-                               </Menu>
+                        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                            <Button
+                                variant="contained"
+                                aria-haspopup="true"
+                                sx={{ height: "25px", backgroundColor: "#7983FF", color: "white", marginTop: '15px', marginRight: '10px' }}
+                                onClick={handleshareClose}
+                            >
+                                Done
+                            </Button>
 
-                                <PendingOutlinedIcon 
-                                  variant="contained"
-                                  aria-haspopup="true"
-                                  aria-controls={openpoper ? 'fade-menu' : undefined}
-                                  aria-expanded={openpoper ? 'true' : undefined}
-                                  onClick={handleClick}
-                                  sx={{margin:"10px", color:"#2CC5CE"}}
-                                >
-                                </PendingOutlinedIcon>
-                                
-                            </Box> 
-                     
-                            </StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody>
-            </Table>
-            </TableContainer>
-            
+                        </Box>
+
+
+                    </DialogContent>
+
+                </Dialog>
+
+
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 700, marginTop: '50px' }} aria-label="customized table" size='large'>
+                        <TableHead>
+                            <TableRow>
+                                <StyledTableCell align="center">Class</StyledTableCell>
+                                <StyledTableCell align="center">Subject</StyledTableCell>
+                                <StyledTableCell align="center">Assignment Title</StyledTableCell>
+                                <StyledTableCell align="center" style={{ fontFamily: "Livvic" }}>Due Date & Time</StyledTableCell>
+                                <StyledTableCell align="center">
+                                    More
+                                </StyledTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {filterassignmentlist.map((row, id) => (
+                                <StyledTableRow key={id}  >
+                                    <StyledTableCell component="th" scope="row" align="center" onClick={() => TableRowonClick(row.title)} >
+
+                                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                                            <Stack spacing={2} direction="row">
+                                                <Typography sx={{ backgroundColor: "#2CC5CE", color: "white", borderRadius: "50%", width: "25px", height: "25px", padding: "5px" }}> G </Typography>
+                                                <Box align="center" style={{ fontFamily: "Livvic" }}> {row.class} </Box>
+                                            </Stack>
+                                        </Box>
+                                    </StyledTableCell>
+                                    <StyledTableCell align="center" onClick={() => TableRowonClick(row.title)} >{row.subject}</StyledTableCell>
+                                    <StyledTableCell align="center" onClick={() => TableRowonClick(row.title)}>{row.title}</StyledTableCell>
+                                    <StyledTableCell align="center" onClick={() => TableRowonClick(row.title)}>{row.duedate.replace("T", "")} </StyledTableCell>
+                                    <StyledTableCell align="center">
+                                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                                            <Button
+                                                variant="contained"
+                                                aria-haspopup="true"
+                                                sx={{ height: "25px", backgroundColor: "#2CC5CE", margin: "10px", color: "white", fontFamily: "Livvic" }}
+                                                onClick={() => navigate('/assignmentedit/:id', { state: { eachvalue: row } })}
+                                            >
+                                                Edit
+                                            </Button>
+
+                                            <Menu
+                                                id="fade-menu"
+                                                MenuListProps={{
+                                                    'aria-labelledby': 'fade-button'
+                                                }}
+                                                anchorEl={anchorEl}
+                                                open={openpoper}
+                                                onClose={handleClose}
+                                                TransitionComponent={Fade}
+                                                sx={{ width: "130px" }}
+                                            >
+                                                {/* <MenuItem onClick={handleClickOpen} sx={{"&:hover": { color: "white",backgroundColor:"#2CC5CE" }}}>Share Link</MenuItem> */}
+                                                <MenuItem onClick={handleShareOpen} sx={{ "&:hover": { color: "white", backgroundColor: "#2CC5CE" }, color: "#2CC5CE" }}>Share Link</MenuItem>
+                                                <MenuItem
+                                                    onClick={() => {
+                                                        rowdelete(row.title)
+                                                    }}
+                                                    sx={{ "&:hover": { color: "white", backgroundColor: "#2CC5CE" }, color: "#2CC5CE" }}
+                                                >
+                                                    Delete
+                                                </MenuItem>
+                                                <MenuItem sx={{ "&:hover": { color: "white", backgroundColor: "#2CC5CE" }, color: "#2CC5CE" }} onClick={() => { handleDownload(row, `${row.title}.csv`) }}>Download</MenuItem>
+
+                                            </Menu>
+
+                                            <PendingOutlinedIcon
+                                                variant="contained"
+                                                aria-haspopup="true"
+                                                aria-controls={openpoper ? 'fade-menu' : undefined}
+                                                aria-expanded={openpoper ? 'true' : undefined}
+                                                onClick={handleClick}
+                                                sx={{ margin: "10px", color: "#2CC5CE" }}
+                                            >
+                                            </PendingOutlinedIcon>
+
+                                        </Box>
+
+                                    </StyledTableCell>
+                                </StyledTableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+
+            </Box>
+
+
+
         </Box>
-  
-   
-    
-    </Box>
     );
 }
